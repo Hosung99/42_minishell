@@ -6,11 +6,11 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:59:43 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/19 15:58:18 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/21 16:46:28 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	sig_handler(int signo)
 {
