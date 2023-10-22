@@ -1,8 +1,9 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 NAME = minishell
-SRCS = main.c parsing/set_term.c parsing/set_signal.c
+SRCS = main.c parsing/set_term.c parsing/set_signal.c parsing/print_picture.c parsing/parse.c
 OBJS = $(SRCS:.c=.o)
+LIBFT = ./libft/libft.a
 
 all: $(NAME)
 
@@ -10,14 +11,17 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) -lreadline
+	make -C libft
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT) -lreadline
 
 clean:
+	make clean -C libft
 	rm -f $(OBJS)
 
 fclean: clean
+	make fclean -C libft
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re%
+.PHONY: all clean fclean re

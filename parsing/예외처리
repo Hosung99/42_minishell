@@ -1,0 +1,31 @@
+// int	check_quote(char *line)
+// {
+// 	int	cnt;
+	
+// 	cnt = 0;
+// 	return (cnt);
+// }
+
+int	check_white_space(char *line)
+{
+	int	index;
+
+	index = 0;
+	while (line[index])
+	{
+		if (line[index] >= 9 && line[index] <= 13)
+			return (-1);
+		if (line[index] == 32)
+			return (-1);
+		index++;
+	}
+	return (1);
+}
+
+int	check_available(char *line)
+{
+	if (check_white_space(line) == -1)
+		return (-1);
+	// check_first_pipe(line);
+	return (1);
+}
