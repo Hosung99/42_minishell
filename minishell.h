@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/21 18:21:05 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/25 17:32:10 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,36 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct s_token t_token;
 typedef struct s_redir t_redir;
 typedef struct s_cmd t_cmd;
+typedef struct s_envp t_envp;
 
-typedef struct  s_token
+struct	s_envp
+{
+	char	*key;
+	char	*value;
+	t_envp	*next;	
+};
+
+typedef enum e_token_identifier
+{
+	// token_pipe,
+	// token_space,
+	token_cmd,
+	token_option,
+	token_read_redir,
+	token_heredoc,
+	token_write_redir,
+	token_append_redir,
+} t_token_identifier;
+
+struct  s_token
 {
     char    *str;
     int     type;
-}	t_token;
+	t_token *next;
+};
 
 struct s_redir
 {
@@ -51,5 +73,10 @@ void	print_picture(void);
 void	parse(char *line, t_cmd *cmd);
 void	sig_handler(int signo);
 void	set_signal(void);
+int		set_token_type(char *str);
+char	*ft_split_index(char *str, int before_index, int cur_index);
+void	make_cmd_token(char *str, t_token *token_header,
+	int *cur_index, int *before_index);
+void	make_redir_token(char *str, t_token *token_header, int *cur_index, int *before_index);
 
 #endif
