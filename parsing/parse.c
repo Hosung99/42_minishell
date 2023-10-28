@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/25 22:16:03 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/28 12:00:39 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	malloc_cmd(t_cmd *cmd, t_cmd **new_cmd)
 	}
 }
 
-void	set_token(char *str, t_cmd *cmd)
+void	tokenize(char *str, t_cmd *cmd)
 {
 	t_cmd	*new_cmd;
 	t_token	*token_header;
@@ -38,33 +38,39 @@ void	set_token(char *str, t_cmd *cmd)
 
 	malloc_cmd(cmd, &new_cmd);
 	token_header = (t_token *)malloc(sizeof(t_token));
+	if (token_header == NULL)
+		return ;
 	curr_index = 0;
-	while (str[curr_index] == ' ')
+	while (str[curr_index] == ' ' || str[curr_index] == '\t')
 		curr_index++;
 	before_index = curr_index;
-	while (str && str[curr_index])
+	while (str[curr_index] && str)
 	{
-		if ( str[curr_index + 1] == '\0' || str[curr_index] == ' ')
+		if (str[curr_index] == '\'' || str[curr_index] == '"')
+			make_quote_token(str, token_header, &curr_index, &before_index);
+		else if (str[curr_index + 1] == '\0' || str[curr_index] == ' ' || str[curr_index] == '\t')
 			make_cmd_token(str, token_header, &curr_index, &before_index);
 		else if (str[curr_index] == '>' || str[curr_index] == '<')
 			make_redir_token(str, token_header, &curr_index, &before_index);
 		curr_index++;
 	}
-	printf("token_header->str : %s\n", token_header->next->str);
+	if (set_quote(token_header->next) == -1)
+		return ;
 }
 
 void	parse(char *line, t_cmd *cmd)
 {
-	char	**split_cmd_pipe;
+	char	**pipe_split_line;
 	int		pipe_cnt;
-	int		index;
+	int		pipe_index;
 
 	pipe_cnt = 0;
-	index = -1;
-	split_cmd_pipe = ft_split(line, '|', &pipe_cnt);
+	pipe_index = -1;
+	pipe_split_line = ft_split(line, '|', &pipe_cnt);
 	cmd->next = NULL;
-	while (++index < pipe_cnt)
-		set_token(split_cmd_pipe[index], cmd);
-	free(split_cmd_pipe);
+	while (++pipe_index < pipe_cnt)
+		tokenize(pipe_split_line[pipe_index], cmd);
+	free(pipe_split_line);
 	return ;
 }
+		
