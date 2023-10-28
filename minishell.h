@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/25 17:32:10 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/28 12:02:16 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,8 @@ char	*ft_split_index(char *str, int before_index, int cur_index);
 void	make_cmd_token(char *str, t_token *token_header,
 	int *cur_index, int *before_index);
 void	make_redir_token(char *str, t_token *token_header, int *cur_index, int *before_index);
+void	make_quote_token(char *str, t_token *token, int *curr_index, int *before_index);
+int		set_quote(t_token *token_header);
+int		check_quote(t_token *token_header);
 
 #endif

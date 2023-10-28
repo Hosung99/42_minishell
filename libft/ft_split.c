@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 17:58:16 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/21 18:00:06 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/28 11:41:35 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	set_string(char **str, const char **s, \
 		(*str)[k++] = **s;
 		*s = *s + 1;
 	}
+	(*str)[k] = 0;
 }
 
 static char	**free_malloc(char **str, int i)
