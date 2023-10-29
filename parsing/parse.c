@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/28 12:00:39 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/29 11:38:25 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	malloc_cmd(t_cmd *cmd, t_cmd **new_cmd)
 {
 	if (cmd->next == NULL)
 	{
-		cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
-		*new_cmd = cmd->next;
+		*new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
+		cmd->next = *new_cmd;
 	}
 	else
 	{
@@ -26,6 +26,7 @@ void	malloc_cmd(t_cmd *cmd, t_cmd **new_cmd)
 			*new_cmd = (*new_cmd)->next;
 		(*new_cmd)->next = (t_cmd *)malloc(sizeof(t_cmd));
 		*new_cmd = (*new_cmd)->next;
+		(*new_cmd)->next = NULL;
 	}
 }
 

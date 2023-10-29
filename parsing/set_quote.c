@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/28 11:37:42 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/29 11:38:21 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_quote(t_token *token)
 
 int	set_quote(t_token *token_header)
 {
-	while (token_header != NULL)
+	while (token_header)
 	{
 		printf("before: token_header->str : %s\n", token_header->str);
 		if (check_quote(token_header) == -1)
