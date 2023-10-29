@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/29 11:38:21 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/29 15:01:22 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,45 @@
 // 	return (1);
 // }
 
-int	check_small_quote(t_token *token, int *str_index)
+void	delete_small_quote(t_token *token)
 {
-	while(token->str[*str_index] != '\'')
+	int	str_index;
+
+	str_index = 0;
+	while (token->str[str_index])
 	{
-		if (token->str[*str_index] == '\0')
+		if (token->str[str_index] == '\'')
+		{
+			token->str = ft_strtrim_index(token->str, '\'');
+			break;
+		}
+		str_index++;
+	}
+}
+
+int	check_small_quote(t_token *token, int str_index)
+{
+	int	quote_cnt;
+	int	quote_index;
+
+	quote_cnt = 0;
+	quote_index = 0;
+	while(token->str[quote_index])
+	{
+		if (token->str[quote_index] == '\'')
+			quote_cnt++;
+		quote_index++;
+	}
+	if (quote_cnt % 2 != 0)
+		return (-1);
+	while(token->str[str_index] != '\'')
+	{
+		if (token->str[str_index] == '\0')
 			return (-1);
-		(*str_index)++;
+		(str_index)++;
 	}
 	token->str = ft_strtrim(token->str, "\'");
+	delete_small_quote(token);
 	return (1);
 }
 
@@ -47,7 +77,7 @@ int	check_quote(t_token *token)
 		// else 
 		if (str[str_index] == '\'')
 		{
-			if (check_small_quote(token, &str_index) == -1)
+			if (check_small_quote(token, str_index) == -1)
 				return (-1);
 			break;
 		}
