@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/28 15:10:28 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/28 15:58:42 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ void	make_cmd_token(char *str, t_token *token_header,
 {
 	t_token	*new_token;
 
+	printf("curr_index : %d\n", *curr_index);
+	if (*curr_index != 0 && (str[*curr_index - 1] == ' ' || str[*curr_index - 1] == '\t' || str[*curr_index] == '>' || str[*curr_index] == '<'))
+		return ;
 	if (str[*curr_index + 1] == '\0')
 		*curr_index = *curr_index + 1;
-	if (*curr_index != 0 && (str[*curr_index - 1] == '>' || str[*curr_index - 1] == '<' || (str[*curr_index - 1] == ' ' && str[*curr_index] == ' ') || str[*curr_index - 1] == '\t'))
-		return ;
-	if (((str[*curr_index] == ' ' || str[*curr_index] == '\0') && str[*curr_index - 1] == ' ') || str[*curr_index] == '\t')
-		return ;
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (!new_token)
 		return ;
