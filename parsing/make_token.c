@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/28 15:58:42 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/29 12:03:45 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	set_token_position(t_token *token_header, t_token *new_token, int *before_index)
 {
+	t_token *token_header_temp;
+	
+	token_header_temp = token_header;
 	if (*before_index == 0)
 		token_header->next = new_token;
 	else
 	{
-		while (token_header->next != NULL)
-			token_header = token_header->next;
-		token_header->next = new_token;
+		while (token_header && token_header_temp->next != NULL)
+			token_header_temp = token_header_temp->next;
+		token_header_temp->next = new_token;
 	}
 }
 
@@ -29,8 +32,11 @@ void	make_cmd_token(char *str, t_token *token_header,
 {
 	t_token	*new_token;
 
-	printf("curr_index : %d\n", *curr_index);
-	if (*curr_index != 0 && (str[*curr_index - 1] == ' ' || str[*curr_index - 1] == '\t' || str[*curr_index] == '>' || str[*curr_index] == '<'))
+	if (*curr_index == 0 || *curr_index > (int) ft_strlen(str))
+		return ;
+	if (((str[*curr_index - 1 ] == ' ' || str[*curr_index - 1] == '\t') && (str[*curr_index] == ' ' || str[*curr_index] == '\t'))  || ((str[*curr_index - 1] == '<' || str[*curr_index - 1] == '>') && (str[*curr_index] == '\0' || str[*curr_index] == ' ' || str[*curr_index] == '\t')))
+		return ;
+	if ((str[*curr_index] == '<' || str[*curr_index] == '>') && (str[*curr_index - 1] == ' ' || str[*curr_index - 1] == '\t'))
 		return ;
 	if (str[*curr_index + 1] == '\0')
 		*curr_index = *curr_index + 1;
@@ -38,7 +44,6 @@ void	make_cmd_token(char *str, t_token *token_header,
 	if (!new_token)
 		return ;
 	new_token->str = ft_split_index(str, *before_index, *curr_index - 1);
-	printf("new_token->str1 : %s\n", new_token->str);
 	new_token->type = set_token_type(new_token->str);
 	new_token->next = NULL;
 	set_token_position(token_header, new_token, before_index);
@@ -106,14 +111,14 @@ void	set_curr_index(char *str, int *curr_index)
 	str_index = *curr_index;
 	while (str[str_index])
 	{
-		printf("str_index : %d\n", str_index);
-		if (str[str_index] != ' ' && str[str_index] != '\t')
-		{
-			*curr_index = str_index;
-			return ;
-		}
+		if (str[str_index] == ' ' || str[str_index] == '\t' || str[str_index] == '<' || str[str_index] == '>')
+			break;
 		str_index--;
 	}
+	if (str_index == -1)
+		*curr_index = 0;
+	else
+		*curr_index = str_index + 1;
 }
 
 int	check_quote_cnt(char *str, int *curr_index)
@@ -143,7 +148,7 @@ int	check_quote_index(char *str, int *curr_index)
 	{
 		if (str[*curr_index] == str[str_index])
 			quote_cnt--;
-		if (quote_cnt == 1)
+		if (quote_cnt == 1 && (str[str_index] == ' ' || str[str_index] == '\t' || str[str_index] == '<' || str[str_index] == '>'))
 			break ;
 		str_index++;
 	}
@@ -173,8 +178,8 @@ void	make_quote_token(char *str, t_token *token_header, int *curr_index, int *be
 		new_token->str[str_index++] = str[*curr_index];
 		*curr_index = *curr_index + 1;
 	}
+	*curr_index = *curr_index - 1;
 	new_token->str[str_index] = '\0';
-	printf("new_token->str3 : %s\n", new_token->str);
 	new_token->type = set_token_type(new_token->str);
 	new_token->next = NULL;
 	set_token_position(token_header, new_token, before_index);

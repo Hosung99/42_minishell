@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim_index.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 13:44:28 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/29 10:45:25 by seoson           ###   ########.fr       */
+/*   Created: 2023/10/29 14:52:00 by seoson            #+#    #+#             */
+/*   Updated: 2023/10/29 14:53:22 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_strtrim_index(char *str, char c)
 {
-	size_t	cnt;
+	int		i;
+	int		j;
+	char	*new_str;
 
-	cnt = 0;
-	while (*s && s)
+	if (!str)
+		return (NULL);
+	new_str = (char *)malloc(sizeof(char) * ((int) ft_strlen(str) + 1));
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
 	{
-		cnt++;
-		s++;
+		if (str[i] != c)
+		{
+			new_str[j] = str[i];
+			j++;
+		}
+		i++;
 	}
-	return (cnt);
+	new_str[j] = '\0';
+	free(str);
+	return (new_str);
 }
