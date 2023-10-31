@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_search_envp_key.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/18 11:28:03 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 16:09:45 by seoson           ###   ########.fr       */
+/*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
+/*   Updated: 2023/10/31 16:08:58 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
+#include "../minishell.h"
 
-	printf("s1 : %s\n", s1);
-	printf("s2 : %s\n", s2);
-	printf("n : %zu\n", n);
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n && s1[i] && s2[i])
+char	*ft_search_envp_key(t_envp *envp_list, char *str)
+{
+	t_envp *envp_temp;
+
+	envp_temp = envp_list;
+	while (envp_temp)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		if (ft_strncmp(envp_temp->key, str, ft_strlen(envp_temp->key)) == 0)
+			return (envp_temp->value);
+		envp_temp = envp_temp->next;
 	}
-	if (i == n)
-		i--;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (NULL);
 }

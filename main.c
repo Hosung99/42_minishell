@@ -6,22 +6,23 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/26 15:31:06 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/31 15:19:33 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int argc, char **argv, char **envp
-
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	struct termios	old_term;
 	struct termios	new_term;
 	t_cmd			cmd;
+	t_envp			envp_list;
 	char			*line;
 
-	print_picture();
+	if (print_picture(argc, argv) == -1)
+		return (-1);
+	set_envp(envp, &envp_list);
 	if (set_termios(&old_term, &new_term) == -1)
 		return (-1);
 	set_signal();
@@ -33,7 +34,7 @@ int main()
 		if (*line != '\0')
 		{
 			add_history(line);
-			parse(line, &cmd);
+			parse(line, &cmd, &envp_list);
 		}
 		free(line);
 	}

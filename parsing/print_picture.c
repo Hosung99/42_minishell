@@ -6,14 +6,17 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 16:50:37 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/23 22:13:58 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/31 14:29:23 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_picture(void)
+int	print_picture(int argc, char **argv)
 {
+	if (argc != 1)
+		return (-1);
+	(void)argv;
 	printf("  /\\       /\\ \n");
 	printf(" /  \\\"\"\"\"\"/  \\ \n");
 	printf("|  \\/\\\"\"\"/\\/  |\n");
@@ -31,4 +34,5 @@ void	print_picture(void)
 	printf("/ -  | | -  \\ /   \"   \"   \" /\n");
 	printf("\\___/   \\___/ \\____________/\n");
 	printf("Hello World!\n\n");
+	return (1);
 }

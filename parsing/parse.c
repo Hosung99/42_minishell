@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/29 11:38:25 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/31 16:01:39 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	malloc_cmd(t_cmd *cmd, t_cmd **new_cmd)
 	}
 }
 
-void	tokenize(char *str, t_cmd *cmd)
+void	tokenize(char *str, t_cmd *cmd, t_envp *envp_list)
 {
 	t_cmd	*new_cmd;
 	t_token	*token_header;
@@ -55,11 +55,11 @@ void	tokenize(char *str, t_cmd *cmd)
 			make_redir_token(str, token_header, &curr_index, &before_index);
 		curr_index++;
 	}
-	if (set_quote(token_header->next) == -1)
+	if (set_quote(token_header->next, envp_list) == -1)
 		return ;
 }
 
-void	parse(char *line, t_cmd *cmd)
+void	parse(char *line, t_cmd *cmd, t_envp *envp_list)
 {
 	char	**pipe_split_line;
 	int		pipe_cnt;
@@ -70,7 +70,7 @@ void	parse(char *line, t_cmd *cmd)
 	pipe_split_line = ft_split(line, '|', &pipe_cnt);
 	cmd->next = NULL;
 	while (++pipe_index < pipe_cnt)
-		tokenize(pipe_split_line[pipe_index], cmd);
+		tokenize(pipe_split_line[pipe_index], cmd, envp_list);
 	free(pipe_split_line);
 	return ;
 }
