@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 16:36:54 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/31 20:35:42 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,15 +138,19 @@ int	check_quote(t_token *token, t_envp *envp_list)
 	return (1);
 }
 
-int	set_quote(t_token *token_header, t_envp *envp_list)
+int	set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd)
 {
-	while (token_header)
+	t_token *token_temp;
+
+	token_temp = token_header;
+	while (token_temp)
 	{
-		printf("before: token_header->str : %s\n", token_header->str);
-		if (check_quote(token_header, envp_list) == -1)
+		printf("before: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
+		if (check_quote(token_temp, envp_list) == -1)
 			return (-1);
-		printf("after: token_header->str : %s\n", token_header->str);
-		token_header = token_header->next;
+		printf("after: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
+		token_temp = token_temp->next;
 	}
+	set_cmd(token_header, cmd);
 	return (1);
 }
