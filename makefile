@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 NAME = minishell
-SRCS = main.c parsing/set_term.c parsing/set_signal.c parsing/print_picture.c parsing/parse.c parsing/set_token_type.c parsing/ft_split_index.c parsing/make_token.c parsing/set_quote.c parsing/ft_strtrim_index.c parsing/set_envp.c parsing/ft_search_envp_key.c
+SRCS = main.c parsing/set_term.c parsing/set_signal.c parsing/print_picture.c parsing/parse.c parsing/set_token_type.c parsing/ft_split_index.c parsing/make_token.c parsing/set_quote.c parsing/ft_strtrim_index.c parsing/set_envp.c parsing/ft_search_envp_key.c parsing/set_cmd.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 

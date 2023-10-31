@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 16:06:04 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/31 21:46:51 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ struct	s_envp
 
 typedef enum e_token_identifier
 {
-	// token_pipe,
-	// token_space,
 	token_cmd,
 	token_option,
 	token_read_redir,
@@ -80,9 +78,10 @@ void	make_cmd_token(char *str, t_token *token_header,
 	int *cur_index, int *before_index);
 void	make_redir_token(char *str, t_token *token_header, int *cur_index, int *before_index);
 void	make_quote_token(char *str, t_token *token, int *curr_index, int *before_index);
-int		set_quote(t_token *token_header, t_envp *envp_list);
+int		set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd);
 int		check_quote(t_token *token, t_envp *envp_list);
 char	*ft_strtrim_index(char *str, char c);
 char	*ft_search_envp_key(t_envp *envp_list, char *str);
+void	set_cmd(t_token *token_header, t_cmd **cmd);
 
 #endif
