@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/28 12:02:16 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/31 21:46:51 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ struct	s_envp
 
 typedef enum e_token_identifier
 {
-	// token_pipe,
-	// token_space,
 	token_cmd,
 	token_option,
 	token_read_redir,
@@ -67,19 +65,23 @@ struct	s_cmd
 	t_cmd	*next;
 };
 
-int	    set_termios(struct termios *old_term, struct termios *new_term);
+int		set_termios(struct termios *old_term, struct termios *new_term);
 int 	reset_termios(struct termios *old_term);
-void	print_picture(void);
-void	parse(char *line, t_cmd *cmd);
+int		print_picture(int argc, char **argv);
+void	parse(char *line, t_cmd *cmd, t_envp *envp_list);
 void	sig_handler(int signo);
 void	set_signal(void);
 int		set_token_type(char *str);
+void	set_envp(char **envp, t_envp *envp_list);
 char	*ft_split_index(char *str, int before_index, int cur_index);
 void	make_cmd_token(char *str, t_token *token_header,
 	int *cur_index, int *before_index);
 void	make_redir_token(char *str, t_token *token_header, int *cur_index, int *before_index);
 void	make_quote_token(char *str, t_token *token, int *curr_index, int *before_index);
-int		set_quote(t_token *token_header);
-int		check_quote(t_token *token_header);
+int		set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd);
+int		check_quote(t_token *token, t_envp *envp_list);
+char	*ft_strtrim_index(char *str, char c);
+char	*ft_search_envp_key(t_envp *envp_list, char *str);
+void	set_cmd(t_token *token_header, t_cmd **cmd);
 
 #endif

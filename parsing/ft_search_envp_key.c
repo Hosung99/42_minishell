@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_search_envp_key.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 13:44:28 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/29 10:45:25 by seoson           ###   ########.fr       */
+/*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
+/*   Updated: 2023/10/31 16:08:58 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-size_t	ft_strlen(const char *s)
+char	*ft_search_envp_key(t_envp *envp_list, char *str)
 {
-	size_t	cnt;
+	t_envp *envp_temp;
 
-	cnt = 0;
-	while (*s && s)
+	envp_temp = envp_list;
+	while (envp_temp)
 	{
-		cnt++;
-		s++;
+		if (ft_strncmp(envp_temp->key, str, ft_strlen(envp_temp->key)) == 0)
+			return (envp_temp->value);
+		envp_temp = envp_temp->next;
 	}
-	return (cnt);
+	return (NULL);
 }
