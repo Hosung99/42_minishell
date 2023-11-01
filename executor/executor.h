@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 01:26:12 by sgo              ###   ########.fr       */
+/*   Updated: 2023/10/31 17:20:43 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	parent_process(t_info *info);
 void	dup_stdout(t_info *info, t_cmd *cmd);
 int		check_slash(char *cmd);
 void	exit_perror(char *msg);
-char	**find_path(t_envp *envp);
+char	**find_path(t_envp *envp, char *key);
 char	*get_cmd(char **path, char *cmd);
 void	wait_all(t_info *info);
 void	file_open(t_cmd *cmd, t_info *info);
