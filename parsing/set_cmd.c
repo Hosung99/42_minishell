@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 17:17:37 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 21:14:11 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ void	set_option(t_token *token_header, t_cmd **cmd, int *option_cnt)
 		(*cmd)->cmd[0] = ft_strdup(token_header->str);
 	}
 	else
-		(*cmd)->cmd[*option_cnt] = token_header->str;
+	{
+		(*cmd)->cmd = (char **)realloc((*cmd)->cmd, sizeof(char *) * (*option_cnt + 1));
+        (*cmd)->cmd[*option_cnt] = ft_strdup(token_header->str);
+	}
 }
 
 void	set_redir(t_token *token_header, t_cmd **cmd)
