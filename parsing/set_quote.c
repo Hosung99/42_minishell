@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 20:35:42 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 16:01:00 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ void	check_envp(t_token *token, int *str_index, t_envp *envp_list)
 	(void)envp_list;
 
 	temp_index = *str_index;
-	while (token->str[temp_index])
+	while (token->str[temp_index++])
 	{
 		if (token->str[temp_index] == ' ' || token->str[temp_index] == '\t' \
 			|| token->str[temp_index] == '$' || token->str[temp_index] == '\"')
 			break;
-		temp_index++;
 	}
 	envp_key = ft_search_envp_key(envp_list, ft_split_index(token->str, *str_index + 1, temp_index - 1));
 	printf("envp key : %s\n", envp_key);
@@ -73,13 +72,14 @@ int	check_big_quote(t_token *token, int str_index, t_envp *envp_list)
 	}
 	if (quote_cnt % 2 != 0)
 		return (-1);
-	while(token->str[str_index] != '\"')
+	while(token->str[str_index++])
 	{
 		if (token->str[str_index] == '\0')
 			return (-1);
 		if (token->str[str_index] == '$')
 			check_envp(token, &str_index, envp_list);
-		str_index++;
+		if (token->str[str_index] == '\"')
+			break;
 	}
 	if (delete_quote(token, '"') == -1)
 		return (-1);
