@@ -11,21 +11,9 @@
 /* ************************************************************************** */
 
 #include "executor.h"
-
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd->cmd[i])
-	{
-		printf("cmd[%d]: %s\n", i, cmd->cmd[i]);
-		i++;
-	}
-	printf("cmd 출력 완료\n");
-	// printf("cmd->str: %s\n", cmd->redir->str);
-	// printf("cmd->file_name: %s\n", cmd->redir->filename);
-}
+void	print_redir(t_cmd *cmd);
+void	print_cmd(t_cmd *cmd);
+void	print_envp(t_envp *envp);
 
 int	executor(t_cmd *cmd, t_envp *envp)
 {
@@ -33,6 +21,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	
 	printf("start executor\n");
 	print_cmd(cmd);
+	print_envp(envp);
 	init_info(&info, envp);
 	while (cmd)
 	{
@@ -53,4 +42,45 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	}
 	wait_all(&info);
 	return (info.status);
+}
+
+void	print_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->cmd[i])
+	{
+		printf("cmd[%d]: %s\n", i, cmd->cmd[i]);
+		i++;
+	}
+	printf("cmd 출력 완료\n");
+	print_redir(cmd);
+	printf("cmd->file_name: %s\n", cmd->redir->filename);
+}
+
+void	print_envp(t_envp *envp)
+{
+	t_envp	*temp;
+
+	temp = envp;
+	while (temp)
+	{
+		printf("key: %s\n", temp->key);
+		printf("value: %s\n", temp->value);
+		temp = temp->next;
+	}
+}
+
+void	print_redir(t_cmd *cmd)
+{
+	t_redir	*temp;
+
+	temp = cmd->redir;
+	while (temp)
+	{
+		printf("redir->str: %s\n", temp->str);
+		printf("redir->filename: %s\n", temp->filename);
+		temp = temp->next;
+	}
 }
