@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 15:19:33 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 20:10:41 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main(int argc, char **argv, char **envp)
 {
 	struct termios	old_term;
 	struct termios	new_term;
-	t_cmd			cmd;
+	t_cmd			*cmd;
 	t_envp			envp_list;
 	char			*line;
 
