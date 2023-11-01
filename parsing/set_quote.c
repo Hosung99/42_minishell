@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 16:01:00 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:13:50 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,35 @@ int	delete_quote(t_token *token, char str)
 	return (1);
 }
 
+void	change_str(t_token **token, int *start_index, int end_index, char *env_key)
+{
+	int		str_index;
+	char	*change_str;
+
+	change_str = (char *)malloc(sizeof(char) * (*start_index + (int) ft_strlen(env_key) + 1));
+	str_index = 0;
+	while (str_index < *start_index)
+	{
+		change_str[str_index] = (*token)->str[str_index];
+		str_index++;
+	}
+	while (*env_key)
+	{
+		change_str[str_index] = *env_key;
+		str_index++;
+		env_key++;
+	}
+	while ((*token)->str[end_index])
+	{
+		change_str[str_index] = (*token)->str[end_index];
+		str_index++;
+		end_index++;
+	}
+	change_str[str_index] = '\0';
+	free((*token)->str);
+	(*token)->str = change_str;
+}
+
 void	check_envp(t_token *token, int *str_index, t_envp *envp_list)
 {
 	int		temp_index;
@@ -54,7 +83,10 @@ void	check_envp(t_token *token, int *str_index, t_envp *envp_list)
 			break;
 	}
 	envp_key = ft_search_envp_key(envp_list, ft_split_index(token->str, *str_index + 1, temp_index - 1));
-	printf("envp key : %s\n", envp_key);
+	if (envp_key == NULL)
+		token->str = NULL;
+	else
+		change_str(&token, str_index, temp_index, envp_key);
 }
 
 int	check_big_quote(t_token *token, int str_index, t_envp *envp_list)
@@ -133,6 +165,8 @@ int	check_quote(t_token *token, t_envp *envp_list)
 				return (-1);
 			break;
 		}
+		if (str[str_index] == '$')
+			check_envp(token, &str_index, envp_list);
 		str_index++;
 	}
 	return (1);
