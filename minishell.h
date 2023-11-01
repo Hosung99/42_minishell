@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 21:46:51 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 20:09:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ struct	s_cmd
 int		set_termios(struct termios *old_term, struct termios *new_term);
 int 	reset_termios(struct termios *old_term);
 int		print_picture(int argc, char **argv);
-void	parse(char *line, t_cmd *cmd, t_envp *envp_list);
+void 	parse(char *line, t_cmd **cmd, t_envp *envp_list);
 void	sig_handler(int signo);
 void	set_signal(void);
 int		set_token_type(char *str);

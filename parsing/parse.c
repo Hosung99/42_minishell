@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 21:42:54 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 20:09:12 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 		return ;
 }
 
-void	parse(char *line, t_cmd *cmd, t_envp *envp_list)
+void parse(char *line, t_cmd **cmd, t_envp *envp_list)
 {
 	char	**pipe_split_line;
 	int		pipe_cnt;
@@ -46,9 +46,9 @@ void	parse(char *line, t_cmd *cmd, t_envp *envp_list)
 	pipe_cnt = 0;
 	pipe_index = -1;
 	pipe_split_line = ft_split(line, '|', &pipe_cnt);
-	cmd = NULL;
+	*cmd = NULL;
 	while (++pipe_index < pipe_cnt)
-		tokenize(pipe_split_line[pipe_index], &cmd, envp_list);
+		tokenize(pipe_split_line[pipe_index], cmd, envp_list);
 	free(pipe_split_line);
 	return ;
 }
