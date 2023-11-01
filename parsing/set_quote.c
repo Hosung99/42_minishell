@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 17:13:50 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:18:13 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	delete_quote(t_token *token, char str)
 			quote_cnt++;
 		str_index++;
 	}
-	// if (quote_cnt % 4 == 0) //4개일때 ''"'' 에러나도록 수정필요.
-	// 	return (-1);
 	str_index = 0;
 	while (token->str[str_index])
 	{
