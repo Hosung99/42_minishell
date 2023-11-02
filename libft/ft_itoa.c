@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:29:32 by seoson            #+#    #+#             */
-/*   Updated: 2023/04/19 14:04:43 by seoson           ###   ########.fr       */
+/*   Updated: 2023/10/28 17:01:14 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ char	*ft_itoa(int n)
 	char		*str;
 	int			len;
 	long long	save;
-	int			i;
+	// int			i;
 
 	len = 0;
 	save = (long long)n;
-	i = 0;
+	// i = 0;
 	save = calc_len(save, &len);
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)

@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 13:43:15 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/01 18:01:01 by sgo              ###   ########.fr       */
+/*   Created: 2023/10/28 09:52:04 by sgo               #+#    #+#             */
+/*   Updated: 2023/10/31 01:20:18 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-#include "libft.h"
-#include <stdio.h>
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
+#include "../executor/executor.h"
 
-	printf("s1 : %s\n", s1);
-	printf("s2 : %s\n", s2);
-	printf("n : %zu\n", n);
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n)
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	if (i == n)
-		i--;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
+void	ft_cd(char **cmd, t_info *info, t_envp *envp);
+void	echo(char **args);
+void	ft_env(t_envp *envp);
+void	ft_exit(t_cmd *cmd, t_info *info, t_envp *envp);
+void	ft_pwd();
+void	ft_export(char **cmd, t_info *info, t_envp *envp);
+void	ft_unset(char **cmd, t_info *info, t_envp *envp);
+
+#endif

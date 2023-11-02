@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   init_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 13:43:15 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/01 18:01:01 by sgo              ###   ########.fr       */
+/*   Created: 2023/10/29 11:43:42 by sgo               #+#    #+#             */
+/*   Updated: 2023/10/31 17:22:35 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "executor.h"
 
-#include "libft.h"
-#include <stdio.h>
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	init_info(t_info *info, t_envp *envp)
 {
-	size_t	i;
-
-	printf("s1 : %s\n", s1);
-	printf("s2 : %s\n", s2);
-	printf("n : %zu\n", n);
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n)
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	if (i == n)
-		i--;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	info->cmd_path = find_path(envp, "PATH");
+	info->pipe_fd[0] = 0;
+	info->pipe_fd[1] = 1;
+	info->cnt = 0;
+	info->tmp_fd = 0;
+	info->outfile_fd = 0;
+	info->pid = 0;
+	info->status = 0;
 }

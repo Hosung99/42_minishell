@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   set_quote.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
 /*   Updated: 2023/11/01 17:18:13 by seoson           ###   ########.fr       */

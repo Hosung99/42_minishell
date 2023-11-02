@@ -8,7 +8,7 @@ LIBFT = ./libft/libft.a
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@ 
 
 $(NAME): $(OBJS)
 	make -C libft
