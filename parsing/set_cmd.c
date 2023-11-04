@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 20:04:51 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 20:05:44 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void    make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
 
     new_cmd = create_new_cmd(token_header);
     if (*cmd == NULL)
-    {
         *cmd = new_cmd;
-    }
     else
     {
         if ((*cmd)->redir != NULL)
