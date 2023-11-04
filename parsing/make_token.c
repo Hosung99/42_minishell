@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 15:59:21 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 15:35:01 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ void	make_quote_token(char *str, t_token *token_header, int *curr_index, int *be
 	str_index = 0;
 	if (!new_token)
 		return ;
-	if (end_index > *curr_index + 1)
-		new_token->str = (char *)malloc(sizeof(char) * (end_index - *curr_index + 1));
+	new_token->str = (char *)malloc(sizeof(char) * (end_index - *curr_index + 2));
 	if (!new_token->str)
 		return ;
 	while (str_index <= end_index)

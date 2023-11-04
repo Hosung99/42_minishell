@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_quote.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 17:18:13 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 18:19:35 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	check_envp(t_token *token, int *str_index, t_envp *envp_list)
 	(void)envp_list;
 
 	temp_index = *str_index;
-	while (token->str[temp_index++])
+	while (token->str && token->str[temp_index++])
 	{
 		if (token->str[temp_index] == ' ' || token->str[temp_index] == '\t' \
 			|| token->str[temp_index] == '$' || token->str[temp_index] == '\"')
