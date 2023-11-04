@@ -14,7 +14,7 @@
 
 void	file_open(t_cmd *cmd, t_info *info)
 {
-	if (cmd->redir->filename == NULL)
+	if (cmd->redir == NULL ||cmd->redir->filename == NULL)
 		return ;
 	info->tmp_fd = open(cmd->redir->filename, O_RDONLY);
 	if (info->tmp_fd < 0)

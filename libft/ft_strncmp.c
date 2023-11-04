@@ -17,12 +17,11 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
-	printf("s1 : %s\n", s1);
-	printf("s2 : %s\n", s2);
-	printf("n : %zu\n", n);
 	i = 0;
 	if (n == 0)
 		return (0);
+	if (!s1 || !s2)
+		return (-1);
 	while (i < n)
 	{
 		if (s1[i] != s2[i])

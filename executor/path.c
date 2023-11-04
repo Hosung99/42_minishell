@@ -15,15 +15,20 @@
 char	**find_path(t_envp *envp, char *key)
 {
 	char	**res;
+	t_envp	*tmp;
 	int		cnt;
 
-	while (envp)
+	if (envp == NULL)
+		return (0); // error 처리 예정
+	tmp = envp;
+	while (tmp)
 	{
-		if (ft_strncmp(key, envp->key, 4) == 0)
+		if (ft_strncmp(key, tmp->key, 4) == 0)
 		{
-			res = ft_split(envp->value, ':', &cnt);
+			res = ft_split(tmp->value, ':', &cnt);
 			return (res);
 		}
+		tmp = tmp->next;
 	}
 	return (0);
 }
