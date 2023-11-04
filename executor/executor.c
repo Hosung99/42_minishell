@@ -20,7 +20,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	t_info	info;
 	
 	printf("start executor\n");
-	// print_cmd(cmd);
+	print_cmd(cmd);
 	// print_envp(envp);
 	init_info(&info, envp);
 	while (cmd)
@@ -50,6 +50,11 @@ void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	printf("start print	cmd\n");
+	if (cmd == NULL)
+		printf("cmd = NULL\n");
+	if (cmd->cmd[0] == NULL)
+		printf("cmd->cmd = NULL\n");
 	while (cmd->cmd[i])
 	{
 		printf("cmd[%d]: %s\n", i, cmd->cmd[i]);
