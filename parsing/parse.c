@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 16:17:45 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 20:08:59 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 		curr_index++;
 	}
 	if (set_quote(token_header->next, envp_list, cmd) == -1)
+	{
+		free_token(token_header);
 		return ;
+	}
 	free_token(token_header);
 }
 
