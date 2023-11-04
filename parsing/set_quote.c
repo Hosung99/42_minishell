@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 18:19:35 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 20:07:29 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,10 @@ int	set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd)
 	{
 		printf("before: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
 		if (check_quote(token_temp, envp_list) == -1)
+		{
+			printf("quote error!\n");
 			return (-1);
+		}
 		printf("after: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
 		token_temp = token_temp->next;
 	}
