@@ -6,11 +6,23 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 20:10:41 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 18:37:02 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int exit_status;
+
+int	check_first_char(char *line)
+{
+	if (line[0] == '|')
+	{
+		printf("minishell: syntax error near unexpected token `%c'\n", line[0]);
+		return (1);
+	}
+	return (-1);
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -31,7 +43,7 @@ int main(int argc, char **argv, char **envp)
 		line = readline("minishell$ ");
 		if (!line)
 			break ;
-		if (*line != '\0')
+		if (*line != '\0' && check_first_char(line))
 		{
 			add_history(line);
 			parse(line, &cmd, &envp_list);

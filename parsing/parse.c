@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 15:19:16 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 16:17:45 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void	free_token(t_token *token_header)
 {
-	t_token	*token_header_temp;
-	t_token *next_node;
+    t_token *token_header_temp;
 
-	token_header_temp = token_header;
-	while (token_header_temp != NULL)
-	{
-		next_node = token_header_temp->next;
-		free(token_header_temp->str);
-		free(token_header_temp);
-		token_header_temp = next_node;
-	}
-	free(token_header);
+    while (token_header)
+    {
+        token_header_temp = token_header;
+        token_header = token_header->next;
+		if (!token_header_temp->str)
+       		free(token_header_temp->str);
+		if (!token_header_temp)
+        	free(token_header_temp);
+    }
 }
 
 void	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)

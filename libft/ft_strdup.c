@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 11:58:02 by seoson            #+#    #+#             */
-/*   Updated: 2023/04/24 21:35:24 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 18:22:37 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_strdup(const char *s1)
 	copy = (char *)malloc(sizeof(char) * len_s1 + 1);
 	if (!copy)
 		return (0);
-	while (i < len_s1)
+	while (s1 && i < len_s1)
 	{
 		copy[i] = s1[i];
 		i++;
