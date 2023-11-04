@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 18:25:49 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/04 20:04:51 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,49 @@ void	malloc_cmd(t_token *token_header, t_cmd **cmd)
 	(*cmd)->next = NULL;
 }
 
-void	make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
-{
-	t_cmd	*cmd_temp;
-	t_cmd	*new_cmd;
 
-	cmd_temp = *cmd;
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	new_cmd->cmd = (char **)malloc(sizeof(char *) \
-		* count_token_option(token_header) + 1);
-	new_cmd->cmd[count_token_option(token_header) + 1] = NULL;
-	printf("count_token_option : %d\n", count_token_option(token_header));
-	new_cmd->cmd[0] = ft_strdup(token_header->str);
-	new_cmd->redir = NULL;
-	if (*cmd == NULL)
-	{
-		*cmd = new_cmd;
-		(*cmd)->next = NULL;
-	}
-	else
-	{
-		while (cmd_temp->next != NULL)
-			cmd_temp = cmd_temp->next;
-		cmd_temp->next = new_cmd;
-		cmd_temp->next->next = NULL;
-	}
-	*option_cnt = 0;
+t_cmd    *create_new_cmd(t_token *token_header)
+{
+    t_cmd    *new_cmd;
+    int     token_cnt;
+
+    new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
+    token_cnt = count_token_option(token_header);
+    new_cmd->cmd = (char **)malloc(sizeof(char *) * (token_cnt + 1));
+    new_cmd->cmd[token_cnt + 1] = NULL;
+    new_cmd->cmd[0] = ft_strdup(token_header->str);
+    new_cmd->redir = NULL;
+    new_cmd->next = NULL;
+
+    return new_cmd;
+}
+
+void    make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
+{
+    t_cmd    *cmd_temp;
+    t_cmd    *new_cmd;
+
+    new_cmd = create_new_cmd(token_header);
+    if (*cmd == NULL)
+    {
+        *cmd = new_cmd;
+    }
+    else
+    {
+        if ((*cmd)->redir != NULL)
+        {
+            free(new_cmd);
+            (*cmd)->cmd = new_cmd->cmd;
+        }
+        else
+        {
+            cmd_temp = *cmd;
+            while (cmd_temp->next != NULL)
+                cmd_temp = cmd_temp->next;
+            cmd_temp->next = new_cmd;
+        }
+    }
+    *option_cnt = 0;
 }
 
 void	set_option(t_token *token_header, t_cmd **cmd, int *option_cnt)
