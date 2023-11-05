@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/05 19:17:27 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/05 19:43:40 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void    make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
     t_cmd    *new_cmd;
     int     token_cnt;
 	
-
     new_cmd = create_new_cmd(token_header);
     token_cnt = count_token_option(token_header);
     if (*cmd == NULL)
@@ -109,33 +108,42 @@ void	set_option(t_token *token_header, t_cmd **cmd, int *option_cnt)
         new_cmd[*option_cnt] = ft_strdup(token_header->str);
         free((*cmd)->cmd);
         (*cmd)->cmd = new_cmd;
+		(*cmd)->cmd[count_token_option(token_header) + 1] = NULL;
 	}
 }
 
-void	set_redir(t_token *token_header, t_cmd **cmd)
+t_cmd *get_last_cmd(t_cmd *cmd)
 {
-	t_redir	*redir_temp;
-	t_redir	*new_redir;
+    if (cmd == NULL)
+        return NULL;
+    while (cmd->next != NULL)
+        cmd = cmd->next;
+    return cmd;
+}
 
-	new_redir = (t_redir *)malloc(sizeof(t_redir));
-	new_redir->str = ft_strdup(token_header->str);
-	if (token_header->next != NULL)
-		new_redir->filename = ft_strdup(token_header->next->str);
-	if (*cmd == NULL)
-		malloc_cmd(token_header, cmd);
-	if ((*cmd)->redir == NULL)
-	{
-		(*cmd)->redir = new_redir;
-		(*cmd)->redir->next = NULL;
-	}
-	else
-	{
-		redir_temp = (*cmd)->redir;
-		while (redir_temp->next != NULL)
-			redir_temp = redir_temp->next;
-		redir_temp->next = new_redir;
-		redir_temp->next->next = NULL;
-	}
+void set_redir(t_token *token_header, t_cmd **cmd)
+{
+    t_redir *redir_temp;
+    t_redir *new_redir;
+    t_cmd *last_cmd;
+
+    new_redir = (t_redir *)malloc(sizeof(t_redir));
+    new_redir->str = ft_strdup(token_header->str);
+    new_redir->next = NULL;
+    if (token_header->next != NULL)
+        new_redir->filename = ft_strdup(token_header->next->str);
+    if (*cmd == NULL)
+        malloc_cmd(token_header, cmd);
+    last_cmd = get_last_cmd(*cmd);
+    if (last_cmd->redir == NULL)
+        last_cmd->redir = new_redir;
+    else
+    {
+        redir_temp = last_cmd->redir;
+        while (redir_temp->next != NULL)
+            redir_temp = redir_temp->next;
+        redir_temp->next = new_redir;
+    }
 }
 
 void	set_cmd(t_token *token_header, t_cmd **cmd)
