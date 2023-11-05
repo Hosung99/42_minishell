@@ -15,7 +15,7 @@
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 {
 	//아직 buitin 함수들 형태만 구현함
-	
+	printf("builtin\n");
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		echo(cmd->cmd + 1);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)

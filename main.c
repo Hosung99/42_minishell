@@ -47,6 +47,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			parse(line, &cmd, &envp_list);
+			executor(cmd, &envp_list);
 		}
 		free(line);
 	}

@@ -18,8 +18,8 @@ void	init_info(t_info *info, t_envp *envp)
 	info->pipe_fd[0] = 0;
 	info->pipe_fd[1] = 1;
 	info->cnt = 0;
-	info->tmp_fd = 0;
-	info->outfile_fd = 0;
+	info->tmp_fd = STDIN_FILENO;
+	info->outfile_fd = STDOUT_FILENO;
 	info->pid = 0;
 	info->status = 0;
 }
