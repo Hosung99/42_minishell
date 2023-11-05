@@ -21,7 +21,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	
 	printf("start executor\n");
 	print_cmd(cmd);
-	print_envp(envp);
+	// print_envp(envp);
 	init_info(&info, envp);
 	while (cmd)
 	{
@@ -40,6 +40,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 		cmd = cmd->next;
 		info.cnt++;
 	}
+	printf("info.cnt: %d\n", info.cnt);
 	wait_all(&info);
 	return (info.status);
 }
@@ -49,14 +50,18 @@ void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
+	printf("start print	cmd\n");
+	if (cmd == NULL)
+		printf("cmd = NULL\n");
+	if (cmd->cmd[0] == NULL)
+		printf("cmd->cmd = NULL\n");
 	while (cmd->cmd[i])
 	{
 		printf("cmd[%d]: %s\n", i, cmd->cmd[i]);
 		i++;
 	}
-	printf("cmd 출력 완료\n");
 	print_redir(cmd);
-	printf("cmd->file_name: %s\n", cmd->redir->filename);
+	printf("cmd 출력 완료\n");
 }
 
 void	print_envp(t_envp *envp)
@@ -64,23 +69,32 @@ void	print_envp(t_envp *envp)
 	t_envp	*temp;
 
 	temp = envp;
+	printf("envp 출력 시작\n");
 	while (temp)
 	{
 		printf("key: %s\n", temp->key);
 		printf("value: %s\n", temp->value);
 		temp = temp->next;
 	}
+	printf("envp 출력 완료\n");
 }
 
 void	print_redir(t_cmd *cmd)
 {
-	t_redir	*temp;
+	// t_redir	*temp;
 
-	temp = cmd->redir;
-	while (temp)
+	// temp = cmd->redir;
+	// while (temp)
+	// {
+	// 	printf("redir->str: %s\n", temp->str);
+	// 	printf("redir->filename: %s\n", temp->filename);
+	// 	temp = temp->next;
+	// }
+	if (cmd->redir == NULL)
 	{
-		printf("redir->str: %s\n", temp->str);
-		printf("redir->filename: %s\n", temp->filename);
-		temp = temp->next;
+		printf("redir is NULL\n");
+		return ;
 	}
+	printf("redir->str: %s\n", cmd->redir->str);
+	printf("redir->filename: %s\n", cmd->redir->filename);
 }

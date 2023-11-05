@@ -83,5 +83,6 @@ int		check_quote(t_token *token, t_envp *envp_list);
 char	*ft_strtrim_index(char *str, char c);
 char	*ft_search_envp_key(t_envp *envp_list, char *str);
 void	set_cmd(t_token *token_header, t_cmd **cmd);
+int		executor(t_cmd *cmd, t_envp *envp);
 
 #endif

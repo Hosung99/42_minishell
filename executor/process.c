@@ -18,8 +18,12 @@ void	child_process(t_cmd *cmd, t_info *info)
 	dup_stdout(info, cmd);
 	if (info->tmp_fd < 0)
 		exit(0); // exit 전에 free 해줘야함
-	if (dup2(info->tmp_fd, STDIN_FILENO) == -1)
-		exit_perror("DUP_ERR");
+	if (info->tmp_fd != STDIN_FILENO)
+	{
+		if (dup2(info->tmp_fd, STDIN_FILENO) == -1)
+			exit_perror("DUP_ERR");
+		close(STDIN_FILENO);
+	}
 	close(info->tmp_fd);
 	if (info->cmd_path == NULL)
 		exit_perror("FILE_NAME_ERR"); // 명령어 에러 처리 필요
@@ -32,8 +36,10 @@ void	child_process(t_cmd *cmd, t_info *info)
 
 void	parent_process(t_info *info)
 {
+	printf("parent_process\n");
 	close(info->tmp_fd);
-	info->tmp_fd = dup(info->pipe_fd[0]);
+	if (info->tmp_fd != STDIN_FILENO)
+		info->tmp_fd = dup(info->pipe_fd[0]);
 	if (info->tmp_fd == -1)
 		perror("FD_ERR");
 	close(info->pipe_fd[0]);
@@ -44,6 +50,9 @@ void	dup_stdout(t_info *info, t_cmd *cmd)
 {
 	if (cmd->next == NULL)
 	{
+		printf("last cmd\n");
+		if (cmd->redir == NULL || cmd->redir->filename == NULL)
+			return ;
 		info->outfile_fd = open(cmd->redir->filename, \
 			O_WRONLY | O_CREAT | O_TRUNC, 0644); // outfile 이름 받는 방법 수정 필요
 		if (info->outfile_fd == -1)

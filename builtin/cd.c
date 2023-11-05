@@ -18,9 +18,14 @@ char	*get_envp_value(t_envp *envp, char *key);
 
 void	ft_cd(char **cmd, t_info *info, t_envp *envp)
 {
-	if (cmd[0] == NULL)
+	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
 	{
 		info->status = go_to_home(envp, info);
+		return ;
+	}
+	else if (ft_strncmp(cmd[0], "-", 2) == 0)
+	{
+		info->status = go_to_oldpwd(envp, info);
 		return ;
 	}
 	if (chdir(cmd[0]) == -1)
@@ -29,7 +34,6 @@ void	ft_cd(char **cmd, t_info *info, t_envp *envp)
 		// 예외 메시지
 		return ;
 	}
-	(void)envp;
 	// home으로 가는 거 만들 예정
 }
 
