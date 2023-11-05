@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 20:05:44 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/05 19:17:27 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ t_cmd    *create_new_cmd(t_token *token_header)
     new_cmd->cmd[0] = ft_strdup(token_header->str);
     new_cmd->redir = NULL;
     new_cmd->next = NULL;
-
     return new_cmd;
 }
 
@@ -60,16 +59,21 @@ void    make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
 {
     t_cmd    *cmd_temp;
     t_cmd    *new_cmd;
+    int     token_cnt;
+	
 
     new_cmd = create_new_cmd(token_header);
+    token_cnt = count_token_option(token_header);
     if (*cmd == NULL)
         *cmd = new_cmd;
     else
     {
-        if ((*cmd)->redir != NULL)
+        if ((*cmd)->redir != NULL && (*cmd)->cmd[0] == NULL)
         {
             free(new_cmd);
-            (*cmd)->cmd = new_cmd->cmd;
+            (*cmd)->cmd = (char **)malloc(sizeof(char *) * (token_cnt + 1));
+			(*cmd)->cmd[token_cnt + 1] = NULL;
+			(*cmd)->cmd[0] = ft_strdup(token_header->str);
         }
         else
         {
