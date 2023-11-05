@@ -22,13 +22,16 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	printf("start executor\n");
 	print_cmd(cmd);
 	// print_envp(envp);
-	init_info(&info, envp);
+	init_info(&info, envp, cmd);
 	while (cmd)
 	{
 		print_cmd(cmd);
 		file_open(cmd, &info);
-		if (is_builtin(cmd->cmd[0]))
+		if (info.cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
+		{	
 			builtin(cmd, &info, envp);
+			break;
+		}
 		else
 			info.pid = fork();
 		if (info.pid == 0)
@@ -38,11 +41,24 @@ int	executor(t_cmd *cmd, t_envp *envp)
 		else
 			parent_process(&info);
 		cmd = cmd->next;
-		info.cnt++;
 	}
-	printf("info.cnt: %d\n", info.cnt);
-	wait_all(&info);
+	if (cmd == NULL)
+		wait_all(&info);
 	return (info.status);
+}
+
+int	cmd_cnt(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	int		cnt;
+
+	cnt = 0;
+	while (temp)
+	{
+		cnt++;
+		temp = temp->next;
+	}
+	return (cnt);
 }
 
 void	print_cmd(t_cmd *cmd)

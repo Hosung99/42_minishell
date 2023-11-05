@@ -24,12 +24,12 @@ typedef	struct	s_info
 	int		pipe_fd[2];
 	int		tmp_fd;
 	int		outfile_fd;
-	int		cnt;
 	pid_t	pid;
 	int		status;
+	int		cmd_cnt;
 }				t_info;
 
-void	init_info(t_info *info, t_envp *envp);
+void	init_info(t_info *info, t_envp *envp, t_cmd *cmd);
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp);
 int		is_builtin(char *cmd);
 void	child_process(t_cmd *cmd, t_info *info);
@@ -41,5 +41,6 @@ char	**find_path(t_envp *envp, char *key);
 char	*get_cmd(char **path, char *cmd);
 void	wait_all(t_info *info);
 void	file_open(t_cmd *cmd, t_info *info);
+int		cmd_cnt(t_cmd *cmd);
 
 #endif

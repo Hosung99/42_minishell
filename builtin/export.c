@@ -14,7 +14,29 @@
 
 void	ft_export(char **cmd, t_info *info, t_envp *envp)
 {
-	(void)cmd;
+	t_envp	*tmpenv;
+	char	**keyval;
+	int		cnt;
+
 	(void)info;
-	(void)envp;
+	tmpenv = envp;
+	keyval = ft_split(cmd[0], '=', &cnt);
+	if (cnt > 2)
+		return ; // 에러처리
+	while (tmpenv)
+	{
+		if (ft_strncmp(tmpenv->key, keyval[0], ft_strlen(tmpenv->key)) == 0)
+		{
+			if (cnt == 2)
+				tmpenv->value = keyval[1];
+			else
+				tmpenv->value = ft_strdup("");
+			return ;
+		}
+		tmpenv = tmpenv->next;
+	}
+	tmpenv = (t_envp *)malloc(sizeof(t_envp));
+	tmpenv->key = keyval[0];
+	tmpenv->value = keyval[1];
+	free(keyval);
 }

@@ -17,5 +17,6 @@ void	ft_exit(t_cmd *cmd, t_info *info, t_envp *envp)
 	//free 함수들 사용할 예정
 	(void)cmd;
 	(void)envp;
+	write(STDOUT_FILENO, "exit\n", 5);
 	exit(info->status);
 }

@@ -18,7 +18,7 @@ void	wait_all(t_info *info)
 
 	count = 0;
 	waitpid(info->pid, &info->status, 0);
-	while (count < info->cnt - 1)
+	while (count < info->cmd_cnt - 1)
 	{
 		if (wait(0) == -1)
 			exit(1);
