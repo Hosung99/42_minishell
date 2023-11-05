@@ -14,7 +14,18 @@
 
 void	ft_unset(char **cmd, t_info *info, t_envp *envp)
 {
-	(void)cmd;
+	t_envp	*tmpenv;
+
 	(void)info;
-	(void)envp;
+	tmpenv = envp;
+	while (tmpenv)
+	{
+		if (ft_strncmp(tmpenv->key, cmd[0], ft_strlen(tmpenv->key)) == 0)
+		{
+			tmpenv->key = NULL;
+			tmpenv->value = NULL;
+			return ;
+		}
+		tmpenv = tmpenv->next;
+	}
 }

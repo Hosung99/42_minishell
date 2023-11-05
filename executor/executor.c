@@ -20,29 +20,50 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	t_info	info;
 	
 	printf("start executor\n");
-	print_cmd(cmd);
 	// print_envp(envp);
-	init_info(&info, envp);
+	init_info(&info, envp, cmd);
 	while (cmd)
 	{
 		print_cmd(cmd);
-		file_open(cmd, &info);
-		if (is_builtin(cmd->cmd[0]))
-			builtin(cmd, &info, envp);
-		else
-			info.pid = fork();
-		if (info.pid == 0)
-			child_process(cmd, &info);
-		else if (info.pid < 0)
-			return (1);
-		else
-			parent_process(&info);
 		cmd = cmd->next;
-		info.cnt++;
 	}
-	printf("info.cnt: %d\n", info.cnt);
-	wait_all(&info);
+	// while (cmd)
+	// {
+	// 	print_cmd(cmd);
+	// 	file_open(cmd, &info);
+	// 	if (info.cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
+	// 	{	
+	// 		builtin(cmd, &info, envp);
+	// 		break;
+	// 	}
+	// 	else
+	// 		info.pid = fork();
+	// 	if (info.pid == 0)
+	// 		child_process(cmd, &info);
+	// 	else if (info.pid < 0)
+	// 		return (1);
+	// 	else
+	// 		parent_process(&info);
+	// 	cmd = cmd->next;
+	// }
+	// if (cmd == NULL)
+	// 	wait_all(&info);
 	return (info.status);
+}
+
+int	cmd_cnt(t_cmd *cmd)
+{
+	t_cmd	*temp;
+	int		cnt;
+
+	cnt = 0;
+	temp  = cmd;
+	while (temp)
+	{
+		cnt++;
+		temp = temp->next;
+	}
+	return (cnt);
 }
 
 void	print_cmd(t_cmd *cmd)
@@ -95,6 +116,10 @@ void	print_redir(t_cmd *cmd)
 		printf("redir is NULL\n");
 		return ;
 	}
-	printf("redir->str: %s\n", cmd->redir->str);
-	printf("redir->filename: %s\n", cmd->redir->filename);
+	while (cmd->redir)
+	{
+		printf("redir->str: %s\n", cmd->redir->str);
+		printf("redir->filename: %s\n", cmd->redir->filename);
+		cmd->redir = cmd->redir->next;
+	}
 }
