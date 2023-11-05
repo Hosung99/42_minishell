@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 20:07:29 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/05 19:02:12 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 int	delete_quote(t_token *token, char str)
 {
 	int	str_index;
-	int	quote_cnt;
+	// int	quote_cnt;
 
 	str_index = 0;
-	quote_cnt = 0;
-	while (token->str[str_index])
-	{
-		if (token->str[str_index] == str)
-			quote_cnt++;
-		str_index++;
-	}
+	// quote_cnt = 0;
+	// while (token->str[str_index])
+	// {
+	// 	if (token->str[str_index] == str)
+	// 		quote_cnt++;
+	// 	str_index++;
+	// }
 	str_index = 0;
 	while (token->str[str_index])
 	{
