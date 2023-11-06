@@ -17,6 +17,7 @@ void	ft_unset(char **cmd, t_info *info, t_envp *envp)
 	t_envp	*tmpenv;
 
 	(void)info;
+	printf("unset\n");
 	tmpenv = envp;
 	while (tmpenv)
 	{
