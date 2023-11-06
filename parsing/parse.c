@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/04 20:08:59 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:40:58 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_token(t_token *token_header)
     }
 }
 
-void	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
+int	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 {
 	t_token	*token_header;
 	int		curr_index;
@@ -46,17 +46,19 @@ void	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 			make_cmd_token(str, token_header, &curr_index, &before_index);
 		else if (str[curr_index] == '>' || str[curr_index] == '<')
 			make_redir_token(str, token_header, &curr_index, &before_index);
-		curr_index++;
+		if (str[curr_index] != '\0')
+			curr_index++;
 	}
 	if (set_quote(token_header->next, envp_list, cmd) == -1)
 	{
 		free_token(token_header);
-		return ;
+		return (-1);
 	}
 	free_token(token_header);
+	return (1);
 }
 
-void parse(char *line, t_cmd **cmd, t_envp *envp_list)
+void	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 {
 	char	**pipe_split_line;
 	int		pipe_cnt;
@@ -67,8 +69,8 @@ void parse(char *line, t_cmd **cmd, t_envp *envp_list)
 	pipe_split_line = ft_split(line, '|', &pipe_cnt);
 	*cmd = NULL;
 	while (++pipe_index < pipe_cnt)
-		tokenize(pipe_split_line[pipe_index], cmd, envp_list);
+		if (tokenize(pipe_split_line[pipe_index], cmd, envp_list) == -1)
+			return ;
 	free(pipe_split_line);
 	return ;
 }
-		

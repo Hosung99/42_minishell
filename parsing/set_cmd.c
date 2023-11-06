@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/05 19:43:40 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:41:06 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,156 +14,119 @@
 
 int	count_token_option(t_token *token_header)
 {
-	int		option_cnt;
-	t_token *token_temp;
+	int		word_cnt;
+	int		redir_cnt;
+	t_token	*token_temp;
 
-	option_cnt = 0;
+	word_cnt = 0;
+	redir_cnt = 0;
 	token_temp = token_header;
 	while (token_temp)
 	{
-		if (token_temp->type == token_option)
-			option_cnt++;
-		else
-			break ;
+		if (token_temp->type == TOKEN_READ_REDIR || token_temp->type == TOKEN_WRITE_REDIR)
+			redir_cnt++;
 		token_temp = token_temp->next;
 	}
-	return (option_cnt);
+	token_temp = token_header;
+	while (token_temp)
+	{
+		if (token_temp->type == TOKEN_WORD)
+			word_cnt++;
+		token_temp = token_temp->next;
+	}
+	if (word_cnt - redir_cnt < 0)
+		return (0);
+	return (word_cnt - redir_cnt);
 }
 
 void	malloc_cmd(t_token *token_header, t_cmd **cmd)
 {
-	*cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	(*cmd)->cmd = (char **)malloc(sizeof(char *) * count_token_option(token_header) + 1);
-	(*cmd)->cmd[count_token_option(token_header) + 1] = NULL;
-	(*cmd)->redir = NULL;
-	(*cmd)->next = NULL;
-}
-
-
-t_cmd    *create_new_cmd(t_token *token_header)
-{
-    t_cmd    *new_cmd;
-    int     token_cnt;
-
-    new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
-    token_cnt = count_token_option(token_header);
-    new_cmd->cmd = (char **)malloc(sizeof(char *) * (token_cnt + 1));
-    new_cmd->cmd[token_cnt + 1] = NULL;
-    new_cmd->cmd[0] = ft_strdup(token_header->str);
-    new_cmd->redir = NULL;
-    new_cmd->next = NULL;
-    return new_cmd;
-}
-
-void    make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
-{
-    t_cmd    *cmd_temp;
-    t_cmd    *new_cmd;
-    int     token_cnt;
-	
-    new_cmd = create_new_cmd(token_header);
-    token_cnt = count_token_option(token_header);
-    if (*cmd == NULL)
-        *cmd = new_cmd;
-    else
-    {
-        if ((*cmd)->redir != NULL && (*cmd)->cmd[0] == NULL)
-        {
-            free(new_cmd);
-            (*cmd)->cmd = (char **)malloc(sizeof(char *) * (token_cnt + 1));
-			(*cmd)->cmd[token_cnt + 1] = NULL;
-			(*cmd)->cmd[0] = ft_strdup(token_header->str);
-        }
-        else
-        {
-            cmd_temp = *cmd;
-            while (cmd_temp->next != NULL)
-                cmd_temp = cmd_temp->next;
-            cmd_temp->next = new_cmd;
-        }
-    }
-    *option_cnt = 0;
-}
-
-void	set_option(t_token *token_header, t_cmd **cmd, int *option_cnt)
-{
-	char	**new_cmd;
-	int		cmd_index;
-
-	*option_cnt = *option_cnt + 1;
-	cmd_index = 0;
 	if (*cmd == NULL)
 	{
-		malloc_cmd(token_header, cmd);
-		(*cmd)->cmd[0] = ft_strdup(token_header->str);
+		*cmd = (t_cmd *)malloc(sizeof(t_cmd));
+		(*cmd)->cmd = (char **)ft_calloc(1, sizeof(char *) * count_token_option(token_header) + 1);
+		(*cmd)->redir = NULL;
+		(*cmd)->next = NULL;
 	}
 	else
 	{
-        new_cmd = (char **)malloc(sizeof(char *) * (*option_cnt + 1));
-        while (cmd_index < *option_cnt)
-        {
-            new_cmd[cmd_index] = (*cmd)->cmd[cmd_index];
-            cmd_index++;
-        }
-        new_cmd[*option_cnt] = ft_strdup(token_header->str);
-        free((*cmd)->cmd);
-        (*cmd)->cmd = new_cmd;
-		(*cmd)->cmd[count_token_option(token_header) + 1] = NULL;
+		(*cmd)->next = (t_cmd *)malloc(sizeof(t_cmd));
+		(*cmd)->next->cmd = (char **)malloc(sizeof(char *) * count_token_option(token_header) + 1);
+		(*cmd)->next->cmd[count_token_option(token_header)] = NULL;
+		(*cmd)->next->redir = NULL;
+		(*cmd)->next->next = NULL;
 	}
+}
+
+void	make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt)
+{
+	t_cmd	*cmd_temp;
+
+	cmd_temp = *cmd;
+	while (cmd_temp->next != NULL)
+		cmd_temp = cmd_temp->next;
+	cmd_temp->cmd[*option_cnt] = ft_strdup(token_header->str);
+	*option_cnt = *option_cnt + 1;
 }
 
 t_cmd *get_last_cmd(t_cmd *cmd)
 {
-    if (cmd == NULL)
-        return NULL;
-    while (cmd->next != NULL)
-        cmd = cmd->next;
-    return cmd;
+	if (cmd == NULL)
+		return NULL;
+	while (cmd->next != NULL)
+		cmd = cmd->next;
+	return cmd;
 }
 
 void set_redir(t_token *token_header, t_cmd **cmd)
 {
-    t_redir *redir_temp;
-    t_redir *new_redir;
-    t_cmd *last_cmd;
+	t_redir *redir_temp;
+	t_redir *new_redir;
+	t_cmd	*last_cmd;
 
-    new_redir = (t_redir *)malloc(sizeof(t_redir));
-    new_redir->str = ft_strdup(token_header->str);
-    new_redir->next = NULL;
-    if (token_header->next != NULL)
-        new_redir->filename = ft_strdup(token_header->next->str);
-    if (*cmd == NULL)
-        malloc_cmd(token_header, cmd);
-    last_cmd = get_last_cmd(*cmd);
-    if (last_cmd->redir == NULL)
-        last_cmd->redir = new_redir;
-    else
-    {
-        redir_temp = last_cmd->redir;
-        while (redir_temp->next != NULL)
-            redir_temp = redir_temp->next;
-        redir_temp->next = new_redir;
-    }
+	new_redir = (t_redir *)malloc(sizeof(t_redir));
+	new_redir->str = ft_strdup(token_header->str);
+	new_redir->next = NULL;
+	if (token_header->next != NULL)
+		new_redir->filename = ft_strdup(token_header->next->str);
+	last_cmd = get_last_cmd(*cmd);
+	if (last_cmd->redir == NULL)
+		last_cmd->redir = new_redir;
+	else
+	{
+		redir_temp = last_cmd->redir;
+		while (redir_temp->next != NULL)
+			redir_temp = redir_temp->next;
+		redir_temp->next = new_redir;
+	}
 }
 
-void	set_cmd(t_token *token_header, t_cmd **cmd)
+int	set_cmd(t_token *token_header, t_cmd **cmd)
 {
 	int	option_cnt;
+	int	token_before_type;
 
 	option_cnt = 0;
+	token_before_type = -1;
+	malloc_cmd(token_header, cmd);
 	while (token_header)
 	{
-		if (token_header->type == token_cmd)
+		if ((token_before_type == TOKEN_READ_REDIR || token_before_type == TOKEN_WRITE_REDIR) &&
+			(token_header->type == TOKEN_READ_REDIR || token_header->type == TOKEN_WRITE_REDIR))
+			return (-1);
+		if (token_header->type == TOKEN_WORD)
 			make_cmd(token_header, cmd, &option_cnt);
-		else if (token_header->type == token_option)
-			set_option(token_header, cmd, &option_cnt);
-		else if (token_header->type == token_read_redir || \
-			token_header->type == token_write_redir)
+		else if (token_header->type == TOKEN_READ_REDIR || \
+			token_header->type == TOKEN_WRITE_REDIR)
 		{
+			if (token_header->next == NULL)
+				return (-1);
 			set_redir(token_header, cmd);
-			if (token_header->next != NULL)
+			if (token_header->next != NULL && token_header->next->type == TOKEN_WORD)
 				token_header = token_header->next;
 		}
+		token_before_type = token_header->type;
 		token_header = token_header->next;
 	}
+	return (1);
 }

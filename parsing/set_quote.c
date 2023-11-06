@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/05 19:02:12 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/06 16:08:44 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int	check_big_quote(t_token *token, int str_index, t_envp *envp_list)
 		if (token->str[str_index] == '\"')
 			break;
 	}
-	if (delete_quote(token, '"') == -1)
-		return (-1);
 	return (1);
 }
 
@@ -137,8 +135,6 @@ int	check_small_quote(t_token *token, int str_index)
 			return (-1);
 		(str_index)++;
 	}
-	if (delete_quote(token, '\'') == -1)
-		return (-1); 
 	return (1);
 }
 
@@ -180,12 +176,16 @@ int	set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd)
 		printf("before: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
 		if (check_quote(token_temp, envp_list) == -1)
 		{
-			printf("quote error!\n");
+			perror("quote error!");
 			return (-1);
 		}
 		printf("after: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
 		token_temp = token_temp->next;
 	}
-	set_cmd(token_header, cmd);
+	if (set_cmd(token_header, cmd) == -1)
+	{
+		perror("redir error!");
+		return (-1);
+	}
 	return (1);
 }

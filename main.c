@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/05 19:17:43 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/06 15:50:17 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ int exit_status;
 
 int	check_first_char(char *line)
 {
-	if (line[0] == '|')
+	int	line_index;
+
+	line_index = 0;
+	while (line[line_index] == ' ' || line[line_index] == '\t')
+		line_index++;
+	if (line[line_index] == '|')
 	{
-		printf("minishell: syntax error near unexpected token `%c'\n", line[0]);
-		return (1);
+		printf("minishell: syntax error near unexpected token '|'\n");
+		return (0);
 	}
-	return (-1);
+	return (1);
 }
 
 int main(int argc, char **argv, char **envp)

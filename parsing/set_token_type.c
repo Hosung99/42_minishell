@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:26:44 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/29 11:02:55 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/06 12:17:43 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@ int	set_token_type(char *str)
 	while (str && str[index])
 	{
 		if (str[index] == '-')
-			return token_option;
+			return TOKEN_WORD;
 		if (str[index] == '>') 
 		{
-			return token_read_redir;
+			return TOKEN_READ_REDIR;
 			return (check_token_type(str[index + 1], str[index + 2],
-				token_write_redir,token_append_redir));
+				TOKEN_WRITE_REDIR,TOKEN_APPEND_REDIR));
 		}
 		else if (str[index] == '<') 
 		{
-			return token_write_redir;
+			return TOKEN_WRITE_REDIR;
 			return (check_token_type(str[index + 1], str[index + 2],
-				token_read_redir ,token_heredoc));
+				TOKEN_READ_REDIR ,TOKEN_HEREDOC));
 		}
 		index++;
 	}
-	return token_cmd;
+	return TOKEN_WORD;
 }
