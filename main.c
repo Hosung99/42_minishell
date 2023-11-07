@@ -6,13 +6,13 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/06 15:50:17 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/07 23:07:40 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int exit_status;
+int	g_exit_status;
 
 int	check_first_char(char *line)
 {
@@ -29,8 +29,14 @@ int	check_first_char(char *line)
 	return (1);
 }
 
-int main(int argc, char **argv, char **envp)
+void	foo(void)
 {
+	system("leaks --list minishell");
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	// atexit(foo);
 	struct termios	old_term;
 	struct termios	new_term;
 	t_cmd			*cmd;
@@ -42,7 +48,6 @@ int main(int argc, char **argv, char **envp)
 	set_envp(envp, &envp_list);
 	if (set_termios(&old_term, &new_term) == -1)
 		return (-1);
-	set_signal();
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -51,11 +56,17 @@ int main(int argc, char **argv, char **envp)
 		if (*line != '\0' && check_first_char(line))
 		{
 			add_history(line);
-			parse(line, &cmd, &envp_list);
-			executor(cmd, &envp_list);
+			if (parse(line, &cmd, &envp_list) == -1)
+				free_cmd(&cmd);
+			else
+			{
+				executor(cmd, &envp_list);
+				free_cmd(&cmd);
+			}
 		}
 		free(line);
 	}
 	if (reset_termios(&old_term) == -1)
 		return (-1);
+	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:38:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/10/31 17:49:30 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/07 12:54:53 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	set_termios(struct termios *old_term, struct termios *new_term)
 	new_term->c_lflag = ~(ICANON);
 	new_term->c_lflag = ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, new_term);
+	set_signal();
 	return (1);
 }
 

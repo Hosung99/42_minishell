@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/05 19:33:28 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/07 16:32:08 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_envp(t_envp *envp);
 int	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
-	
+
 	printf("start executor\n");
 	// print_envp(envp);
 	init_info(&info, envp, cmd);
@@ -32,7 +32,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	// 	print_cmd(cmd);
 	// 	file_open(cmd, &info);
 	// 	if (info.cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
-	// 	{	
+	// 	{
 	// 		builtin(cmd, &info, envp);
 	// 		break;
 	// 	}
@@ -74,9 +74,9 @@ void	print_cmd(t_cmd *cmd)
 	printf("start print	cmd\n");
 	if (cmd == NULL)
 		printf("cmd = NULL\n");
-	if (cmd->cmd[0] == NULL)
+	else if (cmd->cmd && cmd->cmd[0] == NULL)
 		printf("cmd->cmd = NULL\n");
-	while (cmd->cmd[i])
+	while (cmd->cmd && cmd->cmd[i])
 	{
 		printf("cmd[%d]: %s\n", i, cmd->cmd[i]);
 		i++;

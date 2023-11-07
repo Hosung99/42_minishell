@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:20:28 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 15:43:57 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/07 16:41:26 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	set_envp(char **envp, t_envp *envp_list)
 		split_cnt = 0;
 		split_str = ft_split(envp[envp_index], '=', &split_cnt);
 		make_envp_cmd(envp_list, split_str, split_cnt);
+		free_str(split_str);
 		envp_index++;
 	}
 }

@@ -6,18 +6,18 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/06 16:06:46 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/07 23:06:22 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	set_token_position(t_token *token_header, t_token *new_token, int *before_index)
+void	set_token_position(t_token *token_header, t_token *new_token)
 {
-	t_token *token_header_temp;
+	t_token	*token_header_temp;
 
 	token_header_temp = token_header;
-	if (*before_index == 0)
+	if (token_header->next == NULL)
 		token_header->next = new_token;
 	else
 	{
@@ -32,11 +32,9 @@ void	make_cmd_token(char *str, t_token *token_header,
 {
 	t_token	*new_token;
 
-	// if (*curr_index == 0 || *curr_index > (int) ft_strlen(str))
-	// 	return ;
-	if (((str[*curr_index - 1 ] == ' ' || str[*curr_index - 1] == '\t') && (str[*curr_index] == ' ' || str[*curr_index] == '\t'))  || ((str[*curr_index - 1] == '<' || str[*curr_index - 1] == '>') && (str[*curr_index] == '\0' || str[*curr_index] == ' ' || str[*curr_index] == '\t')))
+	if (*curr_index != 0 && (((str[*curr_index - 1] == ' ' || str[*curr_index - 1] == '\t') && (str[*curr_index] == ' ' || str[*curr_index] == '\t'))  || ((str[*curr_index - 1] == '<' || str[*curr_index - 1] == '>') && (str[*curr_index] == '\0' || str[*curr_index] == ' ' || str[*curr_index] == '\t'))))
 		return ;
-	if ((str[*curr_index] == '<' || str[*curr_index] == '>') && (str[*curr_index - 1] == ' ' || str[*curr_index - 1] == '\t'))
+	if (*curr_index != 0 && ((str[*curr_index] == '<' || str[*curr_index] == '>') && (str[*curr_index - 1] == ' ' || str[*curr_index - 1] == '\t') && !(str[*curr_index + 1] == '\0')))
 		return ;
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (str[*curr_index + 1] == '\0')
@@ -45,7 +43,7 @@ void	make_cmd_token(char *str, t_token *token_header,
 		new_token->str = ft_split_index(str, *before_index, *curr_index - 1);
 	new_token->type = set_token_type(new_token->str);
 	new_token->next = NULL;
-	set_token_position(token_header, new_token, before_index);
+	set_token_position(token_header, new_token);
 	*before_index = *curr_index + 1;
 }
 
@@ -84,8 +82,7 @@ void	make_redir_token(char *str, t_token *token_header, int *cur_index, int *bef
 		malloc_redir_token(str, &new_token, cur_index, 2);
 	else
 		malloc_redir_token(str, &new_token, cur_index, 1);
-	printf("new_token->str2 : %s\n", new_token->str);
-	set_token_position(token_header, new_token, before_index);
+	set_token_position(token_header, new_token);
 	*before_index = *cur_index + 1;
 }
 
@@ -154,32 +151,60 @@ int	check_quote_index(char *str, int *curr_index)
 	set_curr_index(str, curr_index);
 	if (ft_is_space(str, curr_index) == 1)
 		return (str_index);
-	return ((int)ft_strlen(str));
+	return ((int) ft_strlen(str));
+}
+
+char *ft_strjoin_char(char *str, char c)
+{
+	char	*new_str;
+	int		str_index;
+
+	str_index = 0;
+	if (str != NULL)
+		new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	else
+		new_str = (char *)malloc(sizeof(char) * 2);
+	while (str && str[str_index])
+	{
+		new_str[str_index] = str[str_index];
+		str_index++;
+	}
+	new_str[str_index++] = c;
+	new_str[str_index] = '\0';
+	free(str);
+	return (new_str);
 }
 
 void	make_quote_token(char *str, t_token *token_header, int *curr_index, int *before_index)
 {
 	t_token	*new_token;
-	int		end_index;
-	int		str_index;
+	char	quote_type;
 
 	new_token = (t_token *)malloc(sizeof(t_token));
-	end_index = check_quote_index(str, curr_index);
-	str_index = 0;
-	if (!new_token)
-		return ;
-	new_token->str = (char *)malloc(sizeof(char) * (end_index - *curr_index + 2));
-	if (!new_token->str)
-		return ;
-	while (str_index <= end_index)
+	quote_type = str[*curr_index];
+	if (*before_index != *curr_index)
+		make_cmd_token(str, token_header, curr_index, before_index);
+	*curr_index = *curr_index + 1;
+	if (str[*curr_index] == quote_type)
 	{
-		new_token->str[str_index++] = str[*curr_index];
+		free(new_token);
+		*before_index = *curr_index + 1;
+		return ;
+	}
+	new_token->str = NULL;
+	while (str[*curr_index] && str[*curr_index] != quote_type)
+	{
+		new_token->str = ft_strjoin_char(new_token->str, str[*curr_index]);
 		*curr_index = *curr_index + 1;
 	}
-	*curr_index = *curr_index - 1;
-	new_token->str[str_index] = '\0';
+	if (str[*curr_index] == '\0')
+	{
+		free(new_token->str);
+		free(new_token);
+		return ;
+	}
 	new_token->type = TOKEN_WORD;
 	new_token->next = NULL;
-	set_token_position(token_header, new_token, before_index);
-	*before_index = *curr_index;
+	set_token_position(token_header, new_token);
+	*before_index = *curr_index + 1;
 }

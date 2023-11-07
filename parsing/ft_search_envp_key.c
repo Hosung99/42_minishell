@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/01 15:51:25 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/07 13:02:22 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	ft_strcmp(char *key, char *str)
 {
-	int index;
-	
+	int	index;
+
 	index = 0;
 	while (key[index] && str[index])
 	{
@@ -30,7 +30,7 @@ static int	ft_strcmp(char *key, char *str)
 
 char	*ft_search_envp_key(t_envp *envp_list, char *str)
 {
-	t_envp *envp_temp;
+	t_envp	*envp_temp;
 
 	envp_temp = envp_list->next;
 	while (envp_temp)
