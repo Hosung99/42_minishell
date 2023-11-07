@@ -19,18 +19,14 @@ void	ft_export(char **cmd, t_info *info, t_envp *envp)
 	int		cnt;
 
 	(void)info;
+	printf("export\n");
 	tmpenv = envp;
 	keyval = ft_split(cmd[0], '=', &cnt);
-	if (cnt > 2)
-		return ; // 에러처리
 	while (tmpenv)
 	{
 		if (ft_strncmp(tmpenv->key, keyval[0], ft_strlen(tmpenv->key)) == 0)
 		{
-			if (cnt == 2)
-				tmpenv->value = keyval[1];
-			else
-				tmpenv->value = ft_strdup("");
+			tmpenv->value = keyval[1]; // value 없을떄 예외처리 해야함.
 			return ;
 		}
 		tmpenv = tmpenv->next;

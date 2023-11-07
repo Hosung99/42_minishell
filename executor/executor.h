@@ -27,6 +27,7 @@ typedef	struct	s_info
 	pid_t	pid;
 	int		status;
 	int		cmd_cnt;
+	int		have_outfile;
 }				t_info;
 
 void	init_info(t_info *info, t_envp *envp, t_cmd *cmd);
