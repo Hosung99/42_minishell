@@ -20,6 +20,7 @@ void	ft_cd(char **cmd, t_info *info, t_envp *envp)
 {
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
 	{
+		printf("cd ~\n");
 		info->status = go_to_home(envp, info);
 		return ;
 	}
@@ -51,6 +52,7 @@ int	go_to_home(t_envp *envp, t_info *info)
 	if (chdir(home) == -1)
 	{
 		// 예외 메시지
+		printf("home 이동 실패\n");
 		return (1);
 	}
 	return (0);
@@ -81,6 +83,7 @@ char	*get_envp_value(t_envp *envp, char *key)
 	{
 		if (ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
 			return (envp->value);
+		envp = envp->next;
 	}
 	return (NULL);
 }

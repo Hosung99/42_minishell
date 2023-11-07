@@ -15,13 +15,20 @@
 void	ft_env(t_envp *envp)
 {
 	//env 없을때 처리 할 예정
-	
+	printf("env\n");
+	if (!envp)
+		printf("env is empty\n");
 	while (envp)
 	{
-		ft_putstr_fd(envp->key, 1);
-		ft_putchar_fd('=', 1);
-		ft_putstr_fd(envp->value, 1);
-		ft_putchar_fd('\n', 1);
+		if (envp->key != NULL || envp->value != NULL)
+		{
+			if (envp->key != NULL)
+				ft_putstr_fd(envp->key, 1);
+			ft_putchar_fd('=', 1);
+			if (envp->value != NULL)
+				ft_putstr_fd(envp->value, 1);
+			ft_putchar_fd('\n', 1);
+		}
 		envp = envp->next;
 	}
 }
