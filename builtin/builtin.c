@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:46:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/07 13:00:37 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/09 02:26:44 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		ft_cd(cmd->cmd + 1, info, envp);
 	else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-		ft_pwd();
+		ft_pwd(info);
 	else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
-		ft_export(cmd->cmd + 1, info, envp);
+		ft_export(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)
-		ft_unset(cmd->cmd + 1, info, envp);
+		ft_unset(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], "env", 4) == 0)
 		ft_env(envp);
 	else if (ft_strncmp(cmd->cmd[0], "exit", 5) == 0)
-		ft_exit(cmd, info, envp);
+		ft_exit(cmd->cmd + 1, info);
 }
 
 int	is_builtin(char *cmd)

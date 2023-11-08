@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/28 16:42:00 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 00:51:31 by sgo              ###   ########.fr       */
+/*   Created: 2023/11/09 01:11:15 by sgo               #+#    #+#             */
+/*   Updated: 2023/11/09 02:02:00 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "executor.h"
 
-void	ft_env(t_envp *envp)
+void	free_info(t_info *info)
 {
-	printf("env\n");
-	if (!envp)
-		printf("env is empty\n");
+	free_str(info->cmd_path);
+	if (info->cmd)
+		free(info->cmd);
+	close(info->pipe_fd[0]);
+	close(info->pipe_fd[1]);
+	free_cmd(&info->cmd_start);
+	free_envp(info->envp_start);
+}
+
+void	free_envp(t_envp *envp)
+{
+	t_envp	*envp_temp;
+
+	if (envp == NULL)
+		return ;
 	while (envp)
 	{
-		if (envp->key != NULL || envp->value != NULL)
-		{
-			if (envp->key != NULL)
-				ft_putstr_fd(envp->key, 1);
-			ft_putchar_fd('=', 1);
-			if (envp->value != NULL)
-				ft_putstr_fd(envp->value, 1);
-			ft_putchar_fd('\n', 1);
-		}
+		envp_temp = envp;
+		if (envp->key)
+			free(envp->key);
+		if (envp->value)
+			free(envp->value);
 		envp = envp->next;
-	}
+		free(envp_temp);
+	}	
 }

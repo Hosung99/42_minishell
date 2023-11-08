@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:52:04 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 01:20:18 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 02:04:38 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	ft_cd(char **cmd, t_info *info, t_envp *envp);
 void	echo(char **args);
 void	ft_env(t_envp *envp);
-void	ft_exit(t_cmd *cmd, t_info *info, t_envp *envp);
-void	ft_pwd();
-void	ft_export(char **cmd, t_info *info, t_envp *envp);
-void	ft_unset(char **cmd, t_info *info, t_envp *envp);
+void	ft_exit(char **cmd, t_info *info);
+void	ft_pwd(t_info *info);
+void	ft_export(char **cmd, t_envp *envp);
+void	ft_unset(char **cmd, t_envp *envp);
 
 #endif

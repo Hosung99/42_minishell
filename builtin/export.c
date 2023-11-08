@@ -6,33 +6,69 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:55:02 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 01:20:22 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 03:18:24 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	ft_export(char **cmd, t_info *info, t_envp *envp)
+void	print_export_err(char *cmd);
+void	set_key_value(t_envp *envp, char *input_key, char *input_value);
+
+void	ft_export(char **cmd, t_envp *envp)
+{
+	int		index;
+	int		char_index;
+	char	*input_key;
+	char	*input_value;
+	
+	index = 0;
+	while (cmd[index])
+	{
+		char_index = 0;
+		if (cmd[index][0] == '=' || !ft_isalpha(cmd[index][0]))
+			print_export_err(cmd[index]);
+		else
+		{
+			while (cmd[index][char_index] != '=')
+				char_index++;
+			input_key = ft_substr(cmd[index], 0, char_index);
+			input_value = ft_substr(cmd[index], char_index + 1, ft_strlen(cmd[index]));
+			set_key_value(envp, input_key, input_value);
+		}
+		index++;
+	}
+}
+
+void	print_export_err(char *cmd)
+{
+	write(STDERR_FILENO, "minishell: export: `", 20);
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, "': not a valid identifier\n", 26);
+}
+
+void	set_key_value(t_envp *envp, char *input_key, char *input_value)
 {
 	t_envp	*tmpenv;
-	char	**keyval;
-	int		cnt;
 
-	(void)info;
-	printf("export\n");
 	tmpenv = envp;
-	keyval = ft_split(cmd[0], '=', &cnt);
 	while (tmpenv)
 	{
-		if (ft_strncmp(tmpenv->key, keyval[0], ft_strlen(tmpenv->key)) == 0)
+		if (ft_strncmp(tmpenv->key, input_key, ft_strlen(tmpenv->key) + 1) == 0)
 		{
-			tmpenv->value = keyval[1]; // value 없을떄 예외처리 해야함.
+			printf("samekey: %s\n", tmpenv->key);
+			free(tmpenv->value);
+			tmpenv->value = input_value;
+			free(input_key);
 			return ;
 		}
 		tmpenv = tmpenv->next;
 	}
-	tmpenv = (t_envp *)malloc(sizeof(t_envp));
-	tmpenv->key = keyval[0];
-	tmpenv->value = keyval[1];
-	free(keyval);
+	tmpenv = envp;
+	while (tmpenv->next)
+		tmpenv = tmpenv->next;
+	tmpenv->next = (t_envp *)malloc(sizeof(t_envp));
+	tmpenv->next->key = input_key;
+	tmpenv->next->value = input_value;
+	tmpenv->next->next = NULL;	
 }

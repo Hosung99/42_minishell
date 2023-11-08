@@ -6,20 +6,21 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:38:25 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/29 16:49:06 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 00:53:20 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	ft_pwd()
+void	ft_pwd(t_info *info)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		// 예외 메시지
+		info->status = 1;
+		perror("pwd");
 	}
 	ft_putstr_fd(cwd, 1);
 	ft_putchar_fd('\n', 1);

@@ -6,18 +6,16 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:04:10 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 01:20:25 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 01:18:16 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	ft_unset(char **cmd, t_info *info, t_envp *envp)
+void	ft_unset(char **cmd, t_envp *envp)
 {
 	t_envp	*tmpenv;
 
-	(void)info;
-	printf("unset\n");
 	tmpenv = envp;
 	while (tmpenv)
 	{

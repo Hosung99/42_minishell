@@ -6,39 +6,36 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:57:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/01 15:43:26 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 00:50:50 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int		go_to_home(t_envp *envp, t_info *info);
-int		go_to_oldpwd(t_envp *envp, t_info *info);
+int		go_to_home(t_envp *envp);
+int		go_to_oldpwd(t_envp *envp);
 char	*get_envp_value(t_envp *envp, char *key);
+int		go_to_path_home(char *path, t_envp *envp);
 
 void	ft_cd(char **cmd, t_info *info, t_envp *envp)
 {
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
-	{
-		printf("cd ~\n");
-		info->status = go_to_home(envp, info);
-		return ;
-	}
+		info->status = go_to_home(envp);
 	else if (ft_strncmp(cmd[0], "-", 2) == 0)
+		info->status = go_to_oldpwd(envp);
+	else if (ft_strncmp(cmd[0], "~/", 2) == 0)
+		info->status = go_to_path_home(cmd[0], envp);
+	else 
 	{
-		info->status = go_to_oldpwd(envp, info);
-		return ;
+		if (chdir(cmd[0]) == -1)
+		{
+			info->status = 1;
+			perror(cmd[0]);
+		}
 	}
-	if (chdir(cmd[0]) == -1)
-	{
-		info->status = 1;
-		// 예외 메시지
-		return ;
-	}
-	// home으로 가는 거 만들 예정
 }
 
-int	go_to_home(t_envp *envp, t_info *info)
+int	go_to_home(t_envp *envp)
 {
 	char	*home;
 
@@ -46,19 +43,17 @@ int	go_to_home(t_envp *envp, t_info *info)
 	if (home == NULL)
 	{
 		write(2, "minishell: cd: HOME not set\n", 28);
-		info->status = 1;
 		return (1);
 	}
 	if (chdir(home) == -1)
 	{
-		// 예외 메시지
-		printf("home 이동 실패\n");
+		perror(home);
 		return (1);
 	}
 	return (0);
 }
 
-int	go_to_oldpwd(t_envp *envp, t_info *info)
+int	go_to_oldpwd(t_envp *envp)
 {
 	char	*oldpwd;
 
@@ -66,12 +61,11 @@ int	go_to_oldpwd(t_envp *envp, t_info *info)
 	if (oldpwd == NULL)
 	{
 		write(2, "minishell: cd: OLDPWD not set\n", 30);
-		info->status = 1;
 		return (1);
 	}
 	if (chdir(oldpwd) == -1)
 	{
-		// 예외 메시지
+		perror(oldpwd);
 		return (1);
 	}
 	return (0);
@@ -86,4 +80,24 @@ char	*get_envp_value(t_envp *envp, char *key)
 		envp = envp->next;
 	}
 	return (NULL);
+}
+
+int	go_to_path_home(char *path, t_envp *envp)
+{
+	char	*home;
+	char	*res;
+
+	home = get_envp_value(envp, "HOME");
+	if (home == NULL)
+	{
+		write(2, "minishell: cd: HOME not set\n", 28);
+		return (1);
+	}
+	res = ft_strjoin(home, path + 1);
+	if (chdir(res) == -1)
+	{
+		perror(res);
+		return (1);
+	}
+	return (0);
 }
