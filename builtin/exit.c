@@ -6,17 +6,58 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:54:23 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/29 17:05:41 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 01:55:45 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	ft_exit(t_cmd *cmd, t_info *info, t_envp *envp)
+int	only_number(char *str);
+
+void	ft_exit(char **cmd, t_info *info)
 {
-	//free 함수들 사용할 예정
-	(void)cmd;
-	(void)envp;
+	int	len;
+	int	exit_status;
+
+	len = 0;
+	while(cmd[len])
+		len++;
+	if (len > 1)
+	{
+		write(STDERR_FILENO, "exit\n", 5);
+		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
+		info->status = 1;
+		return ;
+	}
+	if (only_number(cmd[0]) == 0)
+	{
+		write(STDERR_FILENO, "exit\n", 5);
+		write(STDERR_FILENO, "minishell: exit: ", 17);
+		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
+		write(STDERR_FILENO, ": numeric argument required\n", 28);
+		info->status = 255;
+		return ;
+	}
 	write(STDOUT_FILENO, "exit\n", 5);
-	exit(info->status);
+	exit_status = info->status;
+	free_info(info);
+	exit(exit_status);
+}
+
+int	only_number(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+		return (1);
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }

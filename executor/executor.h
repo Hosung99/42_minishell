@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 17:20:43 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/09 01:15:53 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+# define HERE_DOC_FILE ".here_doc"
+
 typedef	struct	s_info
 {
 	char	**cmd_path;
@@ -24,6 +26,8 @@ typedef	struct	s_info
 	int		pipe_fd[2];
 	int		tmp_fd;
 	int		outfile_fd;
+	t_cmd	*cmd_start;
+	t_envp	*envp_start;
 	pid_t	pid;
 	int		status;
 	int		cmd_cnt;
@@ -43,5 +47,8 @@ char	*get_cmd(char **path, char *cmd);
 void	wait_all(t_info *info);
 void	file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);
+void	here_doc(t_redir *redir, t_info *info);
+void	free_envp(t_envp *envp);
+void	free_info(t_info *info);
 
 #endif
