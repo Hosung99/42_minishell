@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 21:04:16 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/15 20:57:34 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	here_doc(t_redir *redir, t_info *info)
 		tmp = readline("> ");
 		line = ft_strjoin(tmp, "\n");
 		if (!line)
-			exit_perror("readline", info);
-		if (ft_strncmp(redir->filename, tmp, ft_strlen(tmp) + 1) == 0)
+			break ;
+		if (ft_strncmp(redir->filename, line, ft_strlen(line) + 1) == 0)
 			break ;
 		write(file, line, ft_strlen(line));
 		free(tmp);

@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/14 19:12:52 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/15 20:56:47 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 
 	envp = envp->next; // 추후 에러 날 확률 있음
 	init_info(&info, envp, cmd);
+	//cmd 돌면서(redir을 돌면서) heredoc을 infile로.
 	while (cmd)
 	{
 		if (pipe(info.pipe_fd) == -1)
