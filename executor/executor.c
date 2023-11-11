@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 02:02:11 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/11 20:19:08 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,37 @@ void	print_envp(t_envp *envp);
 int	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
+	int		exit_status;
 
-	// printf("start executor\n");
 	envp = envp->next; // 추후 에러 날 확률 있음
 	init_info(&info, envp, cmd);
 	while (cmd)
 	{
-		print_cmd(cmd);
 		if (pipe(info.pipe_fd) == -1)
-			exit_perror("ERROR_pipe");
+			exit_perror("pipe", &info);
 		file_open(cmd, &info);
 		if (info.cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
 		{
 			builtin(cmd, &info, envp);
+			dup2(info.stdout_fd, STDOUT_FILENO);
 			break;
 		}
 		else
 			info.pid = fork();
 		if (info.pid == 0)
-			child_process(cmd, &info);
+			child_process(cmd, &info, envp);
 		else if (info.pid < 0)
 			return (1);
 		else
 			parent_process(&info);
-		// printf("end process\n");
 		cmd = cmd->next;
+		info.have_outfile = 0;
 	}
 	if (cmd == NULL)
 		wait_all(&info);
-	return (info.status);
+	exit_status = info.status;
+	// free_info(&info);
+	return (exit_status);
 }
 
 int	cmd_cnt(t_cmd *cmd)

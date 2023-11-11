@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:55:47 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 01:22:18 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/11 12:20:15 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int	check_slash(char *cmd)
 {
 	if (ft_strncmp(cmd, "/", 1) == 0
 		|| ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "../", 3) == 0)
-		return (1);
+		return (1); // todo : directory인지 체크할 예정
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 01:11:15 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 02:02:00 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/11 20:22:43 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_info(t_info *info)
 	close(info->pipe_fd[0]);
 	close(info->pipe_fd[1]);
 	free_cmd(&info->cmd_start);
-	free_envp(info->envp_start);
+	// free_envp(info->envp_start);
 }
 
 void	free_envp(t_envp *envp)
@@ -39,4 +39,10 @@ void	free_envp(t_envp *envp)
 		envp = envp->next;
 		free(envp_temp);
 	}	
+}
+
+void	exit_free(t_info *info)
+{
+	free_info(info);
+	exit(info->status);
 }

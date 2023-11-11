@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:54:23 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 01:55:45 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/11 20:41:15 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	ft_exit(char **cmd, t_info *info)
 		return ;
 	}
 	write(STDOUT_FILENO, "exit\n", 5);
-	exit_status = info->status;
+	if (cmd[0])
+		exit_status = ft_atoi(cmd[0]) % 256;
+	else
+		exit_status = info->status;
 	free_info(info);
 	exit(exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 01:15:53 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/11 20:22:55 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef	struct	s_info
 	int		pipe_fd[2];
 	int		tmp_fd;
 	int		outfile_fd;
+	int		stdout_fd;
 	t_cmd	*cmd_start;
 	t_envp	*envp_start;
 	pid_t	pid;
@@ -37,11 +38,11 @@ typedef	struct	s_info
 void	init_info(t_info *info, t_envp *envp, t_cmd *cmd);
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp);
 int		is_builtin(char *cmd);
-void	child_process(t_cmd *cmd, t_info *info);
+void	child_process(t_cmd *cmd, t_info *info, t_envp *envp);
 void	parent_process(t_info *info);
 void	dup_stdout(t_info *info, t_cmd *cmd);
 int		check_slash(char *cmd);
-void	exit_perror(char *msg);
+void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp, char *key);
 char	*get_cmd(char **path, char *cmd);
 void	wait_all(t_info *info);
@@ -50,5 +51,11 @@ int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, t_info *info);
 void	free_envp(t_envp *envp);
 void	free_info(t_info *info);
+
+void	ft_perror(char *msg, t_info *info);
+void	ft_cmd_error(char *cmd);
+void	ft_permission_error(char *cmd);
+char	**get_envp(t_envp *envp);
+void	exit_free(t_info *info);
 
 #endif
