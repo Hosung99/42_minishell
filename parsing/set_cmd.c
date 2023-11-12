@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/07 22:25:15 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/11 14:33:41 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	set_cmd(t_token *token_header, t_cmd **cmd)
 	malloc_cmd(token_header, cmd);
 	while (token_header)
 	{
+		printf("AFTER PARSING : %s\n", token_header->str);
 		if ((token_before_type == TOKEN_READ_REDIR || token_before_type == TOKEN_WRITE_REDIR) &&
 			(token_header->type == TOKEN_READ_REDIR || token_header->type == TOKEN_WRITE_REDIR))
 			return (-1);

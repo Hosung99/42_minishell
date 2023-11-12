@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/07 20:52:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/12 16:49:14 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,13 @@ void	set_signal(void);
 int		set_token_type(char *str);
 void	set_envp(char **envp, t_envp *envp_list);
 char	*ft_split_index(char *str, int before_index, int cur_index);
-void	make_cmd_token(char *str, t_token *token_header, \
-			int *cur_index, int *before_index);
-void	make_redir_token(char *str, t_token *token_header, \
-			int *cur_index, int *before_index);
-void	make_quote_token(char *str, t_token *token, \
-			int *curr_index, int *before_index);
+int		make_cmd_token(char *str, t_token *token_header, int curr_index);
+int		make_redir_token(char *str, t_token *token_header, int curr_index);
+int		make_quote_token(char *str, t_token *token_header, int curr_index);
+int 	isMetachar(char curr);
+void	set_token_position(t_token *token_header, t_token *new_token);
 int		set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd);
-int		check_quote(t_token *token, t_envp *envp_list);
+void	change_envp_var(t_token *token, t_envp *envp_list);
 char	*ft_strtrim_index(char *str, char c);
 char	*ft_search_envp_key(t_envp *envp_list, char *str);
 int		set_cmd(t_token *token_header, t_cmd **cmd);
@@ -90,5 +89,6 @@ void	free_cmd(t_cmd **cmd);
 void	free_str(char **str);
 void	free_redir(t_redir *redir);
 void	free_token(t_token *token_header);
+char	*ft_strjoin_char(char *str, char c);
 
 #endif

@@ -6,24 +6,25 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/07 13:02:22 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/11 14:49:35 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+extern int g_exit_status;
 
 static int	ft_strcmp(char *key, char *str)
 {
 	int	index;
 
 	index = 0;
-	while (key[index] && str[index])
+	while (key && str && key[index] && str[index])
 	{
 		if (key[index] != str[index])
 			return (0);
 		index++;
 	}
-	if (key[index] == '\0' && str[index] == '\0')
+	if (key && str && key[index] == '\0' && str[index] == '\0')
 		return (1);
 	return (0);
 }
@@ -35,6 +36,11 @@ char	*ft_search_envp_key(t_envp *envp_list, char *str)
 	envp_temp = envp_list->next;
 	while (envp_temp)
 	{
+		if ((ft_strcmp("?", str)))
+		{
+			free(str);
+			return (ft_itoa(g_exit_status));
+		}
 		if (ft_strcmp(envp_temp->key, str))
 		{
 			free(str);
