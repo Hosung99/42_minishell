@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 20:22:55 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/13 20:35:16 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "../minishell.h"
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 # define HERE_DOC_FILE ".here_doc"
 
@@ -33,6 +35,7 @@ typedef	struct	s_info
 	int		status;
 	int		cmd_cnt;
 	int		have_outfile;
+	int		errono;
 }				t_info;
 
 void	init_info(t_info *info, t_envp *envp, t_cmd *cmd);
@@ -41,10 +44,10 @@ int		is_builtin(char *cmd);
 void	child_process(t_cmd *cmd, t_info *info, t_envp *envp);
 void	parent_process(t_info *info);
 void	dup_stdout(t_info *info, t_cmd *cmd);
-int		check_slash(char *cmd);
+int		check_slash(char *cmd, t_info *info);
 void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp, char *key);
-char	*get_cmd(char **path, char *cmd);
+char	*get_cmd(char **path, char *cmd, t_info *info);
 void	wait_all(t_info *info);
 void	file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);

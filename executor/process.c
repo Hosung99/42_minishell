@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 20:24:32 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/13 20:45:40 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 	close(info->tmp_fd);
 	if (info->cmd_path == NULL)
 		ft_cmd_error(cmd->cmd[0]);
-	info->cmd = get_cmd(info->cmd_path, cmd->cmd[0]);
+	info->cmd = get_cmd(info->cmd_path, cmd->cmd[0], info);
 	if (info->cmd == NULL)
 		ft_cmd_error(cmd->cmd[0]); 
 	input_envp = get_envp(envp);
