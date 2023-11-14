@@ -6,12 +6,13 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/11 14:49:35 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:37:42 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-extern int g_exit_status;
+
+extern int	g_exit_status;
 
 static int	ft_strcmp(char *key, char *str)
 {
@@ -44,10 +45,10 @@ char	*ft_search_envp_key(t_envp *envp_list, char *str)
 		if (ft_strcmp(envp_temp->key, str))
 		{
 			free(str);
-			return (envp_temp->value);
+			return (ft_strdup(envp_temp->value));
 		}
 		envp_temp = envp_temp->next;
 	}
 	free(str);
-	return (NULL);
+	return (ft_strdup(""));
 }

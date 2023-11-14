@@ -6,12 +6,13 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/12 18:16:01 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 16:01:40 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-extern int g_exit_status;
+
+extern int	g_exit_status;
 
 int	before_check_quote(char *line)
 {
@@ -35,29 +36,6 @@ int	before_check_quote(char *line)
 	return (0);
 }
 
-void	free_token(t_token *token_header)
-{
-    t_token *token_header_temp;
-
-	while (token_header != NULL)
-    {
-		token_header_temp = token_header;
-		token_header = token_header->next;
-		free(token_header_temp->str);
-        free(token_header_temp);
-    }
-	free(token_header);
-}
-
-int isMetachar(char curr)
-{
-	if (curr == '<' || curr == '>' || curr == ' ' || curr == '\t' || \
-		curr == '"' || curr == '\'')
-		return (1);
-	else
-		return (0);
-}
-
 void	set_token(t_token *token_header, char *str, int *curr_index)
 {
 	if (str[*curr_index] == '\'' || str[*curr_index] == '"')
@@ -75,7 +53,7 @@ void	set_normal_token(t_token *token_header, char *str, int *curr_index)
 	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
 	while (str[*curr_index])
 	{
-		if (isMetachar(str[*curr_index]) == 1)
+		if (is_metachar(str[*curr_index]) == 1)
 			break ;
 		new_token->str = ft_strjoin_char(new_token->str, str[*curr_index]);
 		*curr_index = *curr_index + 1;
@@ -94,9 +72,11 @@ int	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 	curr_index = 0;
 	while (str[curr_index] == ' ' || str[curr_index] == '\t')
 		curr_index++;
+	(void)cmd;
+	(void)envp_list;
 	while (str[curr_index] && str)
 	{
-		if (isMetachar(str[curr_index]) == 1)
+		if (is_metachar(str[curr_index]) == 1)
 			set_token(token_header, str, &curr_index);
 		else
 			set_normal_token(token_header, str, &curr_index);
@@ -110,6 +90,26 @@ int	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 	return (1);
 }
 
+int	before_check_pipe(char *line)
+{
+	char	before_char;
+	int		str_index;
+
+	str_index = 1;
+	while (line[str_index])
+	{
+		while (line[str_index] == 32 || line[str_index] == 9)
+			str_index++;
+		before_char = line[str_index - 1];
+		if (before_char == '|' && line[str_index] == '|')
+			return (-1);
+		str_index++;
+	}
+	if (line[str_index - 1] == '|')
+		return (-1);
+	return (1);
+}
+
 int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 {
 	char	**pipe_split_line;
@@ -118,8 +118,14 @@ int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 
 	pipe_cnt = 0;
 	pipe_index = -1;
-	pipe_split_line = ft_split(line, '|', &pipe_cnt); //따옴표 안에 파이프는 문자열 밀기.
 	*cmd = NULL;
+	if (before_check_pipe(line) == -1)
+	{
+		printf("minishell: syntax error near unexpected token `|'\n");
+		g_exit_status = 1;
+		return (-1);
+	}
+	pipe_split_line = ft_split(line, '|', &pipe_cnt); //따옴표 안에 파이프는 문자열 밀기.
 	while (++pipe_index < pipe_cnt)
 	{
 		if (before_check_quote(pipe_split_line[pipe_index]))

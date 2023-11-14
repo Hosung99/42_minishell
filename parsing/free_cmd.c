@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:51:47 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/07 22:26:06 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:39:24 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,17 @@ void	free_cmd(t_cmd **cmd)
 		*cmd = cmd_temp;
 	}
 	free(*cmd);
+}
+
+void	free_token(t_token *token_header)
+{
+	t_token	*token_header_temp;
+
+	while (token_header != NULL)
+	{
+		token_header_temp = token_header;
+		token_header = token_header->next;
+		free(token_header_temp->str);
+		free(token_header_temp);
+	}
 }

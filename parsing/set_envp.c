@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:20:28 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/07 16:41:26 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:45:11 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	make_envp_cmd(t_envp *envp_list, char **str, int cnt)
 {
-	t_envp *envp;
+	t_envp	*envp;
 
 	envp = (t_envp *)malloc(sizeof(t_envp));
 	envp->key = ft_strdup(str[0]);
