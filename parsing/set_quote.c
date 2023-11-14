@@ -6,26 +6,24 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/12 17:02:09 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:57:22 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-extern int g_exit_status;
 
-void	change_str(char	**new_str, char *envp_key, int	*str_index)
+extern int	g_exit_status;
+
+void	change_str(char	**new_str, char *envp_key)
 {
-	int	envp_key_index;
-	char *temp_str;
+	int		envp_key_index;
+	char	*temp_str;
 
 	envp_key_index = 0;
 	while (envp_key && envp_key[envp_key_index])
 	{
-		temp_str = ft_strjoin_char(*new_str, envp_key[envp_key_index]);
-		if (temp_str == NULL)
-			return;
-		*new_str = temp_str;
-		(*str_index)++;
+		temp_str = *new_str;
+		*new_str = ft_strjoin_char(*new_str, envp_key[envp_key_index]);
 		envp_key_index++;
 	}
 }
@@ -37,57 +35,52 @@ void	check_envp(char **new_str, \
 	char	*envp_key;
 
 	temp_index = *str_index;
-	while (token->str && token->str[temp_index++])
+	while (token->str && token->str[(*str_index)++])
 	{
-		if (token->str[temp_index] == ' ' || token->str[temp_index] == '\t' \
-			|| token->str[temp_index] == '$' || token->str[temp_index] == '\"')
-			break;
+		if (ft_isalnum(token->str[(*str_index)]) == 0)
+			break ;
 	}
 	envp_key = ft_search_envp_key(envp_list, \
-		ft_split_index(token->str, *str_index + 1, temp_index - 1));
-	if (envp_key == NULL)
-		change_str(new_str, " ", str_index);
-	else
-	{
-		change_str(new_str, envp_key, str_index);
-		free(envp_key);
-	}
+		ft_split_index(token->str, temp_index + 1, (*str_index) - 1));
+	change_str(new_str, envp_key);
+	free(envp_key);
 }
 
 void	change_envp_var(t_token *token, t_envp *envp_list)
 {
 	char	*save_str;
+	char	*temp_str;
 	char	*str;
 	int		str_index;
 
 	str = token->str;
 	str_index = 0;
-	save_str = NULL;
+	save_str = ft_strdup("");
 	while (str && str[str_index])
 	{
 		if (str[str_index] == '$')
 			check_envp(&save_str, token, &str_index, envp_list);
 		else
 		{
+			temp_str = save_str;
 			save_str = ft_strjoin_char(save_str, str[str_index]);
-			if (save_str == NULL)
-				return;
+			str_index++;
 		}
-		str_index++;
 	}
+	free(token->str);
 	token->str = save_str;
 }
 
 int	set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd)
 {
-	t_token *token_temp;
+	t_token	*token_temp;
 
 	token_temp = token_header;
+	(void)cmd;
 	while (token_temp)
 	{
-		printf("before: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
-		change_envp_var(token_temp, envp_list);
-		printf("after: token_header->str : %s type: %d\n", token_temp->str, token_temp->type);
+		if (token_temp->type == TOKEN_D_QUOTE || token_temp->type == TOKEN_WORD)
+			change_envp_var(token_temp, envp_list);
 		token_temp = token_temp->next;
 	}
 	if (set_cmd(token_header, cmd) == -1)
