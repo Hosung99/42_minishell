@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:55:02 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 03:18:24 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:32:46 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	set_key_value(t_envp *envp, char *input_key, char *input_value)
 	{
 		if (ft_strncmp(tmpenv->key, input_key, ft_strlen(tmpenv->key) + 1) == 0)
 		{
-			printf("samekey: %s\n", tmpenv->key);
 			free(tmpenv->value);
 			tmpenv->value = input_value;
 			free(input_key);

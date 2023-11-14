@@ -6,11 +6,13 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 01:11:15 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 20:22:43 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 19:01:47 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+extern int	g_exit_status;
 
 void	free_info(t_info *info)
 {
@@ -44,5 +46,5 @@ void	free_envp(t_envp *envp)
 void	exit_free(t_info *info)
 {
 	free_info(info);
-	exit(info->status);
+	exit(g_exit_status);
 }

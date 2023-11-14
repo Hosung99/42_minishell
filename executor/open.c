@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 01:01:34 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/13 20:35:36 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 16:40:39 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	open_appendfile(t_redir *redir, t_info *info)
 	close(info->outfile_fd);
 	info->outfile_fd = open(redir->filename, \
 		O_WRONLY | O_CREAT | O_APPEND, 0644);
+	info->have_outfile = 1;
 }

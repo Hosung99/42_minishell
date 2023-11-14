@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 12:15:37 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 18:56:53 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,21 @@ int	envp_cnt(t_envp *envp)
 		envp = envp->next;
 	}
 	return (cnt);
+}
+
+void	update_shlvl(t_envp *envp)
+{
+	envp = envp->next;
+	while (envp)
+	{
+		if (strncmp(envp->key, "SHLVL", 6) == 0)
+		{
+			if (envp->value == NULL)
+				envp->value = ft_strdup("1");
+			else
+				envp->value = ft_itoa(ft_atoi(envp->value) + 1);
+			break ;
+		}
+		envp = envp->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 21:04:27 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 19:12:52 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@ void	print_redir(t_cmd *cmd);
 void	print_cmd(t_cmd *cmd);
 void	print_envp(t_envp *envp);
 
+extern int	g_exit_status;
+
 int	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
-	int		exit_status;
 
 	envp = envp->next; // 추후 에러 날 확률 있음
 	init_info(&info, envp, cmd);
@@ -46,9 +47,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	}
 	if (cmd == NULL)
 		wait_all(&info);
-	exit_status = info.status;
-	// free_info(&info);
-	return (exit_status);
+	return (g_exit_status);
 }
 
 int	cmd_cnt(t_cmd *cmd)

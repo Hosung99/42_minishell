@@ -6,11 +6,13 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:55:47 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/13 20:50:02 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 19:02:05 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+extern int	g_exit_status;
 
 char	*get_cmd(char **path, char *cmd, t_info *info)
 {
@@ -56,7 +58,7 @@ int	check_slash(char *cmd, t_info *info)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": is a directory\n", 2);
-		info->status = 126;
+		g_exit_status = 126;
 		exit_free(info);
 	}
 	index = 0;
