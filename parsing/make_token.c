@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 15:42:42 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 19:12:46 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	make_quote_token(char *str, t_token *token_header, int curr_index)
 
 	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
 	quote_type = str[curr_index];
-	printf("curr_index : %d\n", curr_index);
 	curr_index = curr_index + 1;
 	if (quote_type == str[curr_index])
 		new_token->str = ft_strdup(" ");
