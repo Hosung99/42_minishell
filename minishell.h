@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 14:56:03 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/15 11:28:53 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ struct s_envp
 {
 	char	*key;
 	char	*value;
+	int		have_equal;
 	t_envp	*next;
 };
 

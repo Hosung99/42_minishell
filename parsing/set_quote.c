@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 14:57:22 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 22:14:28 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ void	check_envp(char **new_str, \
 
 	temp_index = *str_index;
 	while (token->str && token->str[(*str_index)++])
-	{
 		if (ft_isalnum(token->str[(*str_index)]) == 0)
 			break ;
-	}
 	envp_key = ft_search_envp_key(envp_list, \
 		ft_split_index(token->str, temp_index + 1, (*str_index) - 1));
 	change_str(new_str, envp_key);
