@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	set_envp(envp, &envp_list);
 	if (set_termios(&old_term, &new_term) == -1)
 		return (-1);
+	update_shlvl(&envp_list);
 	while (1)
 	{
 		line = readline("minishell$ ");

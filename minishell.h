@@ -102,5 +102,6 @@ void	delete_quote(t_token *token);
 int		before_check_pipe(char *line);
 int		before_check_redir(char *str);
 int		before_check_quote(char *line);
+void	update_shlvl(t_envp *envp);
 
 #endif
