@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 19:12:46 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/15 14:23:01 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,33 +70,4 @@ int	make_redir_token(char *str, t_token *token_header, int curr_index)
 	while (str[space_index] && ft_is_space(str[space_index]) == 1)
 		space_index++;
 	return (space_index);
-}
-
-int	make_quote_token(char *str, t_token *token_header, int curr_index)
-{
-	t_token	*new_token;
-	char	quote_type;
-
-	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
-	quote_type = str[curr_index];
-	curr_index = curr_index + 1;
-	if (quote_type == str[curr_index])
-		new_token->str = ft_strdup(" ");
-	while (str[curr_index] && str[curr_index] != quote_type)
-	{
-		new_token->str = ft_strjoin_char(new_token->str, str[curr_index]);
-		curr_index++;
-	}
-	if (str[curr_index] == '\0')
-	{
-		free(new_token->str);
-		free(new_token);
-		return (curr_index);
-	}
-	if (quote_type == '"')
-		new_token->type = TOKEN_D_QUOTE;
-	else
-		new_token->type = TOKEN_S_QUOTE;
-	set_token_position(token_header, new_token);
-	return (curr_index + 1);
 }
