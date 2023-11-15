@@ -6,35 +6,13 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 11:10:26 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/15 20:03:49 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern int	g_exit_status;
-
-int	before_check_quote(char *line)
-{
-	int		quote_flag;
-	char	quote_temp;
-
-	quote_flag = 0;
-	while (*line)
-	{
-		if (!quote_flag && (*line == '\'' || *line == '\"'))
-		{
-			quote_temp = *line;
-			quote_flag = 1;
-		}
-		else if (quote_flag && *line == quote_temp)
-			quote_flag = 0;
-		line++;
-	}
-	if (quote_flag)
-		return (1);
-	return (0);
-}
 
 void	set_token(t_token *token_header, char *str, int *curr_index)
 {
@@ -94,25 +72,22 @@ int	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 	return (1);
 }
 
-int	before_check_pipe(char *line)
+int	do_tokenize(char **pipe_split_line, \
+	int pipe_index, t_cmd **cmd, t_envp *envp_list)
 {
-	char	before_char;
-	int		str_index;
-
-	str_index = 1;
-	while (line[str_index])
+	if (before_check_quote(pipe_split_line[pipe_index]))
 	{
-		before_char = line[str_index - 1];
-		while (line[str_index] == 32 || line[str_index] == 9)
-			str_index++;
-		if (before_char == '|' && line[str_index] == '|')
-			return (-1);
-		if (line[str_index] != '\0')
-			str_index++;
-	}
-	if (line[str_index - 1] == '|')
+		free_str(pipe_split_line);
+		printf("minishell: syntax error near unexpected quote\n");
+		g_exit_status = 1;
 		return (-1);
-	return (1);
+	}
+	if (tokenize(pipe_split_line[pipe_index], cmd, envp_list) == -1)
+	{
+		free_str(pipe_split_line);
+		return (-1);
+	}
+	return (0);
 }
 
 int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
@@ -124,28 +99,15 @@ int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 	pipe_cnt = 0;
 	pipe_index = -1;
 	*cmd = NULL;
-	if (before_check_pipe(line) == -1)
+	if (before_check_pipe(line) == -1 || before_check_redir(line) == -1)
 	{
-		printf("minishell: syntax error near unexpected token `|'\n");
 		g_exit_status = 1;
 		return (-1);
 	}
-	pipe_split_line = ft_split(line, '|', &pipe_cnt); //따옴표 안에 파이프는 문자열 밀기.
+	pipe_split_line = ft_split_pipe(line, &pipe_cnt);
 	while (++pipe_index < pipe_cnt)
-	{
-		if (before_check_quote(pipe_split_line[pipe_index]))
-		{
-			free_str(pipe_split_line);
-			printf("minishell: syntax error near unexpected quote\n");
-			g_exit_status = 1;
+		if (do_tokenize(pipe_split_line, pipe_index, cmd, envp_list) == -1)
 			return (-1);
-		}
-		if (tokenize(pipe_split_line[pipe_index], cmd, envp_list) == -1)
-		{
-			free_str(pipe_split_line);
-			return (-1);
-		}
-	}
 	free_str(pipe_split_line);
 	return (1);
 }

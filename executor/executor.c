@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 02:02:11 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/15 17:15:19 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	// printf("start executor\n");
 	envp = envp->next; // 추후 에러 날 확률 있음
 	init_info(&info, envp, cmd);
+	//cmd 돌면서(redir을 돌면서) heredoc을 infile로.
 	while (cmd)
 	{
 		print_cmd(cmd);
