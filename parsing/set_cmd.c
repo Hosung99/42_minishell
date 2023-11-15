@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 15:11:53 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 22:13:10 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	check_token_type(t_token *token, int token_before_type)
 
 int	process_token(t_token **token, t_cmd **cmd, int *option_cnt)
 {
-	if ((*token)->type == TOKEN_WORD)
+	if ((*token)->type == TOKEN_WORD || (*token)->type == TOKEN_D_QUOTE || \
+		(*token)->type == TOKEN_S_QUOTE)
 		make_cmd(*token, cmd, option_cnt);
 	else if ((*token)->type == TOKEN_READ_REDIR \
 		|| (*token)->type == TOKEN_WRITE_REDIR)
@@ -81,7 +82,7 @@ int	set_cmd(t_token *token_header, t_cmd **cmd)
 	malloc_cmd(token_header, cmd);
 	while (token_header)
 	{
-		printf("token_header->str : %s\n", token_header->str);
+		printf("token_header->str : %s token_header->type: %d\n", token_header->str, token_header->type);
 		if (check_token_type(token_header, token_before_type) == -1)
 			return (-1);
 		if (process_token(&token_header, cmd, &option_cnt) == -1)

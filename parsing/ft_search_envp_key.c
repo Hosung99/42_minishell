@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 14:37:42 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 22:21:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_search_envp_key(t_envp *envp_list, char *str)
 	envp_temp = envp_list->next;
 	while (envp_temp)
 	{
+		printf("%s\n", envp_temp->key);
 		if ((ft_strcmp("?", str)))
 		{
 			free(str);

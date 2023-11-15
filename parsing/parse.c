@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 16:01:40 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/15 11:10:26 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int	before_check_quote(char *line)
 
 void	set_token(t_token *token_header, char *str, int *curr_index)
 {
-	if (str[*curr_index] == '\'' || str[*curr_index] == '"')
-		*curr_index = make_quote_token(str, token_header, *curr_index);
-	else if (str[*curr_index] == ' ' || str[*curr_index] == '\t')
+	if (str[*curr_index] == ' ' || str[*curr_index] == '\t')
 		*curr_index = make_cmd_token(str, token_header, *curr_index);
 	else if (str[*curr_index] == '>' || str[*curr_index] == '<')
 		*curr_index = make_redir_token(str, token_header, *curr_index);
@@ -49,16 +47,24 @@ void	set_token(t_token *token_header, char *str, int *curr_index)
 void	set_normal_token(t_token *token_header, char *str, int *curr_index)
 {
 	t_token	*new_token;
+	int		quote_flag;
 
+	quote_flag = 0;
 	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
 	while (str[*curr_index])
 	{
-		if (is_metachar(str[*curr_index]) == 1)
+		if (quote_flag == 0 && (str[*curr_index] == '\'' \
+			|| str[*curr_index] == '\"'))
+			quote_flag = 1;
+		else if (quote_flag == 1 && (str[*curr_index] == '\'' \
+			|| str[*curr_index] == '\"'))
+			quote_flag = 0;
+		if (quote_flag == 0 && is_metachar(str[*curr_index]) == 1)
 			break ;
 		new_token->str = ft_strjoin_char(new_token->str, str[*curr_index]);
 		*curr_index = *curr_index + 1;
 	}
-	new_token->type = TOKEN_WORD;
+	new_token->type = set_token_type(new_token->str);
 	new_token->next = NULL;
 	set_token_position(token_header, new_token);
 }
@@ -72,8 +78,6 @@ int	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 	curr_index = 0;
 	while (str[curr_index] == ' ' || str[curr_index] == '\t')
 		curr_index++;
-	(void)cmd;
-	(void)envp_list;
 	while (str[curr_index] && str)
 	{
 		if (is_metachar(str[curr_index]) == 1)
@@ -98,12 +102,13 @@ int	before_check_pipe(char *line)
 	str_index = 1;
 	while (line[str_index])
 	{
+		before_char = line[str_index - 1];
 		while (line[str_index] == 32 || line[str_index] == 9)
 			str_index++;
-		before_char = line[str_index - 1];
 		if (before_char == '|' && line[str_index] == '|')
 			return (-1);
-		str_index++;
+		if (line[str_index] != '\0')
+			str_index++;
 	}
 	if (line[str_index - 1] == '|')
 		return (-1);

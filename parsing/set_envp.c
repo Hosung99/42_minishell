@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:20:28 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 19:10:18 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/15 11:29:04 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	make_envp_cmd(t_envp *envp_list, char **str)
 	envp->key = ft_strdup(str[0]);
 	envp->value = ft_strdup(str[1]);
 	envp->next = NULL;
+	envp->have_equal = 0;
 	if (envp_list->next == NULL)
 		envp_list->next = envp;
 	else
@@ -53,7 +54,7 @@ char	**ft_split_equal(char *s)
 
 	str_index = len_word(s, '=');
 	str = (char **)malloc(sizeof(char *) * (3));
-	str[0] = ft_substr(s, 0, str_index + 1);
+	str[0] = ft_substr(s, 0, str_index);
 	str[1] = ft_substr(s, str_index + 1, ft_strlen(s) - str_index);
 	str[2] = 0;
 	return (str);

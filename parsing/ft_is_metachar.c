@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:40:11 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 14:40:26 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/14 21:27:29 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	is_metachar(char curr)
 {
-	if (curr == '<' || curr == '>' || curr == ' ' || curr == '\t' || \
-		curr == '"' || curr == '\'')
+	if (curr == '<' || curr == '>' || curr == ' ' || curr == '\t')
 		return (1);
 	else
 		return (0);
