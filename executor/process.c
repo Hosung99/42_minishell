@@ -24,7 +24,7 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 	}
 	dup_stdout(info, cmd);
 	if (info->tmp_fd < 0)
-		exit_free(info); // exit 전에 free 해줘야함
+		exit_free(info);
 	if (dup2(info->tmp_fd, STDIN_FILENO) == -1)
 		exit_perror("dup2", info);
 	close(info->tmp_fd);

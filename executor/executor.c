@@ -19,9 +19,9 @@ int	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
 
-	envp = envp->next; // 추후 에러 날 확률 있음
+	envp = envp->next;
 	init_info(&info, envp, cmd);
-	//cmd 돌면서(redir을 돌면서) heredoc을 infile로.
+	open_here_docs(cmd);
 	while (cmd)
 	{
 		if (pipe(info.pipe_fd) == -1)
@@ -55,7 +55,9 @@ int	cmd_cnt(t_cmd *cmd)
 	int		cnt;
 
 	cnt = 0;
-	temp  = cmd;
+	if (cmd == NULL)
+		return (0);
+	temp = cmd;
 	while (temp)
 	{
 		cnt++;

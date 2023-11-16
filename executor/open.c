@@ -31,7 +31,10 @@ void	file_open(t_cmd *cmd, t_info *info)
 		else if (ft_strncmp(temp->str, ">>", 3) == 0)
 			open_appendfile(temp, info);
 		else if (ft_strncmp(temp->str, "<<", 3) == 0)
-			here_doc(temp, info);
+		{
+			close(info->tmp_fd);
+			info->tmp_fd = dup(cmd->here_doc_fd);
+		}
 		temp = temp->next;
 	}
 }
@@ -41,7 +44,7 @@ void	open_infile(t_redir *redir, t_info *info)
 	close(info->tmp_fd);
 	info->tmp_fd = open(redir->filename, O_RDONLY);
 	if (info->tmp_fd < 0)
-		ft_perror(redir->filename, info);
+		ft_perror(redir->filename);
 }
 
 void	open_outfile(t_redir *redir, t_info *info)

@@ -19,7 +19,7 @@ void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		echo(cmd->cmd + 1);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-		ft_cd(cmd->cmd + 1, info, envp);
+		ft_cd(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
 		ft_pwd();
 	else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
