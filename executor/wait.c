@@ -12,14 +12,14 @@
 
 #include "executor.h"
 
-// extern int	g_exit_status;
-
 void	wait_all(t_info *info)
 {
 	int	count;
+	int	status;
 
 	count = 0;
-	waitpid(info->pid, NULL, 0);
+	waitpid(info->pid, &status, 0);
+	g_exit_status = WEXITSTATUS(status);
 	while (count < info->cmd_cnt - 1)
 	{
 		if (wait(0) == -1)

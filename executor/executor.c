@@ -15,8 +15,6 @@ void	print_redir(t_cmd *cmd);
 void	print_cmd(t_cmd *cmd);
 void	print_envp(t_envp *envp);
 
-extern int	g_exit_status;
-
 int	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;

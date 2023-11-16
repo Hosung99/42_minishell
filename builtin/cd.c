@@ -17,8 +17,6 @@ int		go_to_oldpwd(t_envp *envp, t_info *info);
 char	*get_envp_value(t_envp *envp, char *key);
 int		go_to_path_home(char *path, t_envp *envp, t_info *info);
 
-extern int	g_exit_status;
-
 void	ft_cd(char **cmd, t_info *info, t_envp *envp)
 {
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)

@@ -12,7 +12,6 @@
 
 #include "builtin.h"
 
-extern int	g_exit_status;
 int	only_number(char *str);
 
 void	ft_exit(char **cmd, t_info *info)

@@ -12,8 +12,6 @@
 
 #include "executor.h"
 
-extern int	g_exit_status;
-
 void	free_info(t_info *info)
 {
 	free_str(info->cmd_path);

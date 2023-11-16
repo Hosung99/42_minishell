@@ -14,6 +14,7 @@
 
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 {
+	g_exit_status = 0;
 	dup_stdout(info, cmd);
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		echo(cmd->cmd + 1);

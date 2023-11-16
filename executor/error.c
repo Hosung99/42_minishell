@@ -12,8 +12,6 @@
 
 #include "executor.h"
 
-extern int	g_exit_status;
-
 void	ft_perror(char *msg, t_info *info)
 {
 	(void)info;

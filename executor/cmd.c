@@ -12,8 +12,6 @@
 
 #include "executor.h"
 
-extern int	g_exit_status;
-
 char	*get_cmd(char **path, char *cmd, t_info *info)
 {
 	int		index;

@@ -21,6 +21,8 @@
 
 # define HERE_DOC_FILE ".here_doc"
 
+extern int	g_exit_status;
+
 typedef	struct	s_info
 {
 	char	**cmd_path;
