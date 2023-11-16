@@ -12,11 +12,11 @@ LIBFT = ./libft/libft.a
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 $(NAME): $(OBJS)
 	make -C libft
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT) -lreadline $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT) -lreadline
 
 clean:
 	make clean -C libft
