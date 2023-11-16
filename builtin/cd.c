@@ -12,30 +12,30 @@
 
 #include "builtin.h"
 
-int		go_to_home(t_envp *envp, t_info *info);
-int		go_to_oldpwd(t_envp *envp, t_info *info);
+int		go_to_home(t_envp *envp);
+int		go_to_oldpwd(t_envp *envp);
 char	*get_envp_value(t_envp *envp, char *key);
-int		go_to_path_home(char *path, t_envp *envp, t_info *info);
+int		go_to_path_home(char *path, t_envp *envp);
 
 void	ft_cd(char **cmd, t_info *info, t_envp *envp)
 {
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
-		g_exit_status = go_to_home(envp, info);
+		g_exit_status = go_to_home(envp);
 	else if (ft_strncmp(cmd[0], "-", 2) == 0)
-		g_exit_status = go_to_oldpwd(envp, info);
+		g_exit_status = go_to_oldpwd(envp);
 	else if (ft_strncmp(cmd[0], "~/", 2) == 0)
-		g_exit_status = go_to_path_home(cmd[0], envp, info);
+		g_exit_status = go_to_path_home(cmd[0], envp);
 	else 
 	{
 		if (chdir(cmd[0]) == -1)
 		{
 			g_exit_status = 1;
-			ft_perror(cmd[0], info);
+			ft_perror(cmd[0]);
 		}
 	}
 }
 
-int	go_to_home(t_envp *envp, t_info *info)
+int	go_to_home(t_envp *envp)
 {
 	char	*home;
 
@@ -47,13 +47,13 @@ int	go_to_home(t_envp *envp, t_info *info)
 	}
 	if (chdir(home) == -1)
 	{
-		ft_perror(home, info);
+		ft_perror(home);
 		return (1);
 	}
 	return (0);
 }
 
-int	go_to_oldpwd(t_envp *envp, t_info *info)
+int	go_to_oldpwd(t_envp *envp)
 {
 	char	*oldpwd;
 
@@ -65,7 +65,7 @@ int	go_to_oldpwd(t_envp *envp, t_info *info)
 	}
 	if (chdir(oldpwd) == -1)
 	{
-		ft_perror(oldpwd, info);
+		ft_perror(oldpwd);
 		return (1);
 	}
 	return (0);
@@ -82,7 +82,7 @@ char	*get_envp_value(t_envp *envp, char *key)
 	return (NULL);
 }
 
-int	go_to_path_home(char *path, t_envp *envp, t_info *info)
+int	go_to_path_home(char *path, t_envp *envp)
 {
 	char	*home;
 	char	*res;
@@ -96,7 +96,7 @@ int	go_to_path_home(char *path, t_envp *envp, t_info *info)
 	res = ft_strjoin(home, path + 1);
 	if (chdir(res) == -1)
 	{
-		ft_perror(res, info);
+		ft_perror(res);
 		return (1);
 	}
 	return (0);

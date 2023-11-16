@@ -27,4 +27,5 @@ void	init_info(t_info *info, t_envp *envp, t_cmd *cmd)
 	info->pid = 1;
 	info->status = 0;
 	info->have_outfile = 0;
+	info->file_fds = NULL;
 }

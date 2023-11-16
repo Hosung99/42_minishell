@@ -40,10 +40,10 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 
 void	parent_process(t_info *info)
 {
-	// close(info->tmp_fd);
+	close(info->tmp_fd);
 	info->tmp_fd = dup(info->pipe_fd[0]);
 	if (info->tmp_fd == -1)
-		ft_perror("dup", info);
+		ft_perror("dup");
 	close(info->pipe_fd[0]);
 	close(info->pipe_fd[1]);
 }
@@ -63,14 +63,14 @@ void	dup_stdout(t_info *info, t_cmd *cmd)
 	else if (cmd->next != NULL)
 	{
 		if (dup2(info->pipe_fd[1], STDOUT_FILENO) == -1)
-			ft_perror("dup2", info);
+			ft_perror("dup2");
 	}
 	close(info->pipe_fd[1]);
 }
 
 void	exit_perror(char *msg, t_info *info)
 {
-	ft_perror(msg, info);
+	ft_perror(msg);
 	free_info(info);
 	exit(EXIT_FAILURE);
 }

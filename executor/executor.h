@@ -25,20 +25,27 @@ extern int	g_exit_status;
 
 typedef	struct	s_info
 {
-	char	**cmd_path;
-	char	*cmd;
-	int		pipe_fd[2];
-	int		tmp_fd;
-	int		outfile_fd;
-	int		stdout_fd;
-	t_cmd	*cmd_start;
-	t_envp	*envp_start;
-	pid_t	pid;
-	int		status;
-	int		cmd_cnt;
-	int		have_outfile;
-	int		errono;
+	char		**cmd_path;
+	char		*cmd;
+	int			pipe_fd[2];
+	int			tmp_fd;
+	int			outfile_fd;
+	int			stdout_fd;
+	t_cmd		*cmd_start;
+	t_envp		*envp_start;
+	pid_t		pid;
+	int			status;
+	int			cmd_cnt;
+	int			have_outfile;
+	int			errono;
+	t_file_fd	*file_fds;
 }				t_info;
+
+typedef struct s_file_fd
+{
+	int			here_doc_fd;
+	int			here_doc_satatus;
+}				t_file_fd;
 
 void	init_info(t_info *info, t_envp *envp, t_cmd *cmd);
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp);
@@ -51,13 +58,13 @@ void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp, char *key);
 char	*get_cmd(char **path, char *cmd, t_info *info);
 void	wait_all(t_info *info);
-void	file_open(t_cmd *cmd, t_info *info);
+void	file_open(t_cmd *cmd, t_info *info, t_file_fd *file_fd);
 int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, t_info *info);
 void	free_envp(t_envp *envp);
 void	free_info(t_info *info);
 
-void	ft_perror(char *msg, t_info *info);
+void	ft_perror(char *msg);
 void	ft_cmd_error(char *cmd);
 void	ft_permission_error(char *cmd);
 char	**get_envp(t_envp *envp);

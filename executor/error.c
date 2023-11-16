@@ -12,9 +12,8 @@
 
 #include "executor.h"
 
-void	ft_perror(char *msg, t_info *info)
+void	ft_perror(char *msg)
 {
-	(void)info;
 	ft_putstr_fd("minishell: ", 2);
 	perror(msg);
 	g_exit_status = EXIT_FAILURE;

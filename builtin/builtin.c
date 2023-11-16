@@ -21,7 +21,7 @@ void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
 		ft_cd(cmd->cmd + 1, info, envp);
 	else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-		ft_pwd(info);
+		ft_pwd();
 	else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 		ft_export(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)

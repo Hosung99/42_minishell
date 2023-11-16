@@ -12,13 +12,13 @@
 
 #include "builtin.h"
 
-void	ft_pwd(t_info *info)
+void	ft_pwd(void)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		ft_perror("pwd", info);
+		ft_perror("pwd");
 	ft_putstr_fd(cwd, 1);
 	ft_putchar_fd('\n', 1);
 	free(cwd);
