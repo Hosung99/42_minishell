@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 16:45:53 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 17:02:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	open_here_docs(t_cmd *cmd)
 		ft_free(filename);
 		temp_cmd = temp_cmd->next;
 	}
+	set_signal(TER, TER);
 }
 
 int	check_heredoc(t_cmd *cmd)
