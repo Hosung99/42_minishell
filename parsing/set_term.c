@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:38:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/17 16:44:21 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 18:16:49 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	set_termios(t_termios *term)
 void	reset_termios(t_termios *term)
 {
 	tcsetattr(STDIN_FILENO, TCSANOW, &term->old_term);
-	set_signal(DEF,DEF);
+	// set_signal(DEF,DEF);
 }

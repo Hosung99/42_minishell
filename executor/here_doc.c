@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 17:52:24 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 18:34:38 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	here_doc(t_redir *redir, char *filename)
 		if (!tmp)
 		{
 			printf(">");
-			exit(1) ;
+			exit(1);
 		}
 		line = ft_strjoin(tmp, "\n");
 		if (!line)
@@ -59,13 +59,14 @@ void	open_here_docs(t_cmd *cmd)
 	filename = NULL;
 	if (check_heredoc(cmd) != 1)
 		return ;
+	set_signal(IGN, IGN);
 	while (temp_cmd)
 	{
 		filename = make_random_here_doc();
 		pid = fork();
 		if (pid == 0)
 		{
-			set_signal(IGN, DEF);
+			set_signal(CHI, DEF);
 			do_heredoc(temp_cmd, filename);
 			ft_free(filename);
 			exit(0);
@@ -75,7 +76,6 @@ void	open_here_docs(t_cmd *cmd)
 		else
 		{
 			waitpid(pid, &g_exit_status, 0);
-			// set_signal(IGN, IGN);
 			temp_cmd->here_doc_fd = open(filename, O_RDONLY);
 			if (cmd->here_doc_fd < 0)
 				ft_perror("here_doc");
@@ -84,6 +84,7 @@ void	open_here_docs(t_cmd *cmd)
 		ft_free(filename);
 		temp_cmd = temp_cmd->next;
 	}
+	set_signal(TER, TER);
 }
 
 int	check_heredoc(t_cmd *cmd)

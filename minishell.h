@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/17 16:44:38 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 18:34:55 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define IGN 1
 # define DEF 2
 # define TER 3
+# define CHI 4
 
 typedef struct s_token		t_token;
 typedef struct s_redir		t_redir;

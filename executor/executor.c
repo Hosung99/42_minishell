@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 17:49:35 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 18:22:53 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	executor(t_cmd *cmd, t_envp *envp)
 	envp = envp->next;
 	init_info(&info, envp, cmd);
 	open_here_docs(cmd);
-	// set_signal(TER, TER);
 	while (cmd)
 	{
 		if (pipe(info.pipe_fd) == -1)
