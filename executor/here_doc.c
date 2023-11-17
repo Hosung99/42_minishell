@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/15 20:59:04 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/17 16:45:53 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	here_doc(t_redir *redir, char *filename)
 	while (1)
 	{
 		tmp = readline("> ");
+		if (!tmp)
+		{
+			printf(">");
+			break ;
+		}
 		line = ft_strjoin(tmp, "\n");
 		if (!line)
 			ft_perror("readline");
@@ -51,6 +56,7 @@ void	open_here_docs(t_cmd *cmd)
 
 	temp_cmd = cmd;
 	filename = NULL;
+	set_signal(DEF, IGN);
 	if (check_heredoc(cmd) != 1)
 		return ;
 	while (temp_cmd)
@@ -68,6 +74,7 @@ void	open_here_docs(t_cmd *cmd)
 		else
 		{
 			waitpid(pid, &g_exit_status, 0);
+			set_signal(IGN, IGN);
 			temp_cmd->here_doc_fd = open(filename, O_RDONLY);
 			if (cmd->here_doc_fd < 0)
 				ft_perror("here_doc");
