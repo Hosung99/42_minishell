@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:57:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 00:50:50 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/14 18:59:42 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ int		go_to_oldpwd(t_envp *envp);
 char	*get_envp_value(t_envp *envp, char *key);
 int		go_to_path_home(char *path, t_envp *envp);
 
-void	ft_cd(char **cmd, t_info *info, t_envp *envp)
+void	ft_cd(char **cmd, t_envp *envp)
 {
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
-		info->status = go_to_home(envp);
+		g_exit_status = go_to_home(envp);
 	else if (ft_strncmp(cmd[0], "-", 2) == 0)
-		info->status = go_to_oldpwd(envp);
+		g_exit_status = go_to_oldpwd(envp);
 	else if (ft_strncmp(cmd[0], "~/", 2) == 0)
-		info->status = go_to_path_home(cmd[0], envp);
+		g_exit_status = go_to_path_home(cmd[0], envp);
 	else 
 	{
 		if (chdir(cmd[0]) == -1)
 		{
-			info->status = 1;
-			perror(cmd[0]);
+			g_exit_status = 1;
+			ft_perror(cmd[0]);
 		}
 	}
 }
@@ -47,7 +47,7 @@ int	go_to_home(t_envp *envp)
 	}
 	if (chdir(home) == -1)
 	{
-		perror(home);
+		ft_perror(home);
 		return (1);
 	}
 	return (0);
@@ -65,7 +65,7 @@ int	go_to_oldpwd(t_envp *envp)
 	}
 	if (chdir(oldpwd) == -1)
 	{
-		perror(oldpwd);
+		ft_perror(oldpwd);
 		return (1);
 	}
 	return (0);
@@ -96,7 +96,7 @@ int	go_to_path_home(char *path, t_envp *envp)
 	res = ft_strjoin(home, path + 1);
 	if (chdir(res) == -1)
 	{
-		perror(res);
+		ft_perror(res);
 		return (1);
 	}
 	return (0);

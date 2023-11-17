@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:46:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 02:26:44 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/13 20:18:43 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 {
-	//아직 buitin 함수들 형태만 구현함
-	printf("builtin\n");
+	g_exit_status = 0;
+	dup_stdout(info, cmd);
 	if (ft_strncmp(cmd->cmd[0], "echo", 5) == 0)
 		echo(cmd->cmd + 1);
 	else if (ft_strncmp(cmd->cmd[0], "cd", 3) == 0)
-		ft_cd(cmd->cmd + 1, info, envp);
+		ft_cd(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], "pwd", 4) == 0)
-		ft_pwd(info);
+		ft_pwd();
 	else if (ft_strncmp(cmd->cmd[0], "export", 7) == 0)
 		ft_export(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], "unset", 6) == 0)

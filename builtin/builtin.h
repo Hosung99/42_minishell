@@ -15,11 +15,11 @@
 
 #include "../executor/executor.h"
 
-void	ft_cd(char **cmd, t_info *info, t_envp *envp);
+void	ft_cd(char **cmd, t_envp *envp);
 void	echo(char **args);
 void	ft_env(t_envp *envp);
 void	ft_exit(char **cmd, t_info *info);
-void	ft_pwd(t_info *info);
+void	ft_pwd();
 void	ft_export(char **cmd, t_envp *envp);
 void	ft_unset(char **cmd, t_envp *envp);
 

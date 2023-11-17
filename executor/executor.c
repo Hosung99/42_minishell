@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/15 17:15:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/15 20:58:36 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,34 @@ int	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
 
-	// printf("start executor\n");
-	envp = envp->next; // 추후 에러 날 확률 있음
+	envp = envp->next;
 	init_info(&info, envp, cmd);
-	//cmd 돌면서(redir을 돌면서) heredoc을 infile로.
+	open_here_docs(cmd);
 	while (cmd)
 	{
-		print_cmd(cmd);
 		if (pipe(info.pipe_fd) == -1)
-			exit_perror("ERROR_pipe");
+			exit_perror("pipe", &info);
 		file_open(cmd, &info);
 		if (info.cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
 		{
 			builtin(cmd, &info, envp);
+			dup2(info.stdout_fd, STDOUT_FILENO);
 			break;
 		}
 		else
 			info.pid = fork();
 		if (info.pid == 0)
-			child_process(cmd, &info);
+			child_process(cmd, &info, envp);
 		else if (info.pid < 0)
 			return (1);
 		else
 			parent_process(&info);
-		// printf("end process\n");
 		cmd = cmd->next;
+		info.have_outfile = 0;
 	}
 	if (cmd == NULL)
 		wait_all(&info);
-	return (info.status);
+	return (g_exit_status);
 }
 
 int	cmd_cnt(t_cmd *cmd)
@@ -56,7 +55,9 @@ int	cmd_cnt(t_cmd *cmd)
 	int		cnt;
 
 	cnt = 0;
-	temp  = cmd;
+	if (cmd == NULL)
+		return (0);
+	temp = cmd;
 	while (temp)
 	{
 		cnt++;

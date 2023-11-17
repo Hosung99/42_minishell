@@ -63,6 +63,8 @@ struct s_redir
 struct s_cmd
 {
 	char	**cmd;
+	int		here_doc_fd;
+	char	*here_doc_str;
 	t_redir	*redir;
 	t_cmd	*next;
 };
@@ -102,5 +104,6 @@ void	delete_quote(t_token *token);
 int		before_check_pipe(char *line);
 int		before_check_redir(char *str);
 int		before_check_quote(char *line);
+void	update_shlvl(t_envp *envp);
 
 #endif

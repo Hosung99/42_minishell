@@ -20,7 +20,7 @@ void	make_envp_cmd(t_envp *envp_list, char **str)
 	envp->key = ft_strdup(str[0]);
 	envp->value = ft_strdup(str[1]);
 	envp->next = NULL;
-	envp->have_equal = 0;
+	envp->have_equal = 1;
 	if (envp_list->next == NULL)
 		envp_list->next = envp;
 	else
@@ -63,14 +63,12 @@ char	**ft_split_equal(char *s)
 void	set_envp(char **envp, t_envp *envp_list)
 {
 	int		envp_index;
-	int		split_cnt;
 	char	**split_str;
 
 	envp_index = 0;
 	envp_list->next = NULL;
 	while (envp[envp_index])
 	{
-		split_cnt = 0;
 		split_str = ft_split_equal(envp[envp_index]);
 		make_envp_cmd(envp_list, split_str);
 		free_str(split_str);
