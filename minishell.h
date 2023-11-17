@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 20:06:59 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 11:47:13 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,17 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_token	t_token;
-typedef struct s_redir	t_redir;
-typedef struct s_cmd	t_cmd;
-typedef struct s_envp	t_envp;
+typedef struct s_token		t_token;
+typedef struct s_redir		t_redir;
+typedef struct s_cmd		t_cmd;
+typedef struct s_envp		t_envp;
+typedef struct s_termios	t_termios;
+
+struct s_termios
+{
+	struct termios	old_term;
+	struct termios	new_term;
+};
 
 struct s_envp
 {
@@ -68,8 +75,8 @@ struct s_cmd
 	t_cmd	*next;
 };
 
-int		set_termios(struct termios *old_term, struct termios *new_term);
-int		reset_termios(struct termios *old_term);
+void	set_termios(t_termios *term);
+void	reset_termios(t_termios *term);
 int		print_picture(int argc, char **argv);
 int		parse(char *line, t_cmd **cmd, t_envp *envp_list);
 void	sig_handler(int signo);

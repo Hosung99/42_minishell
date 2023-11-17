@@ -6,28 +6,24 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:38:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 16:13:46 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 11:47:02 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	set_termios(struct termios *old_term, struct termios *new_term)
+void	set_termios(t_termios *term)
 {
-	if (tcgetattr(STDIN_FILENO, old_term) == -1)
-		return (-1);
-	if (tcgetattr(STDIN_FILENO, new_term) == -1)
-		return (-1);
-	new_term->c_lflag = ~(ICANON);
-	new_term->c_lflag = ~(ECHOCTL);
-	tcsetattr(STDIN_FILENO, TCSANOW, new_term);
+	tcgetattr(STDIN_FILENO, &term->old_term);
+	tcgetattr(STDIN_FILENO, &term->new_term);
+	term->new_term.c_lflag = ~(ICANON);
+	term->new_term.c_lflag = ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term->new_term);
 	set_signal("NULL");
-	return (1);
 }
 
-int	reset_termios(struct termios *old_term)
+void	reset_termios(t_termios *term)
 {
-	if (tcsetattr(STDIN_FILENO, TCSANOW, old_term) == -1)
-		return (-1);
-	return (1);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term->old_term);
+	set_signal("DEFAULT");
 }
