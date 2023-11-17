@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:55:47 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 14:27:29 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 17:09:00 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ char	*get_cmd(char **path, char *cmd, t_info *info)
 	char	*tmp;
 	int		have_slash;
 
-	have_slash = check_slash(cmd, info);
-
 	if (cmd == NULL || path == NULL)
 		return (NULL);
+	have_slash = check_slash(cmd, info);
 	path_cmd = ft_strjoin("/", cmd);
 	index = 0;
 	while (path[index])

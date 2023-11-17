@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 17:02:05 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 17:17:11 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ void	here_doc(t_redir *redir, char *filename)
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 00000644);
 	if (fd < 0)
 		ft_perror("here_doc");
+	line = NULL;
 	while (1)
 	{
 		tmp = readline("> ");
 		if (!tmp)
 		{
 			printf(">");
-			break ;
+			exit(1) ;
 		}
 		line = ft_strjoin(tmp, "\n");
 		if (!line)

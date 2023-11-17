@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/13 20:45:40 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/17 17:27:51 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 {
 	char	**input_envp;
 	
+	if (!cmd->cmd || !cmd->cmd[0])
+		exit_free(info);
 	close(info->pipe_fd[0]);
 	if (is_builtin(cmd->cmd[0]))
 	{
