@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 20:11:24 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 12:13:04 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd)
 	t_token	*token_temp;
 
 	token_temp = token_header;
-	(void)cmd;
 	while (token_temp)
 	{
 		if (token_temp->type == TOKEN_WORD)
