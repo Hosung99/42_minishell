@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/17 11:54:23 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 14:04:40 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void	set_init(char **envp, t_envp *envp_list, t_termios *term)
 {
 	set_envp(envp, envp_list);
 	set_termios(term);
-	update_shlvl(envp_list);
+}
+
+void	foo(void)
+{
+	system("leaks --list minishell");
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -47,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	if (print_picture(argc, argv) == -1)
 		return (-1);
 	set_init(envp, &envp_list, &term);
+	update_shlvl(&envp_list);
 	while (1)
 	{
 		line = readline("minishell$ ");

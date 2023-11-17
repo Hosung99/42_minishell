@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/14 18:56:53 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/17 14:06:43 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	envp_cnt(t_envp *envp)
 
 void	update_shlvl(t_envp *envp)
 {
+	char	*tmp;
+
 	envp = envp->next;
 	while (envp)
 	{
@@ -70,7 +72,11 @@ void	update_shlvl(t_envp *envp)
 			if (envp->value == NULL)
 				envp->value = ft_strdup("1");
 			else
+			{
+				tmp = envp->value;
 				envp->value = ft_itoa(ft_atoi(envp->value) + 1);
+				free(tmp);
+			}
 			break ;
 		}
 		envp = envp->next;
