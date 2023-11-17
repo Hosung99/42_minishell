@@ -75,7 +75,6 @@ struct s_cmd
 {
 	char	**cmd;
 	int		here_doc_fd;
-	char	*here_doc_str;
 	t_redir	*redir;
 	t_cmd	*next;
 };

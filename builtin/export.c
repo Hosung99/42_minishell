@@ -64,12 +64,12 @@ void	set_key_value(t_envp *envp, char *input_key, char *input_value, int have_eq
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (ft_strncmp(tmpenv->key, input_key, ft_strlen(tmpenv->key) + 1) == 0)
+		if (tmpenv->key != NULL && ft_strncmp(tmpenv->key, input_key, ft_strlen(input_key) + 1) == 0)
 		{
-			free(tmpenv->value);
+			ft_free(tmpenv->value);
 			tmpenv->value = input_value;
 			tmpenv->have_equal = have_equal;
-			free(input_key);
+			ft_free(input_key);
 			return ;
 		}
 		tmpenv = tmpenv->next;

@@ -63,10 +63,7 @@ int	main(int argc, char **argv, char **envp)
 			if (parse(line, &cmd, &envp_list) == -1)
 				free_cmd(&cmd);
 			else
-			{
 				executor(cmd, &envp_list);
-				free_cmd(&cmd);
-			}
 		}
 		free(line);
 	}

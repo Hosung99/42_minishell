@@ -65,5 +65,6 @@ void	ft_cmd_error(char *cmd);
 void	ft_permission_error(char *cmd);
 char	**get_envp(t_envp *envp);
 void	exit_free(t_info *info);
+void	ft_free(void *ptr);
 
 #endif

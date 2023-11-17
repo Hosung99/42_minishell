@@ -40,11 +40,11 @@ void	here_doc(t_redir *redir, char *filename)
 		if (ft_strncmp(redir->filename, tmp, ft_strlen(tmp) + 1) == 0)
 			break ;
 		write(fd, line, ft_strlen(line));
-		free(tmp);
-		free(line);
+		ft_free(tmp);
+		ft_free(line);
 	}
-	free(tmp);
-	free(line);
+	ft_free(tmp);
+	ft_free(line);
 	close(fd);
 }
 
@@ -66,7 +66,7 @@ void	open_here_docs(t_cmd *cmd)
 		if (pid == 0)
 		{
 			do_heredoc(temp_cmd, filename);
-			free(filename);
+			ft_free(filename);
 			exit(0);
 		}
 		else if (pid < 0)
@@ -80,7 +80,7 @@ void	open_here_docs(t_cmd *cmd)
 				ft_perror("here_doc");
 			unlink(filename);
 		}
-		free(filename);
+		ft_free(filename);
 		temp_cmd = temp_cmd->next;
 	}
 }
@@ -133,7 +133,7 @@ char	*make_random_here_doc()
 	{
 		tmp = ft_itoa(rand() % 10);
 		filename = ft_strjoin_char(filename, tmp[0]);
-		free(tmp);
+		ft_free(tmp);
 		i++;
 	}
 	return (filename);

@@ -19,6 +19,9 @@ int		go_to_path_home(char *path, t_envp *envp);
 
 void	ft_cd(char **cmd, t_envp *envp)
 {
+	char	*nowpwd;
+
+	nowpwd = getcwd(NULL, 0);
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
 		g_exit_status = go_to_home(envp);
 	else if (ft_strncmp(cmd[0], "-", 2) == 0)
@@ -33,6 +36,7 @@ void	ft_cd(char **cmd, t_envp *envp)
 			ft_perror(cmd[0]);
 		}
 	}
+	export_oldpwd(nowpwd, envp);
 }
 
 int	go_to_home(t_envp *envp)
@@ -73,9 +77,11 @@ int	go_to_oldpwd(t_envp *envp)
 
 char	*get_envp_value(t_envp *envp, char *key)
 {
+	if (!key)
+		return (NULL);
 	while (envp)
 	{
-		if (ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
+		if (envp->key != NULL && ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
 			return (envp->value);
 		envp = envp->next;
 	}
