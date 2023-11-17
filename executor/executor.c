@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 16:49:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 16:52:48 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,13 @@ int	executor(t_cmd *cmd, t_envp *envp)
 		else if (info.pid < 0)
 			return (1);
 		else
-		{
-			set_signal("ignore");
 			parent_process(&info);
-		}
 		cmd = cmd->next;
 		info.have_outfile = 0;
 	}
 	free_info(&info);
 	if (cmd == NULL)
 		wait_all(&info);
-	set_signal("terminal");
 	return (g_exit_status);
 }
 
