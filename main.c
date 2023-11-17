@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 19:08:21 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 11:54:23 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,23 @@ int	check_first_char(char *line)
 	return (1);
 }
 
-void	foo(void)
+void	set_init(char **envp, t_envp *envp_list, t_termios *term)
 {
-	system("leaks --list minishell");
+	set_envp(envp, envp_list);
+	set_termios(term);
+	update_shlvl(envp_list);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	// atexit(foo);
-	struct termios	old_term;
-	struct termios	new_term;
+	t_termios		term;
 	t_cmd			*cmd;
 	t_envp			envp_list;
 	char			*line;
 
 	if (print_picture(argc, argv) == -1)
 		return (-1);
-	set_envp(envp, &envp_list);
-	if (set_termios(&old_term, &new_term) == -1)
-		return (-1);
-	update_shlvl(&envp_list);
+	set_init(envp, &envp_list, &term);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -68,7 +65,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(line);
 	}
-	if (reset_termios(&old_term) == -1)
-		return (-1);
+	reset_termios(&term);
 	exit(1);
 }
