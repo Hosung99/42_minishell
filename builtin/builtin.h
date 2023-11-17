@@ -22,5 +22,6 @@ void	ft_exit(char **cmd, t_info *info);
 void	ft_pwd();
 void	ft_export(char **cmd, t_envp *envp);
 void	ft_unset(char **cmd, t_envp *envp);
+void	export_oldpwd(char *oldpwd, t_envp *envp);
 
 #endif

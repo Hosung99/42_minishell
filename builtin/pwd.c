@@ -21,5 +21,5 @@ void	ft_pwd(void)
 		ft_perror("pwd");
 	ft_putstr_fd(cwd, 1);
 	ft_putchar_fd('\n', 1);
-	free(cwd);
+	ft_free(cwd);
 }

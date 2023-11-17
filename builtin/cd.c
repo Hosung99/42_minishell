@@ -19,6 +19,9 @@ int		go_to_path_home(char *path, t_envp *envp);
 
 void	ft_cd(char **cmd, t_envp *envp)
 {
+	char	*nowpwd;
+
+	nowpwd = getcwd(NULL, 0);
 	if (cmd[0] == NULL || ft_strncmp(cmd[0], "~", 2) == 0)
 		g_exit_status = go_to_home(envp);
 	else if (ft_strncmp(cmd[0], "-", 2) == 0)
@@ -33,6 +36,7 @@ void	ft_cd(char **cmd, t_envp *envp)
 			ft_perror(cmd[0]);
 		}
 	}
+	export_oldpwd(nowpwd, envp);
 }
 
 int	go_to_home(t_envp *envp)

@@ -15,8 +15,7 @@
 void	free_info(t_info *info)
 {
 	free_str(info->cmd_path);
-	if (info->cmd)
-		free(info->cmd);
+	ft_free(info->cmd);
 	close(info->pipe_fd[0]);
 	close(info->pipe_fd[1]);
 	free_cmd(&info->cmd_start);
@@ -33,11 +32,11 @@ void	free_envp(t_envp *envp)
 	{
 		envp_temp = envp;
 		if (envp->key)
-			free(envp->key);
+			ft_free(envp->key);
 		if (envp->value)
-			free(envp->value);
+			ft_free(envp->value);
 		envp = envp->next;
-		free(envp_temp);
+		ft_free(envp_temp);
 	}	
 }
 
@@ -45,4 +44,11 @@ void	exit_free(t_info *info)
 {
 	free_info(info);
 	exit(g_exit_status);
+}
+
+void	ft_free(void *ptr)
+{
+	if (ptr)
+		ft_free(ptr);
+	ptr = NULL;
 }

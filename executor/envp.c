@@ -35,7 +35,7 @@ char	**get_envp(t_envp *envp)
 				input_envp[i] = ft_strdup(key);
 			else
 				input_envp[i] = ft_strjoin(key, envp->value);
-			free(key);
+			ft_free(key);
 			if (input_envp[i] == NULL)
 				return (NULL);
 			i++;

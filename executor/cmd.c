@@ -33,13 +33,13 @@ char	*get_cmd(char **path, char *cmd, t_info *info)
 			tmp = ft_strjoin(path[index], path_cmd);
 		if (access(tmp, X_OK) != -1)
 		{
-			free(path_cmd);
+			ft_free(path_cmd);
 			return (tmp);
 		}
-		free(tmp);
+		ft_free(tmp);
 		index++;
 	}
-	free(path_cmd);
+	ft_free(path_cmd);
 	if (have_slash == 1)
 		exit_perror(cmd, info);
 	return (NULL);
