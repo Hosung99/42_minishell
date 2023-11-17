@@ -77,9 +77,11 @@ int	go_to_oldpwd(t_envp *envp)
 
 char	*get_envp_value(t_envp *envp, char *key)
 {
+	if (!key)
+		return (NULL);
 	while (envp)
 	{
-		if (ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
+		if (envp->key != NULL && ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
 			return (envp->value);
 		envp = envp->next;
 	}

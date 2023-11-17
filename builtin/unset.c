@@ -19,7 +19,7 @@ void	ft_unset(char **cmd, t_envp *envp)
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (ft_strncmp(tmpenv->key, cmd[0], ft_strlen(tmpenv->key)) == 0)
+		if (tmpenv->key != NULL && ft_strncmp(tmpenv->key, cmd[0], ft_strlen(tmpenv->key)) == 0)
 		{
 			tmpenv->key = NULL;
 			tmpenv->value = NULL;

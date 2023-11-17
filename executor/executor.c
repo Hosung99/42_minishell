@@ -44,6 +44,7 @@ int	executor(t_cmd *cmd, t_envp *envp)
 		cmd = cmd->next;
 		info.have_outfile = 0;
 	}
+	free_info(&info);
 	if (cmd == NULL)
 		wait_all(&info);
 	return (g_exit_status);

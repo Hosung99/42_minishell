@@ -41,7 +41,7 @@ void	export_oldpwd(char *oldpwd, t_envp *envp)
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (ft_strncmp(tmpenv->key, oldpwd_key, ft_strlen(tmpenv->key) + 1) == 0)
+		if (tmpenv->key && ft_strncmp(tmpenv->key, oldpwd_key, ft_strlen(oldpwd_key) + 1) == 0)
 		{
 			ft_free(tmpenv->value);
 			tmpenv->value = oldpwd_value;

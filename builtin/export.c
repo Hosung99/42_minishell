@@ -45,8 +45,6 @@ void	ft_export(char **cmd, t_envp *envp)
 			input_key = ft_substr(cmd[index], 0, char_index);
 			input_value = ft_substr(cmd[index], char_index + 1, ft_strlen(cmd[index]));
 			set_key_value(envp, input_key, input_value, have_equal);
-			ft_free(input_key);
-			ft_free(input_value);
 		}
 		index++;
 	}
@@ -66,7 +64,7 @@ void	set_key_value(t_envp *envp, char *input_key, char *input_value, int have_eq
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (ft_strncmp(tmpenv->key, input_key, ft_strlen(tmpenv->key) + 1) == 0)
+		if (tmpenv->key != NULL && ft_strncmp(tmpenv->key, input_key, ft_strlen(input_key) + 1) == 0)
 		{
 			ft_free(tmpenv->value);
 			tmpenv->value = input_value;

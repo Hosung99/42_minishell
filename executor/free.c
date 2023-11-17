@@ -19,25 +19,6 @@ void	free_info(t_info *info)
 	close(info->pipe_fd[0]);
 	close(info->pipe_fd[1]);
 	free_cmd(&info->cmd_start);
-	// free_envp(info->envp_start);
-}
-
-void	free_envp(t_envp *envp)
-{
-	t_envp	*envp_temp;
-
-	if (envp == NULL)
-		return ;
-	while (envp)
-	{
-		envp_temp = envp;
-		if (envp->key)
-			ft_free(envp->key);
-		if (envp->value)
-			ft_free(envp->value);
-		envp = envp->next;
-		ft_free(envp_temp);
-	}	
 }
 
 void	exit_free(t_info *info)
@@ -48,7 +29,7 @@ void	exit_free(t_info *info)
 
 void	ft_free(void *ptr)
 {
-	if (ptr)
-		ft_free(ptr);
+	if (ptr != NULL)
+		free(ptr);
 	ptr = NULL;
 }
