@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 14:06:43 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:41:59 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,44 @@ int	envp_cnt(t_envp *envp);
 
 char	**get_envp(t_envp *envp)
 {
-	char	**input_envp;
-	char	*key;
+	char	**env_arr;
 	int		i;
 
 	i = 0;
-	input_envp = (char **)malloc(sizeof(char *) * (envp_cnt(envp) + 1));
-	if (input_envp == NULL)
+	env_arr = (char **)malloc(sizeof(char *) * (envp_cnt(envp) + 1));
+	if (env_arr == NULL)
 		return (NULL);
 	while (envp)
 	{
 		if (envp->key != NULL)
 		{
-			key = ft_strjoin(envp->key, "=");
-			if (key == NULL)
-				return (NULL);
-			if (envp->value == NULL)
-				input_envp[i] = ft_strdup(key);
-			else
-				input_envp[i] = ft_strjoin(key, envp->value);
-			ft_free(key);
-			if (input_envp[i] == NULL)
-				return (NULL);
+			env_arr[i] = input_envp(envp->key, envp->value);
+			if (env_arr[i] == NULL)
+				return (NULL); // return 전에 모든 env_arr[i] free
+			envp = envp->next;
 			i++;
 		}
-		envp = envp->next;
 	}
-	input_envp[i] = NULL;
-	return (input_envp);
+	env_arr[i] = NULL;
+	return (env_arr);
+}
+
+char	*input_envp(char *envp_key, char *envp_value)
+{
+	char	*key;
+	char	*tmp_arr;
+
+	key = ft_strjoin(envp_key, "=");
+	if (key == NULL)
+		return (NULL);
+	if (envp_value == NULL)
+		tmp_arr = ft_strdup(key);
+	else
+		tmp_arr = ft_strjoin(key, envp_value);
+	ft_free(key);
+	if (tmp_arr == NULL)
+		return (NULL);
+	return (tmp_arr);
 }
 
 int	envp_cnt(t_envp *envp)

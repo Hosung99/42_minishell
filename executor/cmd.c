@@ -6,11 +6,13 @@
 /*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:55:47 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 17:09:00 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 17:22:31 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+char	*attach_cmd(char *path, char *cmd, int have_slash, char *path_cmd);
 
 char	*get_cmd(char **path, char *cmd, t_info *info)
 {
@@ -26,21 +28,28 @@ char	*get_cmd(char **path, char *cmd, t_info *info)
 	index = 0;
 	while (path[index])
 	{
-		if (have_slash == 1)
-			tmp = ft_strdup(cmd);
-		else
-			tmp = ft_strjoin(path[index], path_cmd);
-		if (access(tmp, X_OK) != -1)
-		{
-			ft_free(path_cmd);
+		tmp = attach_cmd(path[index], cmd, have_slash, path_cmd);
+		if (tmp != NULL)
 			return (tmp);
-		}
-		ft_free(tmp);
 		index++;
 	}
 	ft_free(path_cmd);
 	if (have_slash == 1)
 		exit_perror(cmd, info);
+	return (NULL);
+}
+
+char	*attach_cmd(char *path, char *cmd, int have_slash, char *path_cmd)
+{
+	char	*tmp;
+
+	if (have_slash == 1)
+		tmp = ft_strdup(cmd);
+	else
+	tmp = ft_strjoin(path, path_cmd);
+	if (access(tmp, X_OK) != -1)
+		return (tmp);
+	ft_free(tmp);
 	return (NULL);
 }
 

@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 18:22:53 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:54:56 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp);
 void	print_redir(t_cmd *cmd);
 void	print_cmd(t_cmd *cmd);
 void	print_envp(t_envp *envp);
 
-int	executor(t_cmd *cmd, t_envp *envp)
+void	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
 
@@ -31,23 +33,30 @@ int	executor(t_cmd *cmd, t_envp *envp)
 		{
 			builtin(cmd, &info, envp);
 			dup2(info.stdout_fd, STDOUT_FILENO);
-			break;
+			break ;
 		}
 		else
-			info.pid = fork();
-		if (info.pid == 0)
-			child_process(cmd, &info, envp);
-		else if (info.pid < 0)
-			return (1);
-		else
-			parent_process(&info);
+			make_pipe(&info, cmd, envp);
 		cmd = cmd->next;
-		info.have_outfile = 0;
 	}
 	free_info(&info);
 	if (cmd == NULL)
 		wait_all(&info);
-	return (g_exit_status);
+}
+
+void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp)
+{
+	info->pid = fork();
+	if (info->pid == 0)
+		child_process(cmd, info, envp);
+	else if (info->pid < 0)
+	{
+		ft_perror("fork");
+		exit_free(info);
+	}
+	else
+		parent_process(info);
+	info->have_outfile = 0;
 }
 
 int	cmd_cnt(t_cmd *cmd)
@@ -65,56 +74,4 @@ int	cmd_cnt(t_cmd *cmd)
 		temp = temp->next;
 	}
 	return (cnt);
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("start print	cmd\n");
-	if (cmd == NULL)
-		printf("cmd = NULL\n");
-	else if (cmd->cmd && cmd->cmd[0] == NULL)
-		printf("cmd->cmd = NULL\n");
-	while (cmd->cmd && cmd->cmd[i])
-	{
-		printf("cmd[%d]: %s\n", i, cmd->cmd[i]);
-		i++;
-	}
-	print_redir(cmd);
-	printf("cmd 출력 완료\n");
-}
-
-void	print_envp(t_envp *envp)
-{
-	t_envp	*temp;
-
-	temp = envp;
-	printf("envp 출력 시작\n");
-	while (temp)
-	{
-		printf("key: %s\n", temp->key);
-		printf("value: %s\n", temp->value);
-		temp = temp->next;
-	}
-	printf("envp 출력 완료\n");
-}
-
-void	print_redir(t_cmd *cmd)
-{
-	t_redir	*temp;
-
-	if (cmd->redir == NULL)
-	{
-		printf("redir is NULL\n");
-		return ;
-	}
-	temp = cmd->redir;
-	while (temp)
-	{
-		printf("redir->str: %s\n", temp->str);
-		printf("redir->filename: %s\n", temp->filename);
-		temp = temp->next;
-	}
 }
