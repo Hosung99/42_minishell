@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/17 18:34:55 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:50:28 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef enum e_token_identifier
 	TOKEN_APPEND_REDIR,
 	TOKEN_S_QUOTE,
 	TOKEN_D_QUOTE,
+	TOKEN_ENV,
 }	t_token_identifier;
 
 struct s_token
@@ -91,11 +92,12 @@ void	set_envp(char **envp, t_envp *envp_list);
 char	*ft_split_index(char *str, int before_index, int cur_index);
 int		make_cmd_token(char *str, t_token *token_header, int curr_index);
 int		make_redir_token(char *str, t_token *token_header, int curr_index);
-int		do_tokenize(char **pipe_split_line, int pipe_index, t_cmd **cmd, t_envp *envp_list);
+int		do_tokenize(char **pipe_split_line, \
+	int pipe_index, t_cmd **cmd, t_envp *envp_list);
 char	**ft_split_pipe(char *str, int *pipe_cnt);
 void	make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt);
 void	malloc_cmd(t_token *token_header, t_cmd **cmd);
-int 	is_metachar(char curr);
+int		is_metachar(char curr);
 void	set_token_position(t_token *token_header, t_token *new_token);
 int		set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd);
 void	change_envp_var(t_token *token, t_envp *envp_list);
@@ -115,5 +117,7 @@ int		before_check_pipe(char *line);
 int		before_check_redir(char *str);
 int		before_check_quote(char *line);
 void	update_shlvl(t_envp *envp);
+void	set_init(char **envp, t_envp *envp_list, t_termios *term);
+int		check_first_char(char *line);
 
 #endif

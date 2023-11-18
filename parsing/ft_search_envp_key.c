@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:05:09 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 18:23:41 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:55:50 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*ft_search_envp_key(t_envp *envp_list, char *str)
 {
 	t_envp	*envp_temp;
 
+	if (str == NULL)
+		return (NULL);
 	envp_temp = envp_list->next;
 	while (envp_temp)
 	{

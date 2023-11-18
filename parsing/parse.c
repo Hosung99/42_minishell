@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 20:03:49 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:56:45 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 		return (-1);
 	}
 	pipe_split_line = ft_split_pipe(line, &pipe_cnt);
+	if (pipe_split_line == NULL)
+		exit(1);
 	while (++pipe_index < pipe_cnt)
 		if (do_tokenize(pipe_split_line, pipe_index, cmd, envp_list) == -1)
 			return (-1);
