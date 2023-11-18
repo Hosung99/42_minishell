@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 17:55:30 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 20:14:23 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 extern int	g_exit_status;
 
-typedef struct	s_info
+typedef struct s_info
 {
 	char		**cmd_path;
 	char		*cmd;
@@ -52,7 +52,7 @@ int		check_slash(char *cmd, t_info *info);
 void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp, char *key);
 char	*get_cmd(char **path, char *cmd, t_info *info);
-void	wait_all(t_info *info);
+void	wait_all(void);
 void	file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, char *filename);

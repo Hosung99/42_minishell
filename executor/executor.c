@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 17:54:56 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 21:14:12 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	executor(t_cmd *cmd, t_envp *envp)
 	envp = envp->next;
 	init_info(&info, envp, cmd);
 	open_here_docs(cmd);
+	if (g_exit_status != 0)
+	{
+		free_info(&info);
+		return ;
+	}
 	while (cmd)
 	{
 		if (pipe(info.pipe_fd) == -1)
@@ -41,14 +46,19 @@ void	executor(t_cmd *cmd, t_envp *envp)
 	}
 	free_info(&info);
 	if (cmd == NULL)
-		wait_all(&info);
+		wait_all();
+	// set_signal(TER, TER);
 }
 
 void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp)
 {
+	set_signal(IGN, IGN);
 	info->pid = fork();
 	if (info->pid == 0)
+	{
+		set_signal(CHI, DEF);
 		child_process(cmd, info, envp);
+	}
 	else if (info->pid < 0)
 	{
 		ft_perror("fork");

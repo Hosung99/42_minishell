@@ -6,13 +6,14 @@
 /*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 17:41:59 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 19:00:35 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	envp_cnt(t_envp *envp);
+int		envp_cnt(t_envp *envp);
+char	*input_envp(char *envp_key, char *envp_value);
 
 char	**get_envp(t_envp *envp)
 {

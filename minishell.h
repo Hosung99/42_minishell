@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:50:28 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 18:43:24 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	change_envp_var(t_token *token, t_envp *envp_list);
 char	*ft_strtrim_index(char *str, char c);
 char	*ft_search_envp_key(t_envp *envp_list, char *str);
 int		set_cmd(t_token *token_header, t_cmd **cmd);
-int		executor(t_cmd *cmd, t_envp *envp);
+void	executor(t_cmd *cmd, t_envp *envp);
 void	free_cmd(t_cmd **cmd);
 void	free_str(char **str);
 void	free_redir(t_redir *redir);
