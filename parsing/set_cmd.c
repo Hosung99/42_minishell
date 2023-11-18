@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/17 13:42:44 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:15:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_token_type(t_token *token, int token_before_type)
 int	process_token(t_token **token, t_cmd **cmd, int *option_cnt)
 {
 	if ((*token)->type == TOKEN_WORD || (*token)->type == TOKEN_D_QUOTE || \
-		(*token)->type == TOKEN_S_QUOTE)
+		(*token)->type == TOKEN_S_QUOTE || (*token)->type == TOKEN_ENV)
 		make_cmd(*token, cmd, option_cnt);
 	else if ((*token)->type == TOKEN_READ_REDIR \
 		|| (*token)->type == TOKEN_WRITE_REDIR)
@@ -66,7 +66,7 @@ int	process_token(t_token **token, t_cmd **cmd, int *option_cnt)
 			return (-1);
 		set_redir(*token, cmd);
 		if ((*token)->next != NULL \
-			&& (*token)->next->type == TOKEN_WORD)
+			&& ((*token)->next->type == TOKEN_WORD || (*token)->next->type))
 				*token = (*token)->next;
 	}
 	return (1);

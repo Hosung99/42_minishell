@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 18:34:38 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/17 21:42:06 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	open_here_docs(t_cmd *cmd)
 		pid = fork();
 		if (pid == 0)
 		{
-			set_signal(CHI, DEF);
+			set_signal(CHI, IGN);
 			do_heredoc(temp_cmd, filename);
 			ft_free(filename);
 			exit(0);

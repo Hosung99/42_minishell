@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:26:14 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 19:28:11 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:43:13 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,31 @@ static size_t	ft_quote_str_len(char *str)
 	return (str_index);
 }
 
+void	check_quote_type(t_token *token, char **new_str, int *str_index)
+{
+	char	quote_type;
+
+	quote_type = token->str[*str_index];
+	*str_index = *str_index + 1;
+	if (quote_type == '"' && token->type != TOKEN_ENV)
+	{
+		while (token->str[*str_index] && quote_type != token->str[*str_index])
+		{
+			*new_str = ft_strjoin_char(*new_str, token->str[*str_index]);
+			*str_index = *str_index + 1;
+		}
+	}
+	else
+	{
+		*str_index = *str_index - 1;
+		*new_str = ft_strjoin_char(*new_str, token->str[*str_index]);
+	}
+}
+
 void	delete_quote(t_token *token)
 {
 	int		str_index;
 	char	*new_str;
-	char	quote_type;
 
 	str_index = 0;
 	if (ft_strlen(token->str) == ft_quote_str_len(token->str))
@@ -46,11 +66,7 @@ void	delete_quote(t_token *token)
 	while (token->str && token->str[str_index])
 	{
 		if (ft_is_quote(token->str[str_index]) != 0)
-		{
-			quote_type = token->str[str_index++];
-			while (token->str[str_index] && quote_type != token->str[str_index])
-				new_str = ft_strjoin_char(new_str, token->str[str_index++]);
-		}
+			check_quote_type(token, &new_str, &str_index);
 		else
 			new_str = ft_strjoin_char(new_str, token->str[str_index]);
 		if (token->str[str_index] != '\0')

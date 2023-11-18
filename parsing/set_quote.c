@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/17 12:13:04 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:25:45 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void	change_envp_var(t_token *token, t_envp *envp_list)
 		if (str[str_index] == '$')
 		{
 			if (check_in_d_quote(str, str_index) == 1)
+			{
 				check_envp(&save_str, token, &str_index, envp_list);
+				if (check_in_d_quote(str, str_index) == 0)
+					token->type = TOKEN_ENV;
+			}
 			else
 				save_str = ft_strjoin_char(save_str, str[str_index++]);
 		}
