@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:48:06 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/14 14:48:38 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:57:09 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*ft_strjoin_char(char *str, char c)
 		new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) + 2));
 	else
 		new_str = (char *)malloc(sizeof(char) * 2);
+	if (!new_str)
+		return (NULL);
 	while (str && str[str_index])
 	{
 		new_str[str_index] = str[str_index];
