@@ -6,11 +6,29 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:38:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 15:39:20 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:50:16 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern int	g_exit_status;
+
+int	check_first_char(char *line)
+{
+	int	line_index;
+
+	line_index = 0;
+	while (line[line_index] == ' ' || line[line_index] == '\t')
+		line_index++;
+	if (line[line_index] == '|')
+	{
+		printf("minishell: syntax error near unexpected token '|'\n");
+		g_exit_status = 258;
+		return (0);
+	}
+	return (1);
+}
 
 int	before_check_pipe(char *line)
 {

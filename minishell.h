@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 16:58:05 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 17:50:28 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,7 @@ int		before_check_pipe(char *line);
 int		before_check_redir(char *str);
 int		before_check_quote(char *line);
 void	update_shlvl(t_envp *envp);
+void	set_init(char **envp, t_envp *envp_list, t_termios *term);
+int		check_first_char(char *line);
 
 #endif
