@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 20:14:23 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/19 17:01:18 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, char *filename);
 void	free_info(t_info *info);
 void	open_here_docs(t_cmd *cmd);
+char	*make_random_here_doc(int index);
+int		check_heredoc(t_cmd *cmd);
+char	*get_readline(void);
 
 void	ft_perror(char *msg);
 void	ft_cmd_error(char *cmd);

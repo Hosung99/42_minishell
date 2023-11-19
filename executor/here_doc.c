@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 20:34:03 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/19 17:01:10 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int		check_heredoc(t_cmd *cmd);
 void	do_heredoc(t_cmd *cmd, char *filename);
-char	*make_random_here_doc(int index);
+void	here_doc_fork(t_cmd *temp_cmd, char *filename);
 
 void	here_doc(t_redir *redir, char *filename)
 {
@@ -29,12 +28,7 @@ void	here_doc(t_redir *redir, char *filename)
 	line = NULL;
 	while (1)
 	{
-		tmp = readline("> ");
-		if (!tmp)
-		{
-			printf(">");
-			exit(1);
-		}
+		tmp = get_readline();
 		line = ft_strjoin(tmp, "\n");
 		if (!line)
 			ft_perror("readline");
@@ -51,7 +45,6 @@ void	here_doc(t_redir *redir, char *filename)
 
 void	open_here_docs(t_cmd *cmd)
 {
-	int		pid;
 	char	*filename;
 	t_cmd	*temp_cmd;
 	int		index;
@@ -66,24 +59,7 @@ void	open_here_docs(t_cmd *cmd)
 	{
 		printf("cmd\n");
 		filename = make_random_here_doc(index);
-		pid = fork();
-		if (pid == 0)
-		{
-			set_signal(CHI, IGN);
-			do_heredoc(temp_cmd, filename);
-			ft_free(filename);
-			exit(0);
-		}
-		else if (pid < 0)
-			ft_perror("fork");
-		else
-		{
-			waitpid(pid, &g_exit_status, 0);
-			temp_cmd->here_doc_fd = open(filename, O_RDONLY);
-			if (cmd->here_doc_fd < 0)
-				ft_perror("here_doc");
-			unlink(filename);
-		}
+		here_doc_fork(temp_cmd, filename);
 		ft_free(filename);
 		temp_cmd = temp_cmd->next;
 		index++;
@@ -91,25 +67,30 @@ void	open_here_docs(t_cmd *cmd)
 	set_signal(TER, TER);
 }
 
-int	check_heredoc(t_cmd *cmd)
+void	here_doc_fork(t_cmd *temp_cmd, char *filename)
 {
-	t_cmd	*temp_cmd;
-	t_redir	*temp_redir;
-
-	temp_cmd = cmd;
-	while (temp_cmd)
+	int	pid;
+	
+	pid = fork();
+	if (pid == 0)
 	{
-		temp_redir = temp_cmd->redir;
-		while (temp_redir)
-		{
-			if (ft_strncmp(temp_redir->str, "<<", 3) == 0)
-				return (1);
-			temp_redir = temp_redir->next;
-		}
-		temp_cmd = temp_cmd->next;
+		set_signal(CHI, IGN);
+		do_heredoc(temp_cmd, filename);
+		ft_free(filename);
+		exit(0);
 	}
-	return (0);
+	else if (pid < 0)
+		ft_perror("fork");
+	else
+	{
+		waitpid(pid, &g_exit_status, 0);
+		temp_cmd->here_doc_fd = open(filename, O_RDONLY);
+		if (temp_cmd->here_doc_fd < 0)
+			ft_perror("here_doc");
+		unlink(filename);
+	}
 }
+
 
 void	do_heredoc(t_cmd *cmd, char *filename)
 {
@@ -125,20 +106,4 @@ void	do_heredoc(t_cmd *cmd, char *filename)
 		temp_redir = temp_redir->next;
 	}
 	return ;
-}
-
-char	*make_random_here_doc(int index)
-{
-	char	*filename;
-	char	*tmp;
-
-	if (index >= 16)
-	{
-		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
-	}
-	filename = ft_strdup(HERE_DOC_FILE);
-	tmp = ft_itoa(index);
-	filename = ft_strjoin(filename, tmp);
-	ft_free(tmp);
-	return (filename);
 }
