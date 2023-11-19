@@ -3,27 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:55:02 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/14 16:32:46 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 17:36:44 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
 void	print_export_err(char *cmd);
-void	set_key_value(t_envp *envp, char *input_key, char *input_value, int have_equal);
+void	set_key_value(t_envp *envp, char *key, char *value, int have_equal);
 void	ft_env_export(t_envp *envp);
+void	find_key_value(char *cmd, t_envp *envp);
 
 void	ft_export(char **cmd, t_envp *envp)
 {
 	int		index;
-	int		char_index;
-	char	*input_key;
-	char	*input_value;
-	int		have_equal;
-	
+
 	index = 0;
 	if (cmd[0] == NULL)
 	{
@@ -32,21 +29,32 @@ void	ft_export(char **cmd, t_envp *envp)
 	}
 	while (cmd[index])
 	{
-		have_equal = 0;
-		char_index = 0;
-		if (cmd[index][0] == '=' || !ft_isalpha(cmd[index][0]))
-			print_export_err(cmd[index]);
-		else
-		{
-			while (cmd[index][char_index] != '=' && cmd[index][char_index] != '\0')
-				char_index++;
-			if (cmd[index][char_index] == '=')
-				have_equal = 1;
-			input_key = ft_substr(cmd[index], 0, char_index);
-			input_value = ft_substr(cmd[index], char_index + 1, ft_strlen(cmd[index]));
-			set_key_value(envp, input_key, input_value, have_equal);
-		}
+		find_key_value(cmd[index], envp);
 		index++;
+	}
+}
+
+void	find_key_value(char *cmd, t_envp *envp)
+{
+	int		have_equal;
+	int		char_index;
+	char	*input_key;
+	char	*input_value;
+
+	have_equal = 0;
+	char_index = 0;
+	if (cmd[0] == '=' || !ft_isalpha(cmd[0]))
+		print_export_err(cmd);
+	else
+	{
+		while (cmd[char_index] != '=' \
+			&& cmd[char_index] != '\0')
+			char_index++;
+		if (cmd[char_index] == '=')
+			have_equal = 1;
+		input_key = ft_substr(cmd, 0, char_index);
+		input_value = ft_substr(cmd, char_index + 1, ft_strlen(cmd));
+		set_key_value(envp, input_key, input_value, have_equal);
 	}
 }
 
@@ -57,19 +65,20 @@ void	print_export_err(char *cmd)
 	write(STDERR_FILENO, "': not a valid identifier\n", 26);
 }
 
-void	set_key_value(t_envp *envp, char *input_key, char *input_value, int have_equal)
+void	set_key_value(t_envp *envp, char *key, char *value, int have_equal)
 {
 	t_envp	*tmpenv;
 
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (tmpenv->key != NULL && ft_strncmp(tmpenv->key, input_key, ft_strlen(input_key) + 1) == 0)
+		if (tmpenv->key && \
+			ft_strncmp(tmpenv->key, key, ft_strlen(key) + 1) == 0)
 		{
 			ft_free(tmpenv->value);
-			tmpenv->value = input_value;
+			tmpenv->value = value;
 			tmpenv->have_equal = have_equal;
-			ft_free(input_key);
+			ft_free(key);
 			return ;
 		}
 		tmpenv = tmpenv->next;
@@ -78,10 +87,10 @@ void	set_key_value(t_envp *envp, char *input_key, char *input_value, int have_eq
 	while (tmpenv->next)
 		tmpenv = tmpenv->next;
 	tmpenv->next = (t_envp *)malloc(sizeof(t_envp));
-	tmpenv->next->key = input_key;
+	tmpenv->next->key = key;
 	tmpenv->next->have_equal = have_equal;
-	tmpenv->next->value = input_value;
-	tmpenv->next->next = NULL;	
+	tmpenv->next->value = value;
+	tmpenv->next->next = NULL;
 }
 
 void	ft_env_export(t_envp *envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:57:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/14 18:59:42 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 17:37:09 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_cd(char **cmd, t_envp *envp)
 		g_exit_status = go_to_oldpwd(envp);
 	else if (ft_strncmp(cmd[0], "~/", 2) == 0)
 		g_exit_status = go_to_path_home(cmd[0], envp);
-	else 
+	else
 	{
 		if (chdir(cmd[0]) == -1)
 		{
@@ -81,7 +81,7 @@ char	*get_envp_value(t_envp *envp, char *key)
 		return (NULL);
 	while (envp)
 	{
-		if (envp->key != NULL && ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
+		if (envp->key && ft_strncmp(key, envp->key, ft_strlen(key)) == 0)
 			return (envp->value);
 		envp = envp->next;
 	}

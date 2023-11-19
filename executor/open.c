@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 01:01:34 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/14 16:40:39 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 18:45:32 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
 void	open_infile(t_redir *redir, t_info *info);
 void	open_outfile(t_redir *redir, t_info *info);
 void	open_appendfile(t_redir *redir, t_info *info);

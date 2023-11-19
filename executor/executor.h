@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/14 18:56:32 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 20:14:23 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-#include "../minishell.h"
-#include <fcntl.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <errno.h>
+# include "../minishell.h"
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <errno.h>
 
 # define HERE_DOC_FILE ".here_doc"
 # define DO_HERE_DOC 0
@@ -25,7 +25,7 @@
 
 extern int	g_exit_status;
 
-typedef	struct	s_info
+typedef struct s_info
 {
 	char		**cmd_path;
 	char		*cmd;
@@ -52,11 +52,10 @@ int		check_slash(char *cmd, t_info *info);
 void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp, char *key);
 char	*get_cmd(char **path, char *cmd, t_info *info);
-void	wait_all(t_info *info);
+void	wait_all(void);
 void	file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, char *filename);
-void	free_envp(t_envp *envp);
 void	free_info(t_info *info);
 void	open_here_docs(t_cmd *cmd);
 

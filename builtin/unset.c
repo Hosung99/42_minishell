@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:04:10 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/09 01:18:16 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 17:37:26 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ft_unset(char **cmd, t_envp *envp)
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (tmpenv->key != NULL && ft_strncmp(tmpenv->key, cmd[0], ft_strlen(tmpenv->key)) == 0)
+		if (tmpenv->key && \
+			ft_strncmp(tmpenv->key, cmd[0], ft_strlen(tmpenv->key)) == 0)
 		{
 			tmpenv->key = NULL;
 			tmpenv->value = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_info.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:43:42 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 20:19:17 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/18 20:44:32 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	init_info(t_info *info, t_envp *envp, t_cmd *cmd)
 	info->pid = 1;
 	info->status = 0;
 	info->have_outfile = 0;
+	g_exit_status = 0;
 }

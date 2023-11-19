@@ -3,22 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:59:43 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:45:20 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 21:25:22 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+extern int	g_exit_status;
+
 void	child_handler(int signo)
 {
-	(void)signo;
-	ft_putstr_fd("\n", STDERR_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	exit(1);
+	if (signo == SIGINT)
+	{
+		ft_putstr_fd("\n", STDERR_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		exit(1);
+	}
+	if (signo == SIGQUIT)
+	{
+		ft_putstr_fd("\n", STDERR_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		exit(3);
+	}
 }
 
 void	sig_handler(int signo)
@@ -29,6 +40,7 @@ void	sig_handler(int signo)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit_status = 1;
 	}
 	if (signo == SIGQUIT)
 	{
@@ -53,4 +65,6 @@ void	set_signal(int sig_int, int sig_quit)
 		signal(SIGQUIT, SIG_DFL);
 	else if (sig_quit == TER)
 		signal(SIGQUIT, sig_handler);
+	else if (sig_quit == CHI)
+		signal(SIGQUIT, child_handler);
 }

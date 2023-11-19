@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:42:00 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/15 18:19:30 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/17 17:47:03 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	export_oldpwd(char *oldpwd, t_envp *envp)
 	tmpenv = envp;
 	while (tmpenv)
 	{
-		if (tmpenv->key && ft_strncmp(tmpenv->key, oldpwd_key, ft_strlen(oldpwd_key) + 1) == 0)
+		if (tmpenv->key && \
+			ft_strncmp(tmpenv->key, oldpwd_key, ft_strlen(oldpwd_key) + 1) == 0)
 		{
 			ft_free(tmpenv->value);
 			tmpenv->value = oldpwd_value;

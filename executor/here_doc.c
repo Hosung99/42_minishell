@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 21:42:06 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/18 20:34:03 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check_heredoc(t_cmd *cmd);
 void	do_heredoc(t_cmd *cmd, char *filename);
-char	*make_random_here_doc();
+char	*make_random_here_doc(int index);
 
 void	here_doc(t_redir *redir, char *filename)
 {
@@ -54,15 +54,18 @@ void	open_here_docs(t_cmd *cmd)
 	int		pid;
 	char	*filename;
 	t_cmd	*temp_cmd;
+	int		index;
 
 	temp_cmd = cmd;
 	filename = NULL;
+	index = 0;
 	if (check_heredoc(cmd) != 1)
 		return ;
 	set_signal(IGN, IGN);
 	while (temp_cmd)
 	{
-		filename = make_random_here_doc();
+		printf("cmd\n");
+		filename = make_random_here_doc(index);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -83,6 +86,7 @@ void	open_here_docs(t_cmd *cmd)
 		}
 		ft_free(filename);
 		temp_cmd = temp_cmd->next;
+		index++;
 	}
 	set_signal(TER, TER);
 }
@@ -123,20 +127,18 @@ void	do_heredoc(t_cmd *cmd, char *filename)
 	return ;
 }
 
-char	*make_random_here_doc()
+char	*make_random_here_doc(int index)
 {
 	char	*filename;
 	char	*tmp;
-	int		i;
 
-	filename = ft_strdup(HERE_DOC_FILE);
-	i = 0;
-	while (i < 10)
+	if (index >= 16)
 	{
-		tmp = ft_itoa(rand() % 10);
-		filename = ft_strjoin_char(filename, tmp[0]);
-		ft_free(tmp);
-		i++;
+		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
 	}
+	filename = ft_strdup(HERE_DOC_FILE);
+	tmp = ft_itoa(index);
+	filename = ft_strjoin(filename, tmp);
+	ft_free(tmp);
 	return (filename);
 }

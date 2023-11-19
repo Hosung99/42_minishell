@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:54:20 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/11 17:50:16 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/17 17:46:16 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	isOptionN(char *str, int* isOptionN);
+int	is_option_n(char *str, int *isoption_n);
 
 void	echo(char **args)
 {
 	int	i;
-	int	isoptionN;
+	int	isoption_n;
 
 	i = 0;
-	isoptionN = 0;
-	while (args[i] && isOptionN(args[i], &isoptionN))
+	isoption_n = 0;
+	while (args[i] && is_option_n(args[i], &isoption_n))
 		i++;
 	while (args[i])
 	{
@@ -30,15 +30,15 @@ void	echo(char **args)
 			ft_putchar_fd(' ', 1);
 		i++;
 	}
-	if (isoptionN == 0)
+	if (isoption_n == 0)
 		ft_putchar_fd('\n', 1);
 }
 
-int	isOptionN(char *str, int *isoptionN)
+int	is_option_n(char *str, int *isoption_n)
 {
-	int	isOptionN;
+	int	have_n;
 
-	isOptionN = 0;
+	have_n = 0;
 	if (*str != '-')
 		return (0);
 	str++;
@@ -46,11 +46,11 @@ int	isOptionN(char *str, int *isoptionN)
 	{
 		if (*str != 'n')
 			return (0);
-		isOptionN = 1;
-		*isoptionN = 1;
+		have_n = 1;
+		*isoption_n = 1;
 		str++;
 	}
-	if (isOptionN)
+	if (have_n)
 		return (1);
 	return (0);
 }
