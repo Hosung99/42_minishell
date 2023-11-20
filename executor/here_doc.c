@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/19 17:06:54 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:04:05 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	open_here_docs(t_cmd *cmd)
 		ft_free(filename);
 		temp_cmd = temp_cmd->next;
 		index++;
-		if (g_exit_status != 0)
+		if (g_exit_status != EXIT_SUCCESS)
 			break ;
 	}
 	set_signal(TER, TER);

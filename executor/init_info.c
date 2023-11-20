@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:43:42 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:26:58 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:04:14 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	init_info(t_info *info, t_envp *envp, t_cmd *cmd)
 	info->pid = 1;
 	info->status = 0;
 	info->have_outfile = 0;
-	g_exit_status = 0;
+	g_exit_status = EXIT_SUCCESS;
 }

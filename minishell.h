@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 18:43:24 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 06:59:34 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 # define DEF 2
 # define TER 3
 # define CHI 4
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define EXIT_NOT_DIR 126
+# define EXIT_NOT_CMD 127
+# define EXIT_NOT_NUM 255
 
 typedef struct s_token		t_token;
 typedef struct s_redir		t_redir;

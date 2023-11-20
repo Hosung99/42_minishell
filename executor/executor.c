@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:37:11 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:03:48 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	executor(t_cmd *cmd, t_envp *envp)
 
 	init_info(&info, envp, cmd);
 	open_here_docs(cmd);
-	if (g_exit_status != 0)
+	if (g_exit_status != EXIT_SUCCESS)
 	{
 		free_info(&info);
 		return ;
