@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:32:19 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:37:49 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:46:19 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_heredoc(t_cmd *cmd)
 char	*get_readline(void)
 {
 	char	*tmp;
-	
+
 	tmp = readline("> ");
 	if (!tmp)
 	{

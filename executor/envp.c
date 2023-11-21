@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 19:00:35 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:54:16 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ char	**get_envp(t_envp *envp)
 		{
 			env_arr[i] = input_envp(envp->key, envp->value);
 			if (env_arr[i] == NULL)
-				return (NULL); // return 전에 모든 env_arr[i] free
-			envp = envp->next;
+				return (NULL);
 			i++;
 		}
+		envp = envp->next;
 	}
 	env_arr[i] = NULL;
 	return (env_arr);

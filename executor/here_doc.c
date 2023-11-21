@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:38:10 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:46:02 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	open_here_docs(t_info *info, t_cmd *cmd)
 void	here_doc_fork(t_cmd *temp_cmd, char *filename)
 {
 	int	pid;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -93,7 +93,6 @@ void	here_doc_fork(t_cmd *temp_cmd, char *filename)
 		unlink(filename);
 	}
 }
-
 
 void	do_heredoc(t_cmd *cmd, char *filename)
 {

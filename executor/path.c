@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:21:50 by sgo               #+#    #+#             */
-/*   Updated: 2023/10/31 17:22:44 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:46:33 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**find_path(t_envp *envp, char *key)
 	int		cnt;
 
 	if (envp == NULL)
-		return (0); // error 처리 예정
+		return (0);
 	tmp = envp;
 	while (tmp)
 	{

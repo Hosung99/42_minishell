@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:55:02 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:54:29 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 17:13:21 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ void	ft_env_export(t_envp *envp)
 			ft_putstr_fd("declare -x ", STDOUT_FILENO);
 			ft_putstr_fd(tmpenv->key, STDOUT_FILENO);
 		}
-		if (tmpenv->have_equal == 1)
+		if (tmpenv->have_equal == 1 && tmpenv->value != NULL)
 		{
 			ft_putstr_fd("=\"", STDOUT_FILENO);
-			ft_putstr_fd(tmpenv->value, STDOUT_FILENO);
+			ft_putstr_fd(tmpenv->value, STDOUT_FILENO); //
 			ft_putstr_fd("\"", STDOUT_FILENO);
 		}
 		ft_putstr_fd("\n", STDOUT_FILENO);
