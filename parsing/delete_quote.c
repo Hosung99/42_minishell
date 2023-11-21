@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:26:14 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:58:23 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 20:52:17 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,12 @@ void	check_quote_type(t_token *token, char **new_str, int *str_index)
 
 	quote_type = token->str[*str_index];
 	*str_index = *str_index + 1;
-	if (quote_type == '"' && token->type != TOKEN_ENV)
+	while (token->str[*str_index] && quote_type != token->str[*str_index])
 	{
-		while (token->str[*str_index] && quote_type != token->str[*str_index])
-		{
-			*new_str = ft_strjoin_char(*new_str, token->str[*str_index]);
-			if (*new_str == NULL)
-				exit(1);
-			*str_index = *str_index + 1;
-		}
-	}
-	else
-	{
-		*str_index = *str_index - 1;
 		*new_str = ft_strjoin_char(*new_str, token->str[*str_index]);
 		if (*new_str == NULL)
-			exit(1);
+			exit(EXIT_FAILURE);
+		*str_index = *str_index + 1;
 	}
 }
 
@@ -74,7 +64,7 @@ void	delete_quote(t_token *token)
 		else
 			new_str = ft_strjoin_char(new_str, token->str[str_index]);
 		if (new_str == NULL)
-			exit(1);
+			exit(EXIT_FAILURE);
 		if (token->str[str_index] != '\0')
 			str_index++;
 	}

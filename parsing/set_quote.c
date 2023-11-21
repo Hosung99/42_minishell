@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 16:29:46 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 20:52:39 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	change_str(char	**new_str, char *envp_key)
 	{
 		*new_str = ft_strjoin_char(*new_str, envp_key[envp_key_index]);
 		if (*new_str == NULL)
-			exit(1);
+			exit(EXIT_FAILURE);
 		envp_key_index++;
 	}
 }
@@ -41,7 +41,7 @@ void	check_envp(char **new_str, \
 	envp_key = ft_search_envp_key(envp_list, \
 		ft_split_index(token->str, temp_index + 1, (*str_index) - 1));
 	if (envp_key == NULL)
-		exit(1);
+		exit(EXIT_FAILURE);
 	else
 		change_str(new_str, envp_key);
 	free(envp_key);
@@ -60,12 +60,8 @@ void	change_envp_var(t_token *token, t_envp *envp_list)
 	{
 		if (str[str_index] == '$')
 		{
-			if (check_in_d_quote(str, str_index) == 1)
-			{
+			if (check_quote(str, str_index) == SUCCESS)
 				check_envp(&save_str, token, &str_index, envp_list);
-				if (check_in_d_quote(str, str_index) == 0)
-					token->type = TOKEN_ENV;
-			}
 			else
 				save_str = ft_strjoin_char(save_str, str[str_index++]);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:59:43 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 07:04:51 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 20:56:11 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	child_handler(int signo)
 		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (signo == SIGQUIT)
 	{
 		ft_putstr_fd("\n", STDERR_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		exit(3);
+		exit(EXIT_FAILURE);
 	}
 }
 

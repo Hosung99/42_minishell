@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 16:27:18 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 20:42:24 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef enum e_token_identifier
 	TOKEN_APPEND_REDIR,
 	TOKEN_S_QUOTE,
 	TOKEN_D_QUOTE,
-	TOKEN_ENV,
 }	t_token_identifier;
 
 struct s_token
@@ -119,7 +118,7 @@ void	free_redir(t_redir *redir);
 void	free_token(t_token *token_header);
 char	*ft_strjoin_char(char *str, char c);
 int		check_in_quote(char *str, int str_index);
-int		check_in_d_quote(char *str, int str_index);
+int		check_quote(char *str, int str_index);
 void	delete_quote(t_token *token);
 int		before_check_pipe(char *line);
 int		before_check_redir(char *str);

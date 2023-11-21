@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:41:05 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 18:20:59 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 20:50:01 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**ft_split_pipe(char *str, int *pipe_cnt)
 	*pipe_cnt = word_cnt;
 	new_str = (char **)malloc(sizeof(char *) * (word_cnt + 1));
 	if (!new_str)
-		return (0);
+		return (NULL);
 	new_str[word_cnt] = 0;
 	while (word_cnt--)
 	{

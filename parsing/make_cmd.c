@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 14:54:46 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 18:01:49 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 20:42:46 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	count_token_option(t_token *token_header)
 	token_temp = token_header;
 	while (token_temp)
 	{
-		if (token_temp->type == TOKEN_WORD || token_temp->type == TOKEN_ENV)
+		if (token_temp->type == TOKEN_WORD)
 			word_cnt++;
 		token_temp = token_temp->next;
 	}
