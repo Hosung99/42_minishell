@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:52:04 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:50:07 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 15:55:49 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # define UNSET		"unset"
 # define CD			"cd"
 # define PWD		"pwd"
-# define ECHO		"echo"
+# define FT_ECHO	"echo"
 # define EXIT		"exit"
 # define OLD_PWD	"OLDPWD"
 # define HOME		"HOME"
 
 void	ft_cd(char **cmd, t_envp *envp);
-void	echo(char **args);
+void	ft_echo(char **args);
 void	ft_env(t_envp *envp);
 void	ft_exit(char **cmd, t_info *info);
 void	ft_pwd(void);

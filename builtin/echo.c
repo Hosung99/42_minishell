@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:54:20 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:51:59 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 15:55:38 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_option_n(char *str, int *isoption_n);
 
-void	echo(char **args)
+void	ft_echo(char **args)
 {
 	int	i;
 	int	isoption_n;
