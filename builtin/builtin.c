@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:46:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 07:01:18 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 15:56:17 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 {
 	g_exit_status = EXIT_SUCCESS;
 	dup_stdout(info, cmd);
-	if (ft_strncmp(cmd->cmd[0], ECHO, 5) == 0)
-		echo(cmd->cmd + 1);
+	if (ft_strncmp(cmd->cmd[0], FT_ECHO, 5) == 0)
+		ft_echo(cmd->cmd + 1);
 	else if (ft_strncmp(cmd->cmd[0], CD, 3) == 0)
 		ft_cd(cmd->cmd + 1, envp);
 	else if (ft_strncmp(cmd->cmd[0], PWD, 4) == 0)
@@ -36,7 +36,7 @@ int	is_builtin(char *cmd)
 {
 	if (!cmd)
 		return (0);
-	else if (ft_strncmp(cmd, ECHO, 5) == 0)
+	else if (ft_strncmp(cmd, FT_ECHO, 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd, CD, 3) == 0)
 		return (1);
