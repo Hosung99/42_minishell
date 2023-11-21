@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 16:39:19 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:15:05 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 16:30:22 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	check_token_type(t_token *token, int token_before_type)
 	|| token_before_type == TOKEN_WRITE_REDIR) && (token->type \
 		== TOKEN_READ_REDIR || token->type == TOKEN_WRITE_REDIR)
 		&& (token_before_type != token->type))
-		return (-1);
-	return (1);
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 int	process_token(t_token **token, t_cmd **cmd, int *option_cnt)
@@ -63,13 +63,13 @@ int	process_token(t_token **token, t_cmd **cmd, int *option_cnt)
 		|| (*token)->type == TOKEN_WRITE_REDIR)
 	{
 		if ((*token)->next == NULL)
-			return (-1);
+			return (FAILURE);
 		set_redir(*token, cmd);
 		if ((*token)->next != NULL \
 			&& ((*token)->next->type == TOKEN_WORD || (*token)->next->type))
 				*token = (*token)->next;
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 int	set_cmd(t_token *token_header, t_cmd **cmd)
@@ -82,12 +82,12 @@ int	set_cmd(t_token *token_header, t_cmd **cmd)
 	malloc_cmd(token_header, cmd);
 	while (token_header)
 	{
-		if (check_token_type(token_header, token_before_type) == -1)
-			return (-1);
-		if (process_token(&token_header, cmd, &option_cnt) == -1)
-			return (-1);
+		if (check_token_type(token_header, token_before_type) == FAILURE)
+			return (FAILURE);
+		if (process_token(&token_header, cmd, &option_cnt) == FAILURE)
+			return (FAILURE);
 		token_before_type = token_header->type;
 		token_header = token_header->next;
 	}
-	return (1);
+	return (SUCCESS);
 }

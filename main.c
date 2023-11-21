@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 07:07:27 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:28:05 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	main(int argc, char **argv, char **envp)
 	t_envp			envp_list;
 	char			*line;
 
-	if (print_picture(argc, argv) == -1)
-		return (-1);
+	if (print_picture(argc, argv) == FAILURE)
+		return (FAILURE);
 	set_init(envp, &envp_list, &term);
-	while (1)
+	while (TRUE)
 	{
 		line = readline("minishell$ ");
 		if (!line)
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		if (*line != '\0' && check_first_char(line))
 		{
 			add_history(line);
-			if (parse(line, &cmd, &envp_list) == -1)
+			if (parse(line, &cmd, &envp_list) == FAILURE)
 				free_cmd(&cmd);
 			else
 				executor(cmd, &envp_list);

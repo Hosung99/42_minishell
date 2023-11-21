@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:59:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 18:04:57 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 16:29:46 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ int	set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd)
 		delete_quote(token_temp);
 		token_temp = token_temp->next;
 	}
-	if (set_cmd(token_header, cmd) == -1)
+	if (set_cmd(token_header, cmd) == FAILURE)
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
 		g_exit_status = 258;
-		return (-1);
+		return (FAILURE);
 	}
-	return (1);
+	return (SUCCESS);
 }

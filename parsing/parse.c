@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 07:05:43 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:31:50 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_normal_token(t_token *token_header, char *str, int *curr_index)
 		else if (quote_flag == 1 && (str[*curr_index] == '\'' \
 			|| str[*curr_index] == '\"'))
 			quote_flag = 0;
-		if (quote_flag == 0 && is_metachar(str[*curr_index]) == 1)
+		if (quote_flag == 0 && is_metachar(str[*curr_index]) == SUCCESS)
 			break ;
 		new_token->str = ft_strjoin_char(new_token->str, str[*curr_index]);
 		*curr_index = *curr_index + 1;
@@ -58,18 +58,18 @@ int	tokenize(char *str, t_cmd **cmd, t_envp *envp_list)
 		curr_index++;
 	while (str[curr_index] && str)
 	{
-		if (is_metachar(str[curr_index]) == 1)
+		if (is_metachar(str[curr_index]) == SUCCESS)
 			set_token(token_header, str, &curr_index);
 		else
 			set_normal_token(token_header, str, &curr_index);
 	}
-	if (set_quote(token_header->next, envp_list, cmd) == -1)
+	if (set_quote(token_header->next, envp_list, cmd) == FAILURE)
 	{
 		free_token(token_header);
-		return (-1);
+		return (FAILURE);
 	}
 	free_token(token_header);
-	return (1);
+	return (SUCCESS);
 }
 
 int	do_tokenize(char **pipe_split_line, \
@@ -99,7 +99,8 @@ int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 	pipe_cnt = 0;
 	pipe_index = -1;
 	*cmd = NULL;
-	if (before_check_pipe(line) == -1 || before_check_redir(line) == -1)
+	if (before_check_pipe(line) == FAILURE || \
+		before_check_redir(line) == FAILURE)
 	{
 		g_exit_status = EXIT_FAILURE;
 		return (-1);
@@ -108,8 +109,8 @@ int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 	if (pipe_split_line == NULL)
 		exit(1);
 	while (++pipe_index < pipe_cnt)
-		if (do_tokenize(pipe_split_line, pipe_index, cmd, envp_list) == -1)
-			return (-1);
+		if (do_tokenize(pipe_split_line, pipe_index, cmd, envp_list) == FAILURE)
+			return (FAILURE);
 	free_str(pipe_split_line);
-	return (1);
+	return (SUCCESS);
 }

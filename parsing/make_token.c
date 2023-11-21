@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/15 14:23:01 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 16:32:44 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	set_token_position(t_token *token_header, t_token *new_token)
 int	ft_is_space(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
-		return (1);
-	return (0);
+		return (SUCCESS);
+	return (FAILURE);
 }
 
 int	make_cmd_token(char *str, t_token *token_header, int curr_index)
@@ -41,10 +41,10 @@ int	make_cmd_token(char *str, t_token *token_header, int curr_index)
 	int		fin_index;
 
 	space_index = curr_index + 1;
-	while (str[space_index] && ft_is_space(str[space_index]) == 1)
+	while (str[space_index] && ft_is_space(str[space_index]) == SUCCESS)
 		space_index++;
 	fin_index = space_index;
-	while (str[fin_index] && is_metachar(str[fin_index]) == 0)
+	while (str[fin_index] && is_metachar(str[fin_index]) == FAILURE)
 		fin_index++;
 	if (fin_index == space_index)
 		return (fin_index);
@@ -67,7 +67,7 @@ int	make_redir_token(char *str, t_token *token_header, int curr_index)
 	new_token->str = ft_substr(str, curr_index, space_index - curr_index);
 	new_token->type = set_token_type(new_token->str);
 	set_token_position(token_header, new_token);
-	while (str[space_index] && ft_is_space(str[space_index]) == 1)
+	while (str[space_index] && ft_is_space(str[space_index]) == SUCCESS)
 		space_index++;
 	return (space_index);
 }
