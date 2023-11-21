@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:32:19 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/19 17:01:14 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:37:49 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ char	*make_random_here_doc(int index)
 	char	*filename;
 	char	*tmp;
 
-	if (index >= 16)
-	{
-		ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
-	}
 	filename = ft_strdup(HERE_DOC_FILE);
 	tmp = ft_itoa(index);
 	filename = ft_strjoin(filename, tmp);
