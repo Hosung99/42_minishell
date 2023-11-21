@@ -6,14 +6,14 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 07:03:48 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:03:47 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp);
-void	execute(t_cmd *cmd, t_envp *envp, t_info *info);
+int		execute(t_cmd *cmd, t_envp *envp, t_info *info);
 
 void	executor(t_cmd *cmd, t_envp *envp)
 {
@@ -26,30 +26,30 @@ void	executor(t_cmd *cmd, t_envp *envp)
 		free_info(&info);
 		return ;
 	}
-	execute(cmd, envp, &info);
-	free_info(&info);
-	if (cmd == NULL)
+	if (execute(cmd, envp, &info) == 0)
 		wait_all();
+	free_info(&info);
 	set_signal(TER, TER);
 }
 
-void	execute(t_cmd *cmd, t_envp *envp, t_info *info)
+int	execute(t_cmd *cmd, t_envp *envp, t_info *info)
 {
 	while (cmd)
 	{
 		if (pipe(info->pipe_fd) == -1)
-			exit_perror("pipe", &info);
+			exit_perror("pipe", info);
 		file_open(cmd, info);
 		if (info->cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
 		{
-			builtin(cmd, &info, envp);
+			builtin(cmd, info, envp);
 			dup2(info->stdout_fd, STDOUT_FILENO);
-			break ;
+			return (1);
 		}
 		else
-			make_pipe(&info, cmd, envp);
+			make_pipe(info, cmd, envp);
 		cmd = cmd->next;
 	}
+	return (0);
 }
 
 void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp)
