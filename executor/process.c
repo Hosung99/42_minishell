@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:55:13 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 19:45:07 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 		exit_perror("dup2", info);
 	close(info->tmp_fd);
 	if (info->cmd_path == NULL)
-		ft_cmd_error(cmd->cmd[0]);
+		ft_no_file_dir(cmd->cmd[0], info);
 	info->cmd = get_cmd(info->cmd_path, cmd->cmd[0], info);
 	if (info->cmd == NULL)
 		ft_cmd_error(cmd->cmd[0]);
@@ -62,13 +62,14 @@ void	dup_stdout(t_info *info, t_cmd *cmd)
 		if (dup2(info->outfile_fd, STDOUT_FILENO) == -1)
 			exit_perror("dup2", info);
 		close(info->outfile_fd);
+		close(info->pipe_fd[1]);
 	}
 	else if (cmd->next != NULL)
 	{
 		if (dup2(info->pipe_fd[1], STDOUT_FILENO) == -1)
 			ft_perror("dup2");
+		close(info->pipe_fd[1]);
 	}
-	close(info->pipe_fd[1]);
 }
 
 void	exit_perror(char *msg, t_info *info)

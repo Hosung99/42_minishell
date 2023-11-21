@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:37:13 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 19:44:57 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	parent_process(t_info *info);
 void	dup_stdout(t_info *info, t_cmd *cmd);
 int		check_slash(char *cmd, t_info *info);
 void	exit_perror(char *msg, t_info *info);
-char	**find_path(t_envp *envp, char *key);
+char	**find_path(t_envp *envp);
 char	*get_cmd(char **path, char *cmd, t_info *info);
 void	wait_all(void);
 void	file_open(t_cmd *cmd, t_info *info);
@@ -70,5 +70,6 @@ char	**get_envp(t_envp *envp);
 void	exit_free(t_info *info);
 void	ft_free(void *ptr);
 void	ft_heredoc_error(t_info *info);
+void	ft_no_file_dir(char *cmd, t_info *info);
 
 #endif
