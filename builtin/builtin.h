@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:52:04 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 19:47:41 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 06:50:07 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 # define BUILTIN_H
 
 # include "../executor/executor.h"
+
+# define ENV		"env"
+# define EXPORT		"export"
+# define UNSET		"unset"
+# define CD			"cd"
+# define PWD		"pwd"
+# define ECHO		"echo"
+# define EXIT		"exit"
+# define OLD_PWD	"OLDPWD"
+# define HOME		"HOME"
 
 void	ft_cd(char **cmd, t_envp *envp);
 void	echo(char **args);

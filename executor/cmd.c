@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:55:47 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 17:22:31 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 06:59:44 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	check_slash(char *cmd, t_info *info)
 	stat(cmd, &buf);
 	if ((buf.st_mode & S_IFMT) == S_IFDIR)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": is a directory\n", 2);
-		g_exit_status = 126;
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": is a directory\n", STDERR_FILENO);
+		g_exit_status = EXIT_NOT_DIR;
 		exit_free(info);
 	}
 	index = 0;

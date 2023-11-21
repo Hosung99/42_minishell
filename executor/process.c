@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 21:12:16 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/19 17:07:05 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 	if (info->cmd == NULL)
 		ft_cmd_error(cmd->cmd[0]);
 	input_envp = get_envp(envp);
-	printf("cmd: %s\n", info->cmd);
 	set_signal(CHI, CHI);
 	if (execve(info->cmd, cmd->cmd, input_envp) == -1)
 		exit_perror("execve", info);

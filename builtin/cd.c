@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:57:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 17:37:09 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:01:31 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_cd(char **cmd, t_envp *envp)
 	{
 		if (chdir(cmd[0]) == -1)
 		{
-			g_exit_status = 1;
+			g_exit_status = EXIT_FAILURE;
 			ft_perror(cmd[0]);
 		}
 	}
@@ -43,7 +43,7 @@ int	go_to_home(t_envp *envp)
 {
 	char	*home;
 
-	home = get_envp_value(envp, "HOME");
+	home = get_envp_value(envp, HOME);
 	if (home == NULL)
 	{
 		write(2, "minishell: cd: HOME not set\n", 28);
@@ -61,7 +61,7 @@ int	go_to_oldpwd(t_envp *envp)
 {
 	char	*oldpwd;
 
-	oldpwd = get_envp_value(envp, "OLDPWD");
+	oldpwd = get_envp_value(envp, OLD_PWD);
 	if (oldpwd == NULL)
 	{
 		write(2, "minishell: cd: OLDPWD not set\n", 30);
@@ -93,7 +93,7 @@ int	go_to_path_home(char *path, t_envp *envp)
 	char	*home;
 	char	*res;
 
-	home = get_envp_value(envp, "HOME");
+	home = get_envp_value(envp, HOME);
 	if (home == NULL)
 	{
 		write(2, "minishell: cd: HOME not set\n", 28);

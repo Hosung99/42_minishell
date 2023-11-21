@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:54:23 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 19:40:26 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:01:48 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ void	ft_exit(char **cmd, t_info *info)
 	write(STDOUT_FILENO, "exit\n", 5);
 	if (only_number(cmd[0]) == 0)
 	{
-		write(STDERR_FILENO, "minishell: exit: ", 17);
-		write(STDERR_FILENO, cmd[0], ft_strlen(cmd[0]));
-		write(STDERR_FILENO, ": numeric argument required\n", 28);
-		g_exit_status = 255;
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(cmd[0], STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		g_exit_status = EXIT_NOT_NUM;
 	}
 	else if (len > 1)
 	{
-		write(STDERR_FILENO, "minishell: exit: too many arguments\n", 37);
-		g_exit_status = 1;
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		g_exit_status = EXIT_FAILURE;
 	}
 	else if (cmd[0])
 		g_exit_status = ft_atoi(cmd[0]) % 256;

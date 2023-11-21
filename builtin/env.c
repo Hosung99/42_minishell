@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:42:00 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 17:47:03 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 06:52:07 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	ft_env(t_envp *envp)
 	{
 		if (envp->key != NULL && envp->have_equal == 1)
 		{
-			ft_putstr_fd(envp->key, 1);
-			ft_putchar_fd('=', 1);
+			ft_putstr_fd(envp->key, STDOUT_FILENO);
+			ft_putchar_fd('=', STDOUT_FILENO);
 			if (envp->value != NULL)
-				ft_putstr_fd(envp->value, 1);
-			ft_putchar_fd('\n', 1);
+				ft_putstr_fd(envp->value, STDOUT_FILENO);
+			ft_putchar_fd('\n', STDOUT_FILENO);
 		}
 		envp = envp->next;
 	}

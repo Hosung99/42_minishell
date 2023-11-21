@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:41:35 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/17 17:11:36 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:07:55 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_cmd_error(char *cmd)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
-	g_exit_status = 127;
-	exit(127);
+	g_exit_status = EXIT_NOT_CMD;
+	exit(EXIT_NOT_CMD);
 }
 
 void	ft_permission_error(char *cmd)
@@ -35,6 +35,6 @@ void	ft_permission_error(char *cmd)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": Permission denied\n", 2);
-	g_exit_status = 126;
-	exit(126);
+	g_exit_status = EXIT_FAILURE;
+	exit(EXIT_FAILURE);
 }

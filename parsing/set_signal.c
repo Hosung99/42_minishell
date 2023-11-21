@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:59:43 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 21:25:22 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:04:51 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sig_handler(int signo)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_exit_status = 1;
+		g_exit_status = EXIT_FAILURE;
 	}
 	if (signo == SIGQUIT)
 	{

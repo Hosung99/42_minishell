@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:55:02 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 17:36:44 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 06:54:29 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ void	find_key_value(char *cmd, t_envp *envp)
 
 void	print_export_err(char *cmd)
 {
-	write(STDERR_FILENO, "minishell: export: `", 20);
-	write(STDERR_FILENO, cmd, ft_strlen(cmd));
-	write(STDERR_FILENO, "': not a valid identifier\n", 26);
+	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	g_exit_status = EXIT_FAILURE;
 }
 
 void	set_key_value(t_envp *envp, char *key, char *value, int have_equal)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:54 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:49:43 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 07:07:27 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 	}
 	reset_termios(&term);
-	exit(1);
+	exit(EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:56:45 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 07:05:43 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	do_tokenize(char **pipe_split_line, \
 	{
 		free_str(pipe_split_line);
 		printf("minishell: syntax error near unexpected quote\n");
-		g_exit_status = 1;
+		g_exit_status = EXIT_FAILURE;
 		return (-1);
 	}
 	if (tokenize(pipe_split_line[pipe_index], cmd, envp_list) == -1)
@@ -101,7 +101,7 @@ int	parse(char *line, t_cmd **cmd, t_envp *envp_list)
 	*cmd = NULL;
 	if (before_check_pipe(line) == -1 || before_check_redir(line) == -1)
 	{
-		g_exit_status = 1;
+		g_exit_status = EXIT_FAILURE;
 		return (-1);
 	}
 	pipe_split_line = ft_split_pipe(line, &pipe_cnt);

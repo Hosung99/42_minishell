@@ -3,51 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/18 21:14:12 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 07:03:48 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp);
-void	print_redir(t_cmd *cmd);
-void	print_cmd(t_cmd *cmd);
-void	print_envp(t_envp *envp);
+void	execute(t_cmd *cmd, t_envp *envp, t_info *info);
 
 void	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
 
-	envp = envp->next;
 	init_info(&info, envp, cmd);
 	open_here_docs(cmd);
-	if (g_exit_status != 0)
+	if (g_exit_status != EXIT_SUCCESS)
 	{
 		free_info(&info);
 		return ;
 	}
+	execute(cmd, envp, &info);
+	free_info(&info);
+	if (cmd == NULL)
+		wait_all();
+	set_signal(TER, TER);
+}
+
+void	execute(t_cmd *cmd, t_envp *envp, t_info *info)
+{
 	while (cmd)
 	{
-		if (pipe(info.pipe_fd) == -1)
+		if (pipe(info->pipe_fd) == -1)
 			exit_perror("pipe", &info);
-		file_open(cmd, &info);
-		if (info.cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
+		file_open(cmd, info);
+		if (info->cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
 		{
 			builtin(cmd, &info, envp);
-			dup2(info.stdout_fd, STDOUT_FILENO);
+			dup2(info->stdout_fd, STDOUT_FILENO);
 			break ;
 		}
 		else
 			make_pipe(&info, cmd, envp);
 		cmd = cmd->next;
 	}
-	free_info(&info);
-	if (cmd == NULL)
-		wait_all();
-	// set_signal(TER, TER);
 }
 
 void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp)
