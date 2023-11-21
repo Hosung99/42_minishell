@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:55:47 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:59:44 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 18:33:35 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*get_cmd(char **path, char *cmd, t_info *info)
 
 	if (cmd == NULL || path == NULL)
 		return (NULL);
+	if (cmd[0] == '\0')
+		ft_cmd_error(cmd);
 	have_slash = check_slash(cmd, info);
 	path_cmd = ft_strjoin("/", cmd);
 	index = 0;

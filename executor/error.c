@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:41:35 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:36:10 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 19:44:47 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,14 @@ void	ft_heredoc_error(t_info *info)
 {
 	ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
 	g_exit_status = 2;
+	exit_free(info);
+}
+
+void	ft_no_file_dir(char *cmd, t_info *info)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
+	g_exit_status = EXIT_NOT_CMD;
 	exit_free(info);
 }

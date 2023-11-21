@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:51:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 19:48:46 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	executor(t_cmd *cmd, t_envp *envp)
 {
 	t_info	info;
 
+	envp = envp->next;
 	init_info(&info, envp, cmd);
 	open_here_docs(&info, cmd);
 	if (g_exit_status != EXIT_SUCCESS)
@@ -34,19 +35,19 @@ void	executor(t_cmd *cmd, t_envp *envp)
 
 int	execute(t_cmd *cmd, t_envp *envp, t_info *info)
 {
+	if (info->cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
+	{
+		builtin(cmd, info, envp);
+		dup2(info->stdout_fd, STDOUT_FILENO);
+		close(info->stdout_fd);
+		return (1);
+	}
 	while (cmd)
 	{
 		if (pipe(info->pipe_fd) == -1)
 			exit_perror("pipe", info);
 		file_open(cmd, info);
-		if (info->cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
-		{
-			builtin(cmd, info, envp);
-			dup2(info->stdout_fd, STDOUT_FILENO);
-			return (1);
-		}
-		else
-			make_pipe(info, cmd, envp);
+		make_pipe(info, cmd, envp);
 		cmd = cmd->next;
 	}
 	return (0);

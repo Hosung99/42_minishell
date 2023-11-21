@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 09:21:50 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:46:33 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 19:39:13 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-char	**find_path(t_envp *envp, char *key)
+char	**find_path(t_envp *envp)
 {
 	char	**res;
 	t_envp	*tmp;
@@ -23,7 +23,7 @@ char	**find_path(t_envp *envp, char *key)
 	tmp = envp;
 	while (tmp)
 	{
-		if (ft_strncmp(key, tmp->key, 4) == 0)
+		if (ft_strncmp("PATH", tmp->key, 4) == 0)
 		{
 			res = ft_split(tmp->value, ':', &cnt);
 			return (res);
