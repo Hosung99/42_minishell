@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:26:44 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 20:42:28 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/21 22:38:27 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,38 @@
 
 int	check_quote(char *str, int str_index)
 {
-	char	quote_type;
-	int		d_quote_cnt;
-	int		s_quote_cnt;
+	char	quote_temp;
+	int		temp_index;
+	int		quote_flag;
 
-	d_quote_cnt = 0;
-	s_quote_cnt = 0;
-	while (str[str_index])
+	quote_flag = 0;
+	temp_index = 0;
+	while (temp_index < str_index)
 	{
-		if (str[str_index] == '\'')
-			s_quote_cnt++;
-		if (str[str_index] == '"')
-			d_quote_cnt++;
-		if (str[str_index] == '\'' || str[str_index] == '"')
-			quote_type = str[str_index];
-		if (str_index == 0)
-			break ;
-		str_index--;
+		if (quote_flag == 0 && str[temp_index] == '\'')
+			quote_flag = 1;
+		else if (quote_flag == 1 && str[temp_index] == '\'')
+			quote_flag = 0;
+		if (str[temp_index] == '\"' || str[temp_index] == '\'')
+		{
+			quote_temp = str[temp_index++];
+			while (str[temp_index] != quote_temp)
+			{
+				if (quote_flag && temp_index == str_index)
+					return (FAILURE);
+				else if (quote_flag == 0 && temp_index == str_index)
+					return (SUCCESS);
+				temp_index++;
+			}
+			if (str[temp_index] == '\'')
+				quote_flag = 0;
+		}
+		temp_index++;
 	}
-	if (d_quote_cnt % 2 == 0 && s_quote_cnt % 2 == 0)
+	if (quote_flag == 1)
+		return (FAILURE);
+	else
 		return (SUCCESS);
-	if (d_quote_cnt % 2 == 1 && quote_type == '"')
-		return (SUCCESS);
-	return (FAILURE);
 }
 
 int	check_in_quote(char *str, int str_index)
