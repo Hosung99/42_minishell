@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 07:04:05 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:38:10 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	do_heredoc(t_cmd *cmd, char *filename);
 void	here_doc_fork(t_cmd *temp_cmd, char *filename);
+void	cnt_heredoc(t_info *info, t_cmd *cmd);
 
 void	here_doc(t_redir *redir, char *filename)
 {
@@ -43,7 +44,7 @@ void	here_doc(t_redir *redir, char *filename)
 	close(fd);
 }
 
-void	open_here_docs(t_cmd *cmd)
+void	open_here_docs(t_info *info, t_cmd *cmd)
 {
 	char	*filename;
 	t_cmd	*temp_cmd;
@@ -54,6 +55,7 @@ void	open_here_docs(t_cmd *cmd)
 	index = 0;
 	if (check_heredoc(cmd) != 1)
 		return ;
+	cnt_heredoc(info, cmd);
 	set_signal(IGN, IGN);
 	while (temp_cmd)
 	{
@@ -107,4 +109,32 @@ void	do_heredoc(t_cmd *cmd, char *filename)
 		temp_redir = temp_redir->next;
 	}
 	return ;
+}
+
+void	cnt_heredoc(t_info *info, t_cmd *cmd)
+{
+	t_cmd	*temp_cmd;
+	t_redir	*temp_redir;
+
+	if (cmd == NULL)
+		return ;
+	temp_cmd = cmd;
+	while (temp_cmd)
+	{
+		if (cmd->redir == NULL)
+		{
+			temp_cmd = temp_cmd->next;
+			continue ;
+		}
+		temp_redir = cmd->redir;
+		while (temp_redir)
+		{
+			if (ft_strncmp(temp_redir->str, "<<", 3) == 0)
+				info->here_doc_cnt++;
+			temp_redir = temp_redir->next;
+		}
+		temp_cmd = temp_cmd->next;
+	}
+	if (info->here_doc_cnt > 16)
+		ft_heredoc_error(info);
 }

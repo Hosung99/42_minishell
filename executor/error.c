@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 21:41:35 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 07:07:55 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:36:10 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,11 @@ void	ft_permission_error(char *cmd)
 	ft_putstr_fd(": Permission denied\n", 2);
 	g_exit_status = EXIT_FAILURE;
 	exit(EXIT_FAILURE);
+}
+
+void	ft_heredoc_error(t_info *info)
+{
+	ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
+	g_exit_status = 2;
+	exit_free(info);
 }

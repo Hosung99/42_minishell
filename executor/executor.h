@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:58:48 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/21 16:37:13 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_info
 	int			cmd_cnt;
 	int			have_outfile;
 	int			errono;
+	int			here_doc_cnt;
 }				t_info;
 
 void	init_info(t_info *info, t_envp *envp, t_cmd *cmd);
@@ -57,7 +58,7 @@ void	file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, char *filename);
 void	free_info(t_info *info);
-void	open_here_docs(t_cmd *cmd);
+void	open_here_docs(t_info *info, t_cmd *cmd);
 char	*make_random_here_doc(int index);
 int		check_heredoc(t_cmd *cmd);
 char	*get_readline(void);
@@ -68,5 +69,6 @@ void	ft_permission_error(char *cmd);
 char	**get_envp(t_envp *envp);
 void	exit_free(t_info *info);
 void	ft_free(void *ptr);
+void	ft_heredoc_error(t_info *info);
 
 #endif
