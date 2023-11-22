@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 19:44:57 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 19:37:11 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	open_here_docs(t_info *info, t_cmd *cmd);
 char	*make_random_here_doc(int index);
 int		check_heredoc(t_cmd *cmd);
 char	*get_readline(void);
+int		have_here_doc(t_cmd *cmd);
+void	dup_stdout_builtin(t_info *info, t_cmd *cmd);
 
 void	ft_perror(char *msg);
 void	ft_cmd_error(char *cmd);
