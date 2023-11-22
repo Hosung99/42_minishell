@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/22 23:52:15 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 00:24:36 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		envp_cnt(t_envp *envp);
 char	*input_envp(char *envp_key, char *envp_value);
-void	create_shlvl(t_envp *envp);
 
 char	**get_envp(t_envp *envp)
 {
@@ -79,7 +78,7 @@ void	update_shlvl(t_envp *envp)
 	envp = envp->next;
 	while (envp)
 	{
-		if (strncmp(envp->key, "SHLVL", 6) == 0)
+		if (strncmp(envp->key, SHLVL, 6) == 0)
 		{
 			if (envp->value == NULL)
 				envp->value = ft_strdup("1");
@@ -93,20 +92,23 @@ void	update_shlvl(t_envp *envp)
 		}
 		if (envp->next == NULL)
 		{
-			create_shlvl(envp);
+			envp->next = new_envp(SHLVL, "1", 1);
 			return ;
 		}
 		envp = envp->next;
 	}
 }
 
-void	create_shlvl(t_envp *envp)
+t_envp	*new_envp(char *key, char *value, int have_equal)
 {
-	envp->next = (t_envp *)malloc(sizeof(t_envp));
-	if (envp->next == NULL)
-		exit(EXIT_FAILURE) ;
-	envp->next->key = ft_strdup("SHLVL");
-	envp->next->have_equal = 1;
-	envp->next->value = ft_strdup("1");
-	envp->next->next = NULL;
+	t_envp	*new;
+
+	new = (t_envp *)malloc(sizeof(t_envp));
+	if (new == NULL)
+		exit(EXIT_FAILURE);
+	new->key = key;
+	new->value = value;
+	new->have_equal = have_equal;
+	new->next = NULL;
+	return (new);
 }
