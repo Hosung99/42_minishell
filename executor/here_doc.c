@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:46:02 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/22 18:00:14 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	here_doc(t_redir *redir, char *filename)
 	unlink(filename);
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 00000644);
 	if (fd < 0)
-		ft_perror("here_doc");
+		ft_perror("here_doc1");
 	line = NULL;
 	while (1)
 	{
@@ -84,14 +84,14 @@ void	here_doc_fork(t_cmd *temp_cmd, char *filename)
 	}
 	else if (pid < 0)
 		ft_perror("fork");
-	else
+	waitpid(pid, &g_exit_status, 0);
+	if (have_here_doc(temp_cmd))
 	{
-		waitpid(pid, &g_exit_status, 0);
 		temp_cmd->here_doc_fd = open(filename, O_RDONLY);
 		if (temp_cmd->here_doc_fd < 0)
-			ft_perror("here_doc");
-		unlink(filename);
+			ft_perror("here_doc2");
 	}
+	unlink(filename);
 }
 
 void	do_heredoc(t_cmd *cmd, char *filename)

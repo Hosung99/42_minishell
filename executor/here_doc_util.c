@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:32:19 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:46:19 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/22 17:53:08 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,20 @@ char	*get_readline(void)
 		exit(1);
 	}
 	return (tmp);
+}
+
+int	have_here_doc(t_cmd *cmd)
+{
+	t_redir	*temp_redir;
+
+	if (cmd == NULL || cmd->redir == NULL)
+		return (0);
+	temp_redir = cmd->redir;
+	while (temp_redir)
+	{
+		if (ft_strncmp(temp_redir->str, "<<", 3) == 0)
+			return (1);
+		temp_redir = temp_redir->next;
+	}
+	return (0);
 }

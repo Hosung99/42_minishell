@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 19:45:07 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 19:39:43 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ void	dup_stdout(t_info *info, t_cmd *cmd)
 		if (dup2(info->pipe_fd[1], STDOUT_FILENO) == -1)
 			ft_perror("dup2");
 		close(info->pipe_fd[1]);
+	}
+}
+
+void	dup_stdout_builtin(t_info *info, t_cmd *cmd)
+{
+	if (info->have_outfile == 1)
+	{
+		if (cmd->redir == NULL || cmd->redir->filename == NULL)
+			return ;
+		if (info->outfile_fd == -1)
+			ft_permission_error(cmd->redir->filename);
+		if (dup2(info->outfile_fd, STDOUT_FILENO) == -1)
+			exit_perror("dup2", info);
+		close(info->outfile_fd);
 	}
 }
 

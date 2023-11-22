@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:46:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 19:10:51 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 19:37:42 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	builtin(t_cmd *cmd, t_info *info, t_envp *envp)
 {
 	g_exit_status = EXIT_SUCCESS;
-	dup_stdout(info, cmd);
+	dup_stdout_builtin(info, cmd);
 	if (ft_strncmp(cmd->cmd[0], FT_ECHO, 5) == 0)
 		ft_echo(cmd->cmd + 1);
 	else if (ft_strncmp(cmd->cmd[0], CD, 3) == 0)

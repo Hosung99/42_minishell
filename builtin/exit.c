@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:54:23 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 07:01:48 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 18:08:45 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	ft_exit(char **cmd, t_info *info)
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		g_exit_status = EXIT_FAILURE;
+		return ;
 	}
 	else if (cmd[0])
 		g_exit_status = ft_atoi(cmd[0]) % 256;
