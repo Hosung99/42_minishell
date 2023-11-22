@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 19:36:22 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 23:52:15 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		envp_cnt(t_envp *envp);
 char	*input_envp(char *envp_key, char *envp_value);
+void	create_shlvl(t_envp *envp);
 
 char	**get_envp(t_envp *envp)
 {
@@ -88,8 +89,24 @@ void	update_shlvl(t_envp *envp)
 				envp->value = ft_itoa(ft_atoi(envp->value) + 1);
 				free(tmp);
 			}
-			break ;
+			return ;
+		}
+		if (envp->next == NULL)
+		{
+			create_shlvl(envp);
+			return ;
 		}
 		envp = envp->next;
 	}
+}
+
+void	create_shlvl(t_envp *envp)
+{
+	envp->next = (t_envp *)malloc(sizeof(t_envp));
+	if (envp->next == NULL)
+		exit(EXIT_FAILURE) ;
+	envp->next->key = ft_strdup("SHLVL");
+	envp->next->have_equal = 1;
+	envp->next->value = ft_strdup("1");
+	envp->next->next = NULL;
 }
