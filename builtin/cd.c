@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:57:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 07:01:31 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 02:03:47 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	ft_cd(char **cmd, t_envp *envp)
 			g_exit_status = EXIT_FAILURE;
 			ft_perror(cmd[0]);
 		}
+	}
+	if (nowpwd == NULL)
+	{	
+		ft_perror("getcwd");
+		return ;
 	}
 	export_oldpwd(nowpwd, envp);
 }
