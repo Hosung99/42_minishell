@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:57:45 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/23 02:03:47 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 17:16:55 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_cd(char **cmd, t_envp *envp)
 		return ;
 	}
 	export_oldpwd(nowpwd, envp);
+	ft_free(nowpwd);
 }
 
 int	go_to_home(t_envp *envp)

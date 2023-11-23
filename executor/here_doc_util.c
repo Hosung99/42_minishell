@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 16:32:19 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/23 14:46:20 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/23 17:49:05 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 char	*make_random_here_doc(int index)
 {
 	char	*filename;
+	char	*tmpname;
 	char	*tmp;
 
-	filename = ft_strdup(HERE_DOC_FILE);
+	tmpname = ft_strdup(HERE_DOC_FILE);
 	tmp = ft_itoa(index);
-	filename = ft_strjoin(filename, tmp);
+	filename = ft_strjoin(tmpname, tmp);
 	ft_free(tmp);
+	ft_free(tmpname);
 	return (filename);
 }
 
@@ -42,19 +44,6 @@ int	check_heredoc(t_cmd *cmd)
 		temp_cmd = temp_cmd->next;
 	}
 	return (0);
-}
-
-char	*get_readline(void)
-{
-	char	*tmp;
-
-	tmp = readline("> ");
-	if (!tmp)
-	{
-		printf(">");
-		exit(1);
-	}
-	return (tmp);
 }
 
 int	have_here_doc(t_cmd *cmd)

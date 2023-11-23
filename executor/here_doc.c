@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 19:16:13 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/22 18:00:14 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 17:44:43 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,23 @@ void	here_doc(t_redir *redir, char *filename)
 	unlink(filename);
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 00000644);
 	if (fd < 0)
-		ft_perror("here_doc1");
+		ft_perror("here_doc");
 	line = NULL;
 	while (1)
 	{
-		tmp = get_readline();
+		tmp = readline("> ");
+		if (!tmp)
+			break ;
+		if (ft_strncmp(redir->filename, tmp, ft_strlen(tmp) + 1) == 0)
+			break ;
 		line = ft_strjoin(tmp, "\n");
 		if (!line)
 			ft_perror("readline");
-		if (ft_strncmp(redir->filename, tmp, ft_strlen(tmp) + 1) == 0)
-			break ;
 		write(fd, line, ft_strlen(line));
 		ft_free(tmp);
 		ft_free(line);
 	}
 	ft_free(tmp);
-	ft_free(line);
 	close(fd);
 }
 
@@ -89,7 +90,7 @@ void	here_doc_fork(t_cmd *temp_cmd, char *filename)
 	{
 		temp_cmd->here_doc_fd = open(filename, O_RDONLY);
 		if (temp_cmd->here_doc_fd < 0)
-			ft_perror("here_doc2");
+			ft_perror("here_doc");
 	}
 	unlink(filename);
 }
