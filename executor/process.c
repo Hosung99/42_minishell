@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/22 23:57:01 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 16:19:04 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	dup_stdout(t_info *info, t_cmd *cmd)
 		if (cmd->redir == NULL || cmd->redir->filename == NULL)
 			return ;
 		if (info->outfile_fd == -1)
-			ft_permission_error(cmd->redir->filename);
+			exit_free(info);
 		if (dup2(info->outfile_fd, STDOUT_FILENO) == -1)
 			exit_perror("dup2", info);
 		close(info->outfile_fd);
@@ -78,8 +78,6 @@ void	dup_stdout_builtin(t_info *info, t_cmd *cmd)
 	{
 		if (cmd->redir == NULL || cmd->redir->filename == NULL)
 			return ;
-		if (info->outfile_fd == -1)
-			ft_permission_error(cmd->redir->filename);
 		if (dup2(info->outfile_fd, STDOUT_FILENO) == -1)
 			exit_perror("dup2", info);
 		close(info->outfile_fd);

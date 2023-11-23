@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/23 00:23:46 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 15:58:53 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp);
 char	*get_cmd(char **path, char *cmd, t_info *info);
 void	wait_all(void);
-void	file_open(t_cmd *cmd, t_info *info);
+int		file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, char *filename);
 void	free_info(t_info *info);
