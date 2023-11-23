@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 17:25:27 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 20:52:28 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/23 15:13:55 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	set_normal_token(t_token *token_header, char *str, int *curr_index)
 {
 	t_token	*new_token;
 	int		quote_flag;
+	char	quote_temp;
 
 	quote_flag = 0;
 	new_token = (t_token *)ft_calloc(1, sizeof(t_token));
@@ -33,9 +34,11 @@ void	set_normal_token(t_token *token_header, char *str, int *curr_index)
 	{
 		if (quote_flag == 0 && (str[*curr_index] == '\'' \
 			|| str[*curr_index] == '\"'))
+		{
+			quote_temp = str[*curr_index];
 			quote_flag = 1;
-		else if (quote_flag == 1 && (str[*curr_index] == '\'' \
-			|| str[*curr_index] == '\"'))
+		}
+		else if (quote_flag == 1 && str[*curr_index] == quote_temp)
 			quote_flag = 0;
 		if (quote_flag == 0 && is_metachar(str[*curr_index]) == SUCCESS)
 			break ;
@@ -43,7 +46,6 @@ void	set_normal_token(t_token *token_header, char *str, int *curr_index)
 		*curr_index = *curr_index + 1;
 	}
 	new_token->type = set_token_type(new_token->str);
-	new_token->next = NULL;
 	set_token_position(token_header, new_token);
 }
 

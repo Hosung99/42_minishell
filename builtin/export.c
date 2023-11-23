@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:55:02 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 17:13:21 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/23 14:46:14 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_env_export(t_envp *envp)
 		if (tmpenv->have_equal == 1 && tmpenv->value != NULL)
 		{
 			ft_putstr_fd("=\"", STDOUT_FILENO);
-			ft_putstr_fd(tmpenv->value, STDOUT_FILENO); //
+			ft_putstr_fd(tmpenv->value, STDOUT_FILENO);
 			ft_putstr_fd("\"", STDOUT_FILENO);
 		}
 		ft_putstr_fd("\n", STDOUT_FILENO);
