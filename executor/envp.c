@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:15:14 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 19:36:22 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 00:24:36 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	update_shlvl(t_envp *envp)
 	envp = envp->next;
 	while (envp)
 	{
-		if (strncmp(envp->key, "SHLVL", 6) == 0)
+		if (strncmp(envp->key, SHLVL, 6) == 0)
 		{
 			if (envp->value == NULL)
 				envp->value = ft_strdup("1");
@@ -88,8 +88,27 @@ void	update_shlvl(t_envp *envp)
 				envp->value = ft_itoa(ft_atoi(envp->value) + 1);
 				free(tmp);
 			}
-			break ;
+			return ;
+		}
+		if (envp->next == NULL)
+		{
+			envp->next = new_envp(SHLVL, "1", 1);
+			return ;
 		}
 		envp = envp->next;
 	}
+}
+
+t_envp	*new_envp(char *key, char *value, int have_equal)
+{
+	t_envp	*new;
+
+	new = (t_envp *)malloc(sizeof(t_envp));
+	if (new == NULL)
+		exit(EXIT_FAILURE);
+	new->key = key;
+	new->value = value;
+	new->have_equal = have_equal;
+	new->next = NULL;
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/22 19:13:45 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 23:57:37 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	execute(t_cmd *cmd, t_envp *envp, t_info *info)
 	if (info->cmd_cnt == 1 && is_builtin(cmd->cmd[0]))
 	{
 		file_open(cmd, info);
+		dup_stdout_builtin(info, cmd);
 		builtin(cmd, info, envp);
 		dup2(info->stdout_fd, STDOUT_FILENO);
 		close(info->stdout_fd);

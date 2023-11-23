@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 17:18:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/22 19:39:43 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/22 23:57:01 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	child_process(t_cmd *cmd, t_info *info, t_envp *envp)
 	if (!cmd->cmd || !cmd->cmd[0])
 		exit_free(info);
 	close(info->pipe_fd[0]);
+	dup_stdout(info, cmd);
 	if (is_builtin(cmd->cmd[0]))
 	{
 		builtin(cmd, info, envp);
 		exit_free(info);
 	}
-	dup_stdout(info, cmd);
 	if (info->tmp_fd < 0)
 		exit_free(info);
 	if (dup2(info->tmp_fd, STDIN_FILENO) == -1)

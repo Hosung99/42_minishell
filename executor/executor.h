@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/22 19:37:11 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 00:23:46 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 
 # define HERE_DOC_FILE ".here_doc"
+# define SHLVL "SHLVL"
 # define DO_HERE_DOC 0
 # define CHECK_HERE_DOC 1
 
@@ -69,6 +70,7 @@ void	ft_perror(char *msg);
 void	ft_cmd_error(char *cmd);
 void	ft_permission_error(char *cmd);
 char	**get_envp(t_envp *envp);
+t_envp	*new_envp(char *key, char *value, int have_equal);
 void	exit_free(t_info *info);
 void	ft_free(void *ptr);
 void	ft_heredoc_error(t_info *info);

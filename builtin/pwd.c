@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:38:25 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 06:54:49 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 02:03:24 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	ft_pwd(void)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		ft_perror("pwd");
+	{
+		ft_perror("getcwd");
+		return ;
+	}
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	ft_free(cwd);
