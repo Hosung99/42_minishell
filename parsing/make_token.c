@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:09:15 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 16:32:44 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:15:33 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	make_cmd_token(char *str, t_token *token_header, int curr_index)
 	space_index = curr_index + 1;
 	while (str[space_index] && ft_is_space(str[space_index]) == SUCCESS)
 		space_index++;
+	if (is_quote(str[space_index]) == SUCCESS)
+		return (space_index);
 	fin_index = space_index;
 	while (str[fin_index] && is_metachar(str[fin_index]) == FAILURE)
 		fin_index++;

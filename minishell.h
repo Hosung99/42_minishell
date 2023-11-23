@@ -6,7 +6,7 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:54:58 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/21 20:42:24 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:12:51 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,10 @@ char	**ft_split_pipe(char *str, int *pipe_cnt);
 void	make_cmd(t_token *token_header, t_cmd **cmd, int *option_cnt);
 void	malloc_cmd(t_token *token_header, t_cmd **cmd);
 int		is_metachar(char curr);
+int		is_redir(char str);
+int		is_quote(char curr);
 void	set_token_position(t_token *token_header, t_token *new_token);
+void	set_normal_token(t_token *token_header, char *str, int *curr_index);
 int		set_quote(t_token *token_header, t_envp *envp_list, t_cmd **cmd);
 void	change_envp_var(t_token *token, t_envp *envp_list);
 char	*ft_strtrim_index(char *str, char c);

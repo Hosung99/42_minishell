@@ -6,13 +6,20 @@
 /*   By: seoson <seoson@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:38:45 by seoson            #+#    #+#             */
-/*   Updated: 2023/11/18 17:50:16 by seoson           ###   ########.fr       */
+/*   Updated: 2023/11/23 16:10:01 by seoson           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern int	g_exit_status;
+
+int	is_redir(char str)
+{
+	if (str == '<' || str == '>')
+		return (SUCCESS);
+	return (0);
+}
 
 int	check_first_char(char *line)
 {
@@ -64,23 +71,23 @@ int	before_check_redir(char *str)
 
 	str_index = 0;
 	count = 0;
-	if (ft_strlen(str) >= 3)
+	while (str[str_index])
 	{
-		while (str[str_index])
+		if (str[str_index] == '<' || str[str_index] == '>')
 		{
-			if (str[str_index] == '<' || str[str_index] == '>')
+			if (str_index != 0 && (is_redir(str[str_index - 1]) \
+				&& str[str_index] != str[str_index - 1]))
+				count = 2;
+			count++;
+			if (count == 3)
 			{
-				count++;
-				if (count == 3)
-				{
-					printf("minishell: syntax error unexpected token `redir'\n");
-					return (-1);
-				}
+				printf("minishell: syntax error unexpected token `redir'\n");
+				return (-1);
 			}
-			else
-				count = 0;
-			str_index++;
 		}
+		else
+			count = 0;
+		str_index++;
 	}
 	return (1);
 }
