@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:26:46 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/23 16:16:16 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 21:14:27 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	executor(t_cmd *cmd, t_envp *envp)
 		return ;
 	}
 	if (execute(cmd, envp, &info) == 0)
-		wait_all();
+		wait_all(cmd);
 	free_info(&info);
 	set_signal(TER, TER);
 }
@@ -60,6 +60,7 @@ void	make_pipe(t_info *info, t_cmd *cmd, t_envp *envp)
 {
 	set_signal(IGN, IGN);
 	info->pid = fork();
+	cmd->pid = info->pid;
 	if (info->pid == 0)
 	{
 		set_signal(CHI, DEF);

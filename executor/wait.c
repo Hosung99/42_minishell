@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgo <sgo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 00:36:55 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/21 16:04:45 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 21:13:55 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-void	wait_all(void)
+void	wait_all(t_cmd	*cmd)
 {
 	int	i;
 	int	status;
 	int	signo;
 
 	i = 0;
-	while (wait(&status) != -1)
+	while (cmd)
 	{
+		waitpid(cmd->pid, &status, 0);
 		if (WIFSIGNALED(status))
 		{
 			signo = WTERMSIG(status);
@@ -34,5 +35,6 @@ void	wait_all(void)
 		}
 		else
 			g_exit_status = WEXITSTATUS(status);
+		cmd = cmd->next;
 	}
 }

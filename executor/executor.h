@@ -6,7 +6,7 @@
 /*   By: sgo <sgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 11:15:12 by sgo               #+#    #+#             */
-/*   Updated: 2023/11/23 17:49:14 by sgo              ###   ########.fr       */
+/*   Updated: 2023/11/23 21:15:15 by sgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		check_slash(char *cmd, t_info *info);
 void	exit_perror(char *msg, t_info *info);
 char	**find_path(t_envp *envp);
 char	*get_cmd(char **path, char *cmd, t_info *info);
-void	wait_all(void);
+void	wait_all(t_cmd	*cmd);
 int		file_open(t_cmd *cmd, t_info *info);
 int		cmd_cnt(t_cmd *cmd);
 void	here_doc(t_redir *redir, char *filename);
